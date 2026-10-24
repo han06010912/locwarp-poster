@@ -7,483 +7,645 @@
 <title>Locwarp 海報製作</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#f5f4ef;color:#304e42;font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC","PingFang TC",sans-serif}
-header{background:#426b59;color:#fff;text-align:center;padding:18px;font-size:23px;font-weight:700}
-main{max-width:1180px;margin:auto;padding:14px;display:grid;grid-template-columns:370px minmax(0,1fr);gap:16px}
-section{background:white;border-radius:16px;padding:16px;margin-bottom:14px;box-shadow:0 3px 15px #0000000b}
-h3{font-size:17px;margin:0 0 13px}
-input,textarea,button,select{font:inherit}
-input[type=text],input[type=date],textarea,select{width:100%;border:1px solid #c7d7cf;border-radius:9px;padding:10px;margin:5px 0;background:white;color:#304e42}
-textarea{resize:vertical;min-height:80px}
-button{background:#426b59;color:white;border:0;border-radius:9px;padding:10px 13px;cursor:pointer}
-button.alt{background:#e7f0e9;color:#345244}
-button.danger{background:#f4e5e6;color:#8d4242}
-.row{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin:7px 0}
-label{display:block;margin:10px 0}
-input[type=checkbox]{width:19px;height:19px;accent-color:#426b59;vertical-align:middle}
-input[type=range]{width:100%;accent-color:#426b59}
-#gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-height:320px;overflow-y:auto;margin-top:12px}
-.thumb{padding:5px;background:#f5f6f3;border:2px solid transparent;border-radius:9px;min-width:0;color:#345244}
-.thumb.active{border-color:#39825a}
-.thumb img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:6px}
-.thumb span{display:block;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.person{display:flex;align-items:center;gap:7px;border-bottom:1px solid #eee;padding:7px 0}
-.person span{flex:1;overflow-wrap:anywhere}
-.person button{padding:5px 8px}
-#people{max-height:240px;overflow-y:auto}
-#previewPanel{align-self:start;position:sticky;top:10px;text-align:center}
-#canvas{width:100%;max-width:480px;height:auto;display:block;margin:12px auto;background:#eee;border-radius:5px;box-shadow:0 3px 14px #0002;touch-action:none;cursor:grab}
-small,.hint{font-size:13px;color:#718176}
-#selectedText{padding:10px;border-radius:9px;background:#edf4ee;margin:9px 0;word-break:break-all}
-#status{font-size:13px;color:#647b6f}
-@media(max-width:760px){main{display:block}#previewPanel{position:static}header{font-size:21px}}
+body{margin:0;background:#f5f5ef;color:#294c3a;font-family:-apple-system,BlinkMacSystemFont,'PingFang TC','Noto Sans TC',sans-serif}
+header{background:#3c7056;color:white;text-align:center;padding:17px;font-size:23px;font-weight:750}
+main{max-width:1200px;margin:auto;padding:14px;display:grid;grid-template-columns:370px minmax(0,1fr);gap:15px}
+section{background:#fff;padding:15px;border-radius:15px;margin-bottom:13px;box-shadow:0 2px 12px #0000000b}
+h3{margin:0 0 12px;font-size:17px}
+label{display:block;margin:10px 0 4px;font-size:14px}
+input,button,select,textarea{font:inherit}
+input[type=text],input[type=date],textarea,select{width:100%;padding:10px;border:1px solid #cbd9d0;border-radius:9px;background:#fff;color:#274637;margin:4px 0}
+textarea{min-height:85px;resize:vertical}
+button{border:0;border-radius:9px;background:#3e765a;color:white;padding:9px 12px;cursor:pointer}
+button.alt{background:#e6f0e9;color:#315943}
+button.danger{background:#f7ebeb;color:#a44343}
+button:focus-visible,input:focus-visible{outline:2px solid #7ab598}
+input[type=checkbox]{width:19px;height:19px;accent-color:#42775a;vertical-align:middle}
+input[type=range]{width:100%;accent-color:#42775a}
+input[type=color]{width:64px;height:38px;border:1px solid #ccc;border-radius:8px;background:white}
+.row{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin:8px 0}
+.row>*{min-width:0}
+.hint{font-size:12px;color:#687b6d;line-height:1.5}
+.status{font-size:13px;color:#617969;overflow-wrap:anywhere}
+#gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;max-height:340px;overflow:auto;margin:12px 0}
+.thumb{background:#f5f6f1;color:#334e3c;border:2px solid transparent;border-radius:10px;padding:5px;min-width:0}
+.thumb.active{border-color:#448b65}
+.thumb img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:6px}
+.thumb span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;margin-top:4px}
+.person{display:flex;align-items:center;gap:6px;padding:7px 0;border-bottom:1px solid #edf0ed}
+.person .name{flex:1;min-width:0;overflow-wrap:anywhere;font-size:13px}
+.person button{padding:6px 7px}
+#people{max-height:260px;overflow:auto}
+#previewPanel{position:sticky;top:10px;align-self:start;text-align:center}
+#canvas{display:block;width:100%;max-width:490px;height:auto;margin:12px auto;border-radius:6px;background:#eee;box-shadow:0 2px 15px #0002;touch-action:none}
+#picked{border-radius:8px;padding:10px;background:#eef4ed;overflow-wrap:anywhere;text-align:left;font-size:14px}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.control{min-width:0}
+.control label{font-size:12px}
+#download{display:block;width:100%;max-width:490px;margin:8px auto;font-size:16px;font-weight:700;padding:12px}
+@media(max-width:760px){main{display:block}#previewPanel{position:static}header{font-size:20px}}
 </style>
 </head>
 <body>
+
 <header>🌸 Locwarp 海報製作</header>
+
 <main>
 <div>
+
 <section>
 <h3>① 選擇花種底圖</h3>
-<input id="search" type="text" placeholder="搜尋花種名稱">
+<input id="search" type="text" placeholder="搜尋花種名稱或檔名">
 <div class="row">
-<button onclick="loadImages()">重新讀取圖片</button>
-<span id="count"></span>
+<button id="reload">重新讀取圖片</button>
+<span id="count" class="hint"></span>
 </div>
 <div id="gallery"></div>
-<p id="status"></p>
-<div id="namePanel" hidden>
-<label>替選取的圖片設定花種名稱</label>
-<input id="flowerName" type="text" placeholder="例如：櫻花">
-<button class="alt" onclick="renameFlower()">儲存花種名稱</button>
+<div id="status" class="status"></div>
+<div id="renameArea" hidden>
+<label>目前底圖的花種名稱</label>
+<input id="flowerName" type="text" placeholder="例如：銀蓮花">
+<button id="saveName" class="alt">儲存名稱</button>
 </div>
 </section>
 
 <section>
 <h3>② 花農名單</h3>
-<small>每行一位花農，完整保留日文、顏文字及特殊符號。</small>
+<div class="hint">每行一位；保留日文、顏文字及 Emoji，輸出統一加上 🪄，沒有圓點或編號。</div>
 <textarea id="newPeople" placeholder="夯夯&#10;さくら🌸&#10;o(*≧▽≦)ツﾟ夯"></textarea>
 <div class="row">
-<button onclick="addPeople()">加入名單</button>
-<button class="alt" onclick="selectAll(true)">全選</button>
-<button class="alt" onclick="selectAll(false)">全不選</button>
+<button id="addPeople">加入名單</button>
+<button id="all" class="alt">全選</button>
+<button id="none" class="alt">全不選</button>
 </div>
 <div id="people"></div>
+<label>統一前綴圖示</label>
+<input id="prefix" type="text" value="🪄" maxlength="12">
 </section>
 
 <section>
-<h3>③ 日期設定</h3>
-<label><input id="showDate" type="checkbox" checked> 顯示日期</label>
+<h3>③ 日期</h3>
+<label><input type="checkbox" id="showDate" checked> 顯示日期</label>
 <input id="date" type="date">
-<label>日期顯示方式</label>
-<select id="dateStyle">
-<option value="long">2026 / 10 / 25（日）</option>
-<option value="short">2026.10.25</option>
-<option value="chinese">2026年10月25日</option>
+<select id="dateFormat">
+<option value="a">2026 / 10 / 25（日）</option>
+<option value="b">2026.10.25</option>
+<option value="c">2026年10月25日</option>
 </select>
-<label>日期字體大小 <b id="dateSizeValue"></b></label>
-<input id="dateSize" type="range" min="20" max="65" value="37">
-<label>日期顏色</label>
-<input id="dateColor" type="color" value="#614b30">
-<label><input id="dateOutline" type="checkbox" checked> 金色描邊</label>
 </section>
 
 <section>
 <h3>④ 本日總召</h3>
-<label><input id="showLeader" type="checkbox"> 顯示總召姓名</label>
-<input id="leader" type="text" placeholder="輸入本日總召">
+<label><input type="checkbox" id="showLeader"> 顯示總召姓名</label>
+<input id="leader" type="text" placeholder="輸入總召姓名（可使用日文與符號）">
 </section>
 
 <section>
-<h3>⑤ 文字位置與大小</h3>
-<div class="hint">在右側海報上點選姓名、日期或總召，再直接拖曳位置。</div>
-<div id="selectedText">尚未選擇文字</div>
-<label>選取文字大小 <b id="fontValue"></b></label>
-<input id="fontSize" type="range" min="15" max="70" value="32">
-<label>選取文字顏色</label>
-<input id="fontColor" type="color" value="#304e42">
+<h3>⑤ 調整位置與大小</h3>
+<div class="hint">先選「日期／總召／花農」，再用滑桿調整；也可以直接拖曳預覽文字。</div>
+<label>要調整的文字</label>
+<select id="target"></select>
+<div id="picked">請選擇文字</div>
+<div class="controls">
+<div class="control">
+<label>左右位置 <span id="xLabel"></span></label>
+<input type="range" id="posX" min="5" max="95" step="0.5">
+</div>
+<div class="control">
+<label>上下位置 <span id="yLabel"></span></label>
+<input type="range" id="posY" min="2" max="98" step="0.5">
+</div>
+</div>
+<label>字體大小 <span id="sizeLabel"></span></label>
+<input id="size" type="range" min="15" max="85" step="1">
 <div class="row">
-<button class="alt" onclick="nudge(0,-5)">↑</button>
-<button class="alt" onclick="nudge(-5,0)">←</button>
-<button class="alt" onclick="nudge(5,0)">→</button>
-<button class="alt" onclick="nudge(0,5)">↓</button>
+<label>文字顏色 <input id="color" type="color"></label>
+<label><input id="outline" type="checkbox"> 淺金描邊</label>
 </div>
 <div class="row">
-<button class="alt" onclick="resetLayout()">重設這張底圖的位置</button>
+<button id="centerDate" class="alt">日期置中金框</button>
+<button id="centerLeader" class="alt">總召置中欄位</button>
 </div>
+<div class="row">
+<button id="reset" class="danger">重設這張底圖排版</button>
+</div>
+<div class="hint">每張底圖分別記錄位置。設定保存在這台裝置的瀏覽器中。</div>
 </section>
+
 </div>
 
 <section id="previewPanel">
 <h3>海報即時預覽</h3>
-<small>點選文字後拖曳，調整結果會自動儲存</small>
+<div class="hint">用手指拖曳文字；若很難點中，請使用左右／上下滑桿。</div>
 <canvas id="canvas" width="1086" height="1448"></canvas>
-<button onclick="downloadPoster()" style="width:100%;max-width:480px;margin:8px auto">下載 PNG 海報</button>
+<button id="download">下載 PNG 海報</button>
+<div id="downloadInfo" class="status"></div>
 </section>
 </main>
 
 <script>
-"use strict";
-const OWNER="han06010912";
-const REPO="locwarp-poster";
+'use strict';
+
+const OWNER='han06010912';
+const REPO='locwarp-poster';
 const API=`https://api.github.com/repos/${OWNER}/${REPO}/contents/images`;
 const $=id=>document.getElementById(id);
-const canvas=$("canvas"),ctx=canvas.getContext("2d");
+const canvas=$('canvas');
+const ctx=canvas.getContext('2d');
 
-const read=(key,fallback)=>{
- try{return JSON.parse(localStorage.getItem(key))??fallback}
- catch{return fallback}
-};
-let people=read("lw_people",[]);
-let flowerNames=read("lw_names",{});
-let layouts=read("lw_layouts",{});
-let files=[],selectedFile="",backgroundImage=null;
-let selectedText="",hitBoxes=[],dragging=false;
-let dragOffset={x:0,y:0};
-let imageLoadingId=0;
-let storageOK=true;
+function saved(key,defaultValue){
+ try{
+  return JSON.parse(localStorage.getItem(key))??defaultValue;
+ }catch{
+  return defaultValue;
+ }
+}
+
+let people=saved('lw_people',[]).map((p,i)=>({
+ id:p.id||`legacy_${i}`,
+ name:String(p.name||''),
+ checked:p.checked!==false
+}));
+
+let fileNames=saved('lw_names',{});
+let layouts=saved('lw_layouts',{});
+let settings=saved('lw_settings',{});
+let files=[];
+let selectedFile='';
+let poster=null;
+let selectedKey='date';
+let hitAreas=[];
+let drag=null;
+let loadToken=0;
 
 function persist(){
  try{
-  localStorage.setItem("lw_people",JSON.stringify(people));
-  localStorage.setItem("lw_names",JSON.stringify(flowerNames));
-  localStorage.setItem("lw_layouts",JSON.stringify(layouts));
+  localStorage.setItem('lw_people',JSON.stringify(people));
+  localStorage.setItem('lw_names',JSON.stringify(fileNames));
+  localStorage.setItem('lw_layouts',JSON.stringify(layouts));
+  localStorage.setItem('lw_settings',JSON.stringify(settings));
  }catch(e){
-  storageOK=false;
-  $("status").textContent="瀏覽器儲存空間不足，位置可能無法保留";
+  $('status').textContent='儲存設定失敗：瀏覽器空間可能不足';
  }
 }
 
-function currentLayout(){
+function layout(){
  if(!selectedFile)return {};
- if(!layouts[selectedFile])layouts[selectedFile]={};
- return layouts[selectedFile];
+ return layouts[selectedFile]||(layouts[selectedFile]={});
+}
+
+function defaultItem(key){
+ if(key==='date'){
+  return{x:.5,y:.096,size:45,color:'#513f31',outline:true};
+ }
+ if(key==='leader'){
+  return{x:.65,y:.916,size:41,color:'#513f31',outline:true};
+ }
+ const index=people.findIndex(p=>p.id===key);
+ const row=Math.floor(Math.max(0,index)/2);
+ const col=Math.max(0,index)%2;
+ return{
+  x:col===0?.33:.68,
+  y:.744+row*.028,
+  size:31,
+  color:'#344b3b',
+  outline:false
+ };
 }
 
 function getItem(key){
- const saved=currentLayout()[key];
- if(saved)return saved;
- if(key==="date")return {x:.5,y:.092,size:37,color:"#614b30"};
- if(key==="leader")return {x:.65,y:.914,size:32,color:"#304e42"};
- const i=people.findIndex(p=>p.id===key);
- const row=Math.floor(Math.max(i,0)/2);
- const col=Math.max(i,0)%2;
- return {x:col===0?.33:.68,y:.76+row*.026,size:32,color:"#304e42"};
+ return{...defaultItem(key),...(layout()[key]||{})};
 }
 
-function modifyItem(key,patch){
+function setItem(key,changes){
  if(!selectedFile)return;
- currentLayout()[key]={...getItem(key),...patch};
- persist();draw();
+ layout()[key]={...getItem(key),...changes};
+ persist();
+ updateControls();
+ renderPoster();
+}
+
+function selectedLabels(){
+ const a=[];
+ if($('showDate').checked&&$('date').value){
+  a.push({key:'date',text:dateText()});
+ }
+ if($('showLeader').checked&&$('leader').value.trim()){
+  a.push({key:'leader',text:$('leader').value.trim()});
+ }
+ people.filter(p=>p.checked).forEach(p=>{
+  a.push({key:p.id,text:($('prefix').value||'')+' '+p.name});
+ });
+ return a;
+}
+
+function dateText(){
+ const val=$('date').value;
+ if(!val)return'';
+ const [y,m,d]=val.split('-').map(Number);
+ const wd='日一二三四五六'[new Date(y,m-1,d).getDay()];
+ if($('dateFormat').value==='b'){
+  return `${y}.${String(m).padStart(2,'0')}.${String(d).padStart(2,'0')}`;
+ }
+ if($('dateFormat').value==='c'){
+  return `${y}年${m}月${d}日`;
+ }
+ return `${y} / ${String(m).padStart(2,'0')} / ${String(d).padStart(2,'0')}（${wd}）`;
+}
+
+function updateTargetOptions(){
+ const options=[
+  {key:'date',text:'📅 日期'},
+  {key:'leader',text:'👑 本日總召'},
+  ...people.map(p=>({key:p.id,text:'🪄 '+p.name}))
+ ];
+ const el=$('target');
+ el.replaceChildren();
+ options.forEach(o=>{
+  const option=document.createElement('option');
+  option.value=o.key;
+  option.textContent=o.text;
+  el.appendChild(option);
+ });
+ if(!options.some(o=>o.key===selectedKey)){
+  selectedKey='date';
+ }
+ el.value=selectedKey;
+ updateControls();
+}
+
+function updateControls(){
+ const item=getItem(selectedKey);
+ $('target').value=selectedKey;
+ $('posX').value=Math.round(item.x*200)/2;
+ $('posY').value=Math.round(item.y*200)/2;
+ $('size').value=item.size;
+ $('color').value=item.color;
+ $('outline').checked=item.outline;
+ $('xLabel').textContent=Math.round(item.x*100)+'%';
+ $('yLabel').textContent=Math.round(item.y*100)+'%';
+ $('sizeLabel').textContent=item.size+'px';
+ $('picked').textContent=$('target').selectedOptions[0]?.textContent||'請選擇文字';
 }
 
 async function loadImages(){
- $("status").textContent="正在讀取 GitHub 圖片…";
- let all=[];
+ $('status').textContent='正在讀取 images 圖片…';
  try{
-  const r=await fetch(API+"?t="+Date.now(),{
-   headers:{"Accept":"application/vnd.github+json"}
+  const r=await fetch(API+'?t='+Date.now(),{
+   headers:{Accept:'application/vnd.github+json'}
   });
-  if(!r.ok)throw Error("GitHub "+r.status);
+  if(!r.ok)throw Error('GitHub '+r.status);
   const data=await r.json();
-  all=data.filter(f=>f.type==="file"&&/\.(png|jpe?g|webp)$/i.test(f.name))
-   .map(f=>({name:f.name,url:f.download_url}));
-  files=all;
-  $("count").textContent=files.length+" 張";
-  $("status").textContent=files.length?"圖片已載入":"資料夾內沒有圖片";
-  renderGallery();
+  files=data.filter(f=>
+   f.type==='file'&&/\.(png|jpe?g|webp)$/i.test(f.name)
+  ).map(f=>({name:f.name,url:f.download_url}));
+  $('count').textContent=files.length+' 張';
+  $('status').textContent=files.length?'已讀取圖片':'images 資料夾內尚無可用圖片';
+  drawGallery();
   if(files.length){
-   const previous=files.some(f=>f.name===selectedFile)?selectedFile:files[0].name;
-   chooseImage(previous);
+   chooseImage(files.some(f=>f.name===selectedFile)?
+    selectedFile:files[0].name);
   }
  }catch(e){
-  $("status").textContent="讀取失敗："+e.message;
+  $('status').textContent='無法讀取圖片：'+e.message;
  }
 }
 
-function renderGallery(){
- const q=$("search").value.trim().toLocaleLowerCase();
- const gallery=$("gallery");
- gallery.replaceChildren();
- files.filter(f=>(flowerNames[f.name]||f.name).toLocaleLowerCase().includes(q))
- .forEach(f=>{
-  const btn=document.createElement("button");
-  btn.className="thumb"+(f.name===selectedFile?" active":"");
-  const img=document.createElement("img");
-  img.src=f.url;img.loading="lazy";
-  img.alt=flowerNames[f.name]||f.name;
-  const title=document.createElement("span");
-  title.textContent=flowerNames[f.name]||f.name.replace(/\.[^.]+$/,"");
-  btn.append(img,title);
+function drawGallery(){
+ const q=$('search').value.trim().toLocaleLowerCase();
+ const box=$('gallery');
+ box.replaceChildren();
+ files.filter(f=>
+  (fileNames[f.name]||f.name).toLocaleLowerCase().includes(q)
+ ).forEach(f=>{
+  const btn=document.createElement('button');
+  btn.className='thumb'+(f.name===selectedFile?' active':'');
+  const img=document.createElement('img');
+  img.src=f.url;
+  img.loading='lazy';
+  img.alt=fileNames[f.name]||f.name;
+  const span=document.createElement('span');
+  span.textContent=fileNames[f.name]||f.name.replace(/\.[^.]+$/,'');
+  btn.append(img,span);
   btn.onclick=()=>chooseImage(f.name);
-  gallery.appendChild(btn);
+  box.appendChild(btn);
  });
 }
 
-function chooseImage(filename){
- const f=files.find(f=>f.name===filename);
+function chooseImage(name){
+ const f=files.find(f=>f.name===name);
  if(!f)return;
- selectedFile=filename;
- selectedText="";
- $("namePanel").hidden=false;
- $("flowerName").value=flowerNames[filename]||"";
- renderGallery();
- const id=++imageLoadingId;
+ selectedFile=name;
+ $('renameArea').hidden=false;
+ $('flowerName').value=fileNames[name]||'';
+ drawGallery();
+ poster=null;
+ const token=++loadToken;
  const img=new Image();
- img.crossOrigin="anonymous";
+ img.crossOrigin='anonymous';
  img.onload=()=>{
-  if(id!==imageLoadingId)return;
-  backgroundImage=img;
+  if(token!==loadToken)return;
+  poster=img;
   canvas.width=img.naturalWidth;
   canvas.height=img.naturalHeight;
-  draw();
+  updateControls();
+  renderPoster();
  };
  img.onerror=()=>{
-  if(id===imageLoadingId)$("status").textContent="此圖片載入失敗";
+  $('status').textContent='圖片載入失敗：'+f.name;
  };
- backgroundImage=null;
  img.src=f.url;
- draw();
+ renderPoster();
 }
 
-function renameFlower(){
- if(!selectedFile)return;
- const value=$("flowerName").value.trim();
- if(value)flowerNames[selectedFile]=value;
- else delete flowerNames[selectedFile];
- persist();renderGallery();
-}
-
-function addPeople(){
- const names=$("newPeople").value.split(/\r?\n/)
-  .map(s=>s.trim()).filter(Boolean);
- names.forEach(name=>{
-  if(!people.some(p=>p.name===name)){
-   people.push({
-    id:"person_"+Date.now()+"_"+Math.random().toString(36).slice(2,9),
-    name,checked:true
-   });
-  }
- });
- $("newPeople").value="";
- persist();renderPeople();draw();
-}
-
-function selectAll(value){
- people.forEach(p=>p.checked=value);
- persist();renderPeople();draw();
-}
-
-function renderPeople(){
- const box=$("people");box.replaceChildren();
+function drawPeople(){
+ const box=$('people');
+ box.replaceChildren();
  people.forEach((p,i)=>{
-  const row=document.createElement("div");
-  row.className="person";
-  const check=document.createElement("input");
-  check.type="checkbox";check.checked=p.checked;
-  check.onchange=()=>{p.checked=check.checked;persist();draw()};
-  const name=document.createElement("span");
-  name.textContent=p.name;
-  const edit=document.createElement("button");
-  edit.className="alt";edit.textContent="編輯";
-  edit.onclick=()=>{
-   const next=prompt("修改花農姓名",p.name);
-   if(next===null)return;
-   if(next.trim()){p.name=next.trim();persist();renderPeople();draw()}
+  const row=document.createElement('div');
+  row.className='person';
+  const ck=document.createElement('input');
+  ck.type='checkbox';
+  ck.checked=p.checked;
+  ck.onchange=()=>{
+   p.checked=ck.checked;
+   persist();
+   renderPoster();
   };
-  const del=document.createElement("button");
-  del.className="danger";del.textContent="刪除";
+  const name=document.createElement('span');
+  name.className='name';
+  name.textContent='🪄 '+p.name;
+
+  const edit=document.createElement('button');
+  edit.className='alt';
+  edit.textContent='修改';
+  edit.onclick=()=>{
+   const n=prompt('修改花農姓名',p.name);
+   if(n!==null&&n.trim()){
+    p.name=n.trim();
+    persist();
+    drawPeople();
+    updateTargetOptions();
+    renderPoster();
+   }
+  };
+
+  const del=document.createElement('button');
+  del.className='danger';
+  del.textContent='刪除';
   del.onclick=()=>{
    people.splice(i,1);
    Object.values(layouts).forEach(l=>delete l[p.id]);
-   if(selectedText===p.id)selectedText="";
-   persist();renderPeople();draw();
+   persist();
+   drawPeople();
+   updateTargetOptions();
+   renderPoster();
   };
-  row.append(check,name,edit,del);
+  row.append(ck,name,edit,del);
   box.appendChild(row);
  });
 }
 
-function dateText(){
- const value=$("date").value;
- if(!value)return "";
- const [y,m,d]=value.split("-").map(Number);
- const weekday=["日","一","二","三","四","五","六"][
-  new Date(y,m-1,d).getDay()
- ];
- switch($("dateStyle").value){
-  case "short":return `${y}.${String(m).padStart(2,"0")}.${String(d).padStart(2,"0")}`;
-  case "chinese":return `${y}年${m}月${d}日`;
-  default:return `${y} / ${String(m).padStart(2,"0")} / ${String(d).padStart(2,"0")}（${weekday}）`;
- }
-}
-
-function labels(){
- const result=[];
- if($("showDate").checked&&$("date").value)
-  result.push({key:"date",text:dateText()});
- if($("showLeader").checked&&$("leader").value.trim())
-  result.push({key:"leader",text:$("leader").value.trim()});
- people.filter(p=>p.checked).forEach(p=>result.push({key:p.id,text:p.name}));
- return result;
-}
-
-function itemFont(item,size){
- return `700 ${size}px "PingFang TC","PingFang SC","Hiragino Kaku Gothic ProN","Noto Sans CJK TC","Arial Unicode MS",system-ui,sans-serif`;
-}
-
-function draw(){
- const w=canvas.width,h=canvas.height,scale=w/1086;
- ctx.clearRect(0,0,w,h);
- if(backgroundImage)ctx.drawImage(backgroundImage,0,0,w,h);
- else{
-  ctx.fillStyle="#f5f1e9";ctx.fillRect(0,0,w,h);
-  ctx.fillStyle="#52695d";ctx.textAlign="center";
-  ctx.font=`${28*scale}px sans-serif`;
-  ctx.fillText("請先選擇海報底圖",w/2,h/2);
- }
- hitBoxes=[];
- for(const label of labels()){
-  const item=getItem(label.key);
-  const size=item.size*scale;
-  ctx.save();
-  ctx.textAlign="center";
-  ctx.textBaseline="middle";
-  ctx.font=itemFont(item,size);
-  ctx.lineJoin="round";
-  const x=item.x*w,y=item.y*h;
-  if(label.key==="date"&&$("dateOutline").checked){
-   ctx.strokeStyle="#fff4d9";
-   ctx.lineWidth=Math.max(3,3.4*scale);
-   ctx.strokeText(label.text,x,y,w*.54);
+function addPeople(){
+ const input=$('newPeople');
+ input.value.split(/\r?\n/)
+ .map(s=>s.trim()).filter(Boolean)
+ .forEach(name=>{
+  if(!people.some(p=>p.name===name)){
+   people.push({
+    id:'p_'+Date.now()+'_'+Math.random().toString(36).slice(2,9),
+    name,
+    checked:true
+   });
   }
-  ctx.fillStyle=label.key==="date"?$("dateColor").value:item.color;
-  ctx.fillText(label.text,x,y,w*.64);
-  const measured=Math.min(ctx.measureText(label.text).width,w*.64);
-  const boxWidth=Math.max(measured,size*1.6);
-  hitBoxes.push({
-   key:label.key,x,y,
-   left:x-boxWidth/2-12*scale,
-   right:x+boxWidth/2+12*scale,
-   top:y-size*.85,
-   bottom:y+size*.85
-  });
-  ctx.restore();
- }
+ });
+ input.value='';
+ persist();
+ drawPeople();
+ updateTargetOptions();
+ renderPoster();
 }
 
-function pointerPoint(e){
+function drawText(label){
+ const item=getItem(label.key);
+ const scale=canvas.width/1086;
+ const sz=item.size*scale;
+ const x=item.x*canvas.width;
+ const y=item.y*canvas.height;
+ ctx.save();
+ ctx.font=`700 ${sz}px "PingFang TC","Hiragino Kaku Gothic ProN","Noto Sans CJK TC","Apple Color Emoji","Segoe UI Emoji",system-ui,sans-serif`;
+ ctx.textAlign='center';
+ ctx.textBaseline='middle';
+ ctx.lineJoin='round';
+ const maxWidth=canvas.width*.77;
+ if(item.outline){
+  ctx.strokeStyle='#fff5df';
+  ctx.lineWidth=Math.max(2,4*scale);
+  ctx.strokeText(label.text,x,y,maxWidth);
+ }
+ ctx.fillStyle=item.color;
+ ctx.fillText(label.text,x,y,maxWidth);
+ const width=Math.min(ctx.measureText(label.text).width,maxWidth);
+ hitAreas.push({
+  key:label.key,x,y,
+  left:x-width/2-18*scale,
+  right:x+width/2+18*scale,
+  top:y-sz*.9,
+  bottom:y+sz*.9
+ });
+ ctx.restore();
+}
+
+function renderPoster(){
+ const w=canvas.width,h=canvas.height;
+ ctx.clearRect(0,0,w,h);
+ if(poster){
+  ctx.drawImage(poster,0,0,w,h);
+ }else{
+  ctx.fillStyle='#f2f0e7';
+  ctx.fillRect(0,0,w,h);
+  ctx.fillStyle='#536658';
+  ctx.font='28px sans-serif';
+  ctx.textAlign='center';
+  ctx.fillText('請先選擇海報底圖',w/2,h/2);
+ }
+ hitAreas=[];
+ selectedLabels().forEach(drawText);
+}
+
+function point(e){
  const r=canvas.getBoundingClientRect();
- return {
+ return{
   x:(e.clientX-r.left)*canvas.width/r.width,
   y:(e.clientY-r.top)*canvas.height/r.height
  };
 }
 
-function chooseText(key){
- selectedText=key;
- const label=labels().find(x=>x.key===key);
- $("selectedText").textContent=label?
-  "已選取："+label.text:"尚未選擇文字";
- if(label){
-  const item=getItem(key);
-  $("fontSize").value=item.size;
-  $("fontColor").value=item.color;
- }
- updateSizeLabels();
-}
-
-canvas.addEventListener("pointerdown",e=>{
- const p=pointerPoint(e);
- const hit=[...hitBoxes].reverse().find(b=>
-  p.x>=b.left&&p.x<=b.right&&p.y>=b.top&&p.y<=b.bottom
+canvas.addEventListener('pointerdown',e=>{
+ const p=point(e);
+ const hit=[...hitAreas].reverse().find(a=>
+  p.x>=a.left&&p.x<=a.right&&
+  p.y>=a.top&&p.y<=a.bottom
  );
- if(!hit){chooseText("");return}
- chooseText(hit.key);
- dragging=true;
- dragOffset.x=p.x-hit.x;
- dragOffset.y=p.y-hit.y;
+ if(!hit)return;
+ selectedKey=hit.key;
+ updateControls();
+ drag={dx:p.x-hit.x,dy:p.y-hit.y};
  canvas.setPointerCapture(e.pointerId);
  e.preventDefault();
 });
 
-canvas.addEventListener("pointermove",e=>{
- if(!dragging||!selectedText)return;
- const p=pointerPoint(e);
- const x=Math.max(.08,Math.min(.92,(p.x-dragOffset.x)/canvas.width));
- const y=Math.max(.03,Math.min(.97,(p.y-dragOffset.y)/canvas.height));
- modifyItem(selectedText,{x,y});
+canvas.addEventListener('pointermove',e=>{
+ if(!drag)return;
+ const p=point(e);
+ setItem(selectedKey,{
+  x:Math.max(.04,Math.min(.96,(p.x-drag.dx)/canvas.width)),
+  y:Math.max(.03,Math.min(.97,(p.y-drag.dy)/canvas.height))
+ });
  e.preventDefault();
 });
-function stopDrag(){dragging=false}
-canvas.addEventListener("pointerup",stopDrag);
-canvas.addEventListener("pointercancel",stopDrag);
 
-function nudge(dx,dy){
- if(!selectedText)return;
- const item=getItem(selectedText);
- modifyItem(selectedText,{
-  x:Math.max(0,Math.min(1,item.x+dx/canvas.width)),
-  y:Math.max(0,Math.min(1,item.y+dy/canvas.height))
- });
+['pointerup','pointercancel','lostpointercapture'].forEach(ev=>
+ canvas.addEventListener(ev,()=>drag=null)
+);
+
+function saveSettings(){
+ settings={
+  date:$('date').value,
+  dateFormat:$('dateFormat').value,
+  showDate:$('showDate').checked,
+  showLeader:$('showLeader').checked,
+  leader:$('leader').value,
+  prefix:$('prefix').value
+ };
+ persist();
 }
 
-function updateSizeLabels(){
- $("fontValue").textContent=$("fontSize").value;
- $("dateSizeValue").textContent=$("dateSize").value;
+function exportImage(){
+ if(!poster){
+  alert('請先選擇底圖');
+  return;
+ }
+ renderPoster();
+ canvas.toBlob(blob=>{
+  if(!blob){
+   alert('無法輸出 PNG');
+   return;
+  }
+  const u=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=u;
+  a.download=(fileNames[selectedFile]||'Locwarp')+'-海報.png';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  $('downloadInfo').textContent='若 iPhone 沒有自動下載，可使用 Safari 的分享功能儲存。';
+  setTimeout(()=>URL.revokeObjectURL(u),60000);
+ },'image/png');
 }
 
-function resetLayout(){
+$('reload').onclick=loadImages;
+$('search').oninput=drawGallery;
+
+$('saveName').onclick=()=>{
  if(!selectedFile)return;
- if(!confirm("重設目前底圖的全部文字位置？"))return;
+ const n=$('flowerName').value.trim();
+ if(n)fileNames[selectedFile]=n;
+ else delete fileNames[selectedFile];
+ persist();
+ drawGallery();
+};
+
+$('addPeople').onclick=addPeople;
+
+$('all').onclick=()=>{
+ people.forEach(p=>p.checked=true);
+ persist();
+ drawPeople();
+ renderPoster();
+};
+
+$('none').onclick=()=>{
+ people.forEach(p=>p.checked=false);
+ persist();
+ drawPeople();
+ renderPoster();
+};
+
+$('target').onchange=()=>{
+ selectedKey=$('target').value;
+ updateControls();
+};
+
+[
+ ['posX','x'],
+ ['posY','y'],
+ ['size','size']
+].forEach(([id,key])=>{
+ $(id).oninput=()=>{
+  setItem(selectedKey,{
+   [key]:key==='size'?
+    Number($(id).value):
+    Number($(id).value)/100
+  });
+ };
+});
+
+$('color').oninput=()=>
+ setItem(selectedKey,{color:$('color').value});
+
+$('outline').onchange=()=>
+ setItem(selectedKey,{outline:$('outline').checked});
+
+$('centerDate').onclick=()=>{
+ selectedKey='date';
+ setItem('date',{x:.5,y:.097});
+ updateTargetOptions();
+};
+
+$('centerLeader').onclick=()=>{
+ selectedKey='leader';
+ setItem('leader',{x:.65,y:.916});
+ updateTargetOptions();
+};
+
+$('reset').onclick=()=>{
+ if(!selectedFile||
+ !confirm('確定重設這張底圖所有文字的位置與大小？'))return;
  delete layouts[selectedFile];
  persist();
- chooseText("");
- draw();
-}
+ updateControls();
+ renderPoster();
+};
 
-function downloadPoster(){
- if(!backgroundImage){alert("請先選擇海報底圖");return}
- draw();
- try{
-  canvas.toBlob(blob=>{
-   if(!blob){alert("圖片產生失敗");return}
-   const url=URL.createObjectURL(blob);
-   const a=document.createElement("a");
-   a.href=url;
-   a.download=(flowerNames[selectedFile]||"Locwarp")+"-海報.png";
-   document.body.appendChild(a);a.click();a.remove();
-   setTimeout(()=>URL.revokeObjectURL(url),30000);
-  },"image/png");
- }catch(e){alert("無法輸出圖片："+e.message)}
-}
+[
+ 'date','dateFormat','showDate',
+ 'showLeader','leader','prefix'
+].forEach(id=>{
+ $(id).addEventListener('input',()=>{
+  saveSettings();
+  renderPoster();
+ });
+ $(id).addEventListener('change',()=>{
+  saveSettings();
+  renderPoster();
+ });
+});
 
-$("fontSize").addEventListener("input",()=>{
- updateSizeLabels();
- if(selectedText){
-  modifyItem(selectedText,{size:Number($("fontSize").value)});
-  if(selectedText==="date")$("dateSize").value=$("fontSize").value;
- }
-});
-$("fontColor").addEventListener("input",()=>{
- if(selectedText)modifyItem(selectedText,{color:$("fontColor").value});
-});
-$("dateSize").addEventListener("input",()=>{
- updateSizeLabels();
- modifyItem("date",{size:Number($("dateSize").value)});
- if(selectedText==="date")$("fontSize").value=$("dateSize").value;
-});
-$("dateColor").addEventListener("input",()=>{
- modifyItem("date",{color:$("dateColor").value});
-});
-["showDate","date","dateStyle","dateOutline","showLeader","leader"]
-.forEach(id=>{
- $(id).addEventListener("input",draw);
- $(id).addEventListener("change",draw);
-});
-$("search").addEventListener("input",renderGallery);
-$("date").value=new Date().toLocaleDateString("en-CA");
-renderPeople();updateSizeLabels();loadImages();draw();
+$('download').onclick=exportImage;
+
+$('date').value=settings.date||
+ new Date().toLocaleDateString('en-CA');
+$('dateFormat').value=settings.dateFormat||'a';
+$('showDate').checked=settings.showDate!==false;
+$('showLeader').checked=!!settings.showLeader;
+$('leader').value=settings.leader||'';
+$('prefix').value=settings.prefix??'🪄';
+
+drawPeople();
+updateTargetOptions();
+loadImages();
+renderPoster();
 </script>
 </body>
 </html>
