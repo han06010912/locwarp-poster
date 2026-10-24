@@ -7,36 +7,36 @@
 <title>Locwarp 海報製作</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#f5f3ed;color:#304b42;font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC",sans-serif}
-header{background:#436b59;color:white;text-align:center;padding:18px;font-size:23px;font-weight:bold}
-main{max-width:1150px;margin:auto;padding:14px;display:grid;grid-template-columns:380px 1fr;gap:16px}
-section{background:white;padding:16px;border-radius:16px;margin-bottom:14px;box-shadow:0 2px 10px #0000000a}
-h3{margin:0 0 12px;font-size:17px}
-input,textarea,button{font:inherit}
-input[type=text],input[type=date],textarea{width:100%;padding:11px;border:1px solid #c9d6cd;border-radius:9px;margin:6px 0}
-textarea{height:95px;resize:vertical}
-button{border:0;border-radius:9px;padding:10px 14px;background:#436b59;color:white;cursor:pointer}
-button.secondary{background:#e4eee7;color:#304b42}
-button:disabled{opacity:.5}
-.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.row>*{flex-shrink:0}
-label{display:block;margin:9px 0}
-label input[type=checkbox]{accent-color:#436b59;width:18px;height:18px;vertical-align:middle}
-#gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;max-height:365px;overflow:auto;margin-top:12px}
-.thumb{background:#f6f6f2;border:2px solid transparent;border-radius:10px;padding:5px;min-width:0}
-.thumb.active{border-color:#4c8a69}
+body{margin:0;background:#f5f4ef;color:#304e42;font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC","PingFang TC",sans-serif}
+header{background:#426b59;color:#fff;text-align:center;padding:18px;font-size:23px;font-weight:700}
+main{max-width:1180px;margin:auto;padding:14px;display:grid;grid-template-columns:370px minmax(0,1fr);gap:16px}
+section{background:white;border-radius:16px;padding:16px;margin-bottom:14px;box-shadow:0 3px 15px #0000000b}
+h3{font-size:17px;margin:0 0 13px}
+input,textarea,button,select{font:inherit}
+input[type=text],input[type=date],textarea,select{width:100%;border:1px solid #c7d7cf;border-radius:9px;padding:10px;margin:5px 0;background:white;color:#304e42}
+textarea{resize:vertical;min-height:80px}
+button{background:#426b59;color:white;border:0;border-radius:9px;padding:10px 13px;cursor:pointer}
+button.alt{background:#e7f0e9;color:#345244}
+button.danger{background:#f4e5e6;color:#8d4242}
+.row{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin:7px 0}
+label{display:block;margin:10px 0}
+input[type=checkbox]{width:19px;height:19px;accent-color:#426b59;vertical-align:middle}
+input[type=range]{width:100%;accent-color:#426b59}
+#gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-height:320px;overflow-y:auto;margin-top:12px}
+.thumb{padding:5px;background:#f5f6f3;border:2px solid transparent;border-radius:9px;min-width:0;color:#345244}
+.thumb.active{border-color:#39825a}
 .thumb img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:6px}
 .thumb span{display:block;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-#people{max-height:230px;overflow:auto}
-.person{display:flex;align-items:center;gap:8px;padding:6px;border-bottom:1px solid #eee}
-.person input{accent-color:#436b59;width:18px;height:18px}
+.person{display:flex;align-items:center;gap:7px;border-bottom:1px solid #eee;padding:7px 0}
 .person span{flex:1;overflow-wrap:anywhere}
-.person button{padding:5px 9px;background:#eee;color:#555}
-#preview{position:sticky;top:12px;align-self:start;text-align:center}
-canvas{display:block;width:100%;height:auto;max-width:480px;margin:12px auto;border-radius:6px;box-shadow:0 3px 18px #0002;background:#f0eee8}
-small{color:#718077}
-#status{font-size:13px;color:#69796e;margin:8px 0}
-@media(max-width:760px){main{display:block}#preview{position:static}header{font-size:21px}}
+.person button{padding:5px 8px}
+#people{max-height:240px;overflow-y:auto}
+#previewPanel{align-self:start;position:sticky;top:10px;text-align:center}
+#canvas{width:100%;max-width:480px;height:auto;display:block;margin:12px auto;background:#eee;border-radius:5px;box-shadow:0 3px 14px #0002;touch-action:none;cursor:grab}
+small,.hint{font-size:13px;color:#718176}
+#selectedText{padding:10px;border-radius:9px;background:#edf4ee;margin:9px 0;word-break:break-all}
+#status{font-size:13px;color:#647b6f}
+@media(max-width:760px){main{display:block}#previewPanel{position:static}header{font-size:21px}}
 </style>
 </head>
 <body>
@@ -45,258 +45,445 @@ small{color:#718077}
 <div>
 <section>
 <h3>① 選擇花種底圖</h3>
-<input type="text" id="search" placeholder="搜尋花種名稱">
+<input id="search" type="text" placeholder="搜尋花種名稱">
 <div class="row">
 <button onclick="loadImages()">重新讀取圖片</button>
-<span id="imageCount">讀取中</span>
+<span id="count"></span>
 </div>
 <div id="gallery"></div>
-<div id="status"></div>
-<div id="renameBox" hidden>
-<label>選取圖片的花種名稱</label>
+<p id="status"></p>
+<div id="namePanel" hidden>
+<label>替選取的圖片設定花種名稱</label>
 <input id="flowerName" type="text" placeholder="例如：櫻花">
-<button class="secondary" onclick="saveFlowerName()">儲存名稱</button>
+<button class="alt" onclick="renameFlower()">儲存花種名稱</button>
 </div>
 </section>
 
 <section>
 <h3>② 花農名單</h3>
-<small>每行輸入一位花農，可儲存並重複勾選。</small>
-<textarea id="newPeople" placeholder="夯夯&#10;大文&#10;飄飄"></textarea>
+<small>每行一位花農，完整保留日文、顏文字及特殊符號。</small>
+<textarea id="newPeople" placeholder="夯夯&#10;さくら🌸&#10;o(*≧▽≦)ツﾟ夯"></textarea>
 <div class="row">
 <button onclick="addPeople()">加入名單</button>
-<button class="secondary" onclick="toggleAll(true)">全選</button>
-<button class="secondary" onclick="toggleAll(false)">全不選</button>
+<button class="alt" onclick="selectAll(true)">全選</button>
+<button class="alt" onclick="selectAll(false)">全不選</button>
 </div>
 <div id="people"></div>
 </section>
 
 <section>
-<h3>③ 日期與總召</h3>
-<label><input type="checkbox" id="showDate" checked> 顯示日期</label>
-<input type="date" id="date">
-<label><input type="checkbox" id="showLeader"> 顯示本日總召姓名</label>
-<input type="text" id="leader" placeholder="輸入總召姓名">
+<h3>③ 日期設定</h3>
+<label><input id="showDate" type="checkbox" checked> 顯示日期</label>
+<input id="date" type="date">
+<label>日期顯示方式</label>
+<select id="dateStyle">
+<option value="long">2026 / 10 / 25（日）</option>
+<option value="short">2026.10.25</option>
+<option value="chinese">2026年10月25日</option>
+</select>
+<label>日期字體大小 <b id="dateSizeValue"></b></label>
+<input id="dateSize" type="range" min="20" max="65" value="37">
+<label>日期顏色</label>
+<input id="dateColor" type="color" value="#614b30">
+<label><input id="dateOutline" type="checkbox" checked> 金色描邊</label>
 </section>
 
 <section>
-<h3>④ 字體設定</h3>
-<label>花農名字大小</label>
-<input type="range" id="nameSize" min="20" max="52" value="33" style="width:100%">
-<label>字體顏色</label>
-<input type="color" id="color" value="#344c43">
-<label>名單上下位置</label>
-<input type="range" id="position" min="65" max="83" value="72" style="width:100%">
-<button onclick="downloadPoster()" style="width:100%;margin-top:15px">下載 PNG 海報</button>
+<h3>④ 本日總召</h3>
+<label><input id="showLeader" type="checkbox"> 顯示總召姓名</label>
+<input id="leader" type="text" placeholder="輸入本日總召">
+</section>
+
+<section>
+<h3>⑤ 文字位置與大小</h3>
+<div class="hint">在右側海報上點選姓名、日期或總召，再直接拖曳位置。</div>
+<div id="selectedText">尚未選擇文字</div>
+<label>選取文字大小 <b id="fontValue"></b></label>
+<input id="fontSize" type="range" min="15" max="70" value="32">
+<label>選取文字顏色</label>
+<input id="fontColor" type="color" value="#304e42">
+<div class="row">
+<button class="alt" onclick="nudge(0,-5)">↑</button>
+<button class="alt" onclick="nudge(-5,0)">←</button>
+<button class="alt" onclick="nudge(5,0)">→</button>
+<button class="alt" onclick="nudge(0,5)">↓</button>
+</div>
+<div class="row">
+<button class="alt" onclick="resetLayout()">重設這張底圖的位置</button>
+</div>
 </section>
 </div>
 
-<section id="preview">
+<section id="previewPanel">
 <h3>海報即時預覽</h3>
-<small>選擇圖片、花農及日期後自動更新</small>
+<small>點選文字後拖曳，調整結果會自動儲存</small>
 <canvas id="canvas" width="1086" height="1448"></canvas>
+<button onclick="downloadPoster()" style="width:100%;max-width:480px;margin:8px auto">下載 PNG 海報</button>
 </section>
 </main>
 
 <script>
-const owner="han06010912";
-const repo="locwarp-poster";
-const api=`https://api.github.com/repos/${owner}/${repo}/contents/images`;
+"use strict";
+const OWNER="han06010912";
+const REPO="locwarp-poster";
+const API=`https://api.github.com/repos/${OWNER}/${REPO}/contents/images`;
 const $=id=>document.getElementById(id);
-const canvas=$("canvas");
-const ctx=canvas.getContext("2d");
+const canvas=$("canvas"),ctx=canvas.getContext("2d");
 
-let files=[];
-let selected=null;
-let image=null;
-let people=JSON.parse(localStorage.getItem("lw_people")||"[]");
-let names=JSON.parse(localStorage.getItem("lw_names")||"{}");
+const read=(key,fallback)=>{
+ try{return JSON.parse(localStorage.getItem(key))??fallback}
+ catch{return fallback}
+};
+let people=read("lw_people",[]);
+let flowerNames=read("lw_names",{});
+let layouts=read("lw_layouts",{});
+let files=[],selectedFile="",backgroundImage=null;
+let selectedText="",hitBoxes=[],dragging=false;
+let dragOffset={x:0,y:0};
+let imageLoadingId=0;
+let storageOK=true;
 
-function save(){
- localStorage.setItem("lw_people",JSON.stringify(people));
- localStorage.setItem("lw_names",JSON.stringify(names));
+function persist(){
+ try{
+  localStorage.setItem("lw_people",JSON.stringify(people));
+  localStorage.setItem("lw_names",JSON.stringify(flowerNames));
+  localStorage.setItem("lw_layouts",JSON.stringify(layouts));
+ }catch(e){
+  storageOK=false;
+  $("status").textContent="瀏覽器儲存空間不足，位置可能無法保留";
+ }
+}
+
+function currentLayout(){
+ if(!selectedFile)return {};
+ if(!layouts[selectedFile])layouts[selectedFile]={};
+ return layouts[selectedFile];
+}
+
+function getItem(key){
+ const saved=currentLayout()[key];
+ if(saved)return saved;
+ if(key==="date")return {x:.5,y:.092,size:37,color:"#614b30"};
+ if(key==="leader")return {x:.65,y:.914,size:32,color:"#304e42"};
+ const i=people.findIndex(p=>p.id===key);
+ const row=Math.floor(Math.max(i,0)/2);
+ const col=Math.max(i,0)%2;
+ return {x:col===0?.33:.68,y:.76+row*.026,size:32,color:"#304e42"};
+}
+
+function modifyItem(key,patch){
+ if(!selectedFile)return;
+ currentLayout()[key]={...getItem(key),...patch};
+ persist();draw();
 }
 
 async function loadImages(){
- $("status").textContent="正在讀取 GitHub 圖片...";
+ $("status").textContent="正在讀取 GitHub 圖片…";
+ let all=[];
  try{
-  const r=await fetch(api+"?t="+Date.now(),{
+  const r=await fetch(API+"?t="+Date.now(),{
    headers:{"Accept":"application/vnd.github+json"}
   });
-  if(!r.ok)throw Error("GitHub 回應 "+r.status);
+  if(!r.ok)throw Error("GitHub "+r.status);
   const data=await r.json();
-  files=data.filter(f=>/\.(png|jpg|jpeg|webp)$/i.test(f.name))
+  all=data.filter(f=>f.type==="file"&&/\.(png|jpe?g|webp)$/i.test(f.name))
    .map(f=>({name:f.name,url:f.download_url}));
-  $("imageCount").textContent=files.length+" 張";
-  $("status").textContent="圖片讀取完成";
-  showGallery();
-  if(files.length&&!selected)chooseImage(files[0].name);
-  if(!files.length)$("status").textContent="images 資料夾尚無可用圖片";
+  files=all;
+  $("count").textContent=files.length+" 張";
+  $("status").textContent=files.length?"圖片已載入":"資料夾內沒有圖片";
+  renderGallery();
+  if(files.length){
+   const previous=files.some(f=>f.name===selectedFile)?selectedFile:files[0].name;
+   chooseImage(previous);
+  }
  }catch(e){
   $("status").textContent="讀取失敗："+e.message;
  }
 }
 
-function showGallery(){
- const keyword=$("search").value.trim().toLowerCase();
- const box=$("gallery");
- box.innerHTML="";
- files.filter(f=>(names[f.name]||f.name).toLowerCase().includes(keyword))
+function renderGallery(){
+ const q=$("search").value.trim().toLocaleLowerCase();
+ const gallery=$("gallery");
+ gallery.replaceChildren();
+ files.filter(f=>(flowerNames[f.name]||f.name).toLocaleLowerCase().includes(q))
  .forEach(f=>{
-  const b=document.createElement("button");
-  b.className="thumb"+(selected===f.name?" active":"");
+  const btn=document.createElement("button");
+  btn.className="thumb"+(f.name===selectedFile?" active":"");
   const img=document.createElement("img");
   img.src=f.url;img.loading="lazy";
-  const label=document.createElement("span");
-  label.textContent=names[f.name]||f.name.replace(/\.[^.]+$/,"");
-  b.append(img,label);
-  b.onclick=()=>chooseImage(f.name);
-  box.appendChild(b);
+  img.alt=flowerNames[f.name]||f.name;
+  const title=document.createElement("span");
+  title.textContent=flowerNames[f.name]||f.name.replace(/\.[^.]+$/,"");
+  btn.append(img,title);
+  btn.onclick=()=>chooseImage(f.name);
+  gallery.appendChild(btn);
  });
 }
 
 function chooseImage(filename){
- const f=files.find(x=>x.name===filename);
+ const f=files.find(f=>f.name===filename);
  if(!f)return;
- selected=filename;
- $("renameBox").hidden=false;
- $("flowerName").value=names[filename]||"";
- showGallery();
- const im=new Image();
- im.crossOrigin="anonymous";
- im.onload=()=>{
-  image=im;
-  canvas.width=im.naturalWidth;
-  canvas.height=im.naturalHeight;
+ selectedFile=filename;
+ selectedText="";
+ $("namePanel").hidden=false;
+ $("flowerName").value=flowerNames[filename]||"";
+ renderGallery();
+ const id=++imageLoadingId;
+ const img=new Image();
+ img.crossOrigin="anonymous";
+ img.onload=()=>{
+  if(id!==imageLoadingId)return;
+  backgroundImage=img;
+  canvas.width=img.naturalWidth;
+  canvas.height=img.naturalHeight;
   draw();
  };
- im.onerror=()=>{$("status").textContent="無法載入這張圖片";};
- im.src=f.url;
+ img.onerror=()=>{
+  if(id===imageLoadingId)$("status").textContent="此圖片載入失敗";
+ };
+ backgroundImage=null;
+ img.src=f.url;
+ draw();
 }
 
-function saveFlowerName(){
- if(!selected)return;
- const n=$("flowerName").value.trim();
- if(n)names[selected]=n;
- else delete names[selected];
- save();
- showGallery();
+function renameFlower(){
+ if(!selectedFile)return;
+ const value=$("flowerName").value.trim();
+ if(value)flowerNames[selectedFile]=value;
+ else delete flowerNames[selectedFile];
+ persist();renderGallery();
 }
 
 function addPeople(){
- const arr=$("newPeople").value.split(/\n|,|，/)
- .map(s=>s.trim()).filter(Boolean);
- arr.forEach(n=>{
-  if(!people.some(p=>p.name===n))
-   people.push({name:n,checked:true});
+ const names=$("newPeople").value.split(/\r?\n/)
+  .map(s=>s.trim()).filter(Boolean);
+ names.forEach(name=>{
+  if(!people.some(p=>p.name===name)){
+   people.push({
+    id:"person_"+Date.now()+"_"+Math.random().toString(36).slice(2,9),
+    name,checked:true
+   });
+  }
  });
  $("newPeople").value="";
- save();renderPeople();draw();
+ persist();renderPeople();draw();
 }
 
-function toggleAll(value){
+function selectAll(value){
  people.forEach(p=>p.checked=value);
- save();renderPeople();draw();
+ persist();renderPeople();draw();
 }
 
 function renderPeople(){
- const box=$("people");box.innerHTML="";
+ const box=$("people");box.replaceChildren();
  people.forEach((p,i)=>{
-  const div=document.createElement("div");
-  div.className="person";
+  const row=document.createElement("div");
+  row.className="person";
   const check=document.createElement("input");
   check.type="checkbox";check.checked=p.checked;
-  check.onchange=()=>{
-   p.checked=check.checked;save();draw();
+  check.onchange=()=>{p.checked=check.checked;persist();draw()};
+  const name=document.createElement("span");
+  name.textContent=p.name;
+  const edit=document.createElement("button");
+  edit.className="alt";edit.textContent="編輯";
+  edit.onclick=()=>{
+   const next=prompt("修改花農姓名",p.name);
+   if(next===null)return;
+   if(next.trim()){p.name=next.trim();persist();renderPeople();draw()}
   };
-  const span=document.createElement("span");
-  span.textContent=p.name;
   const del=document.createElement("button");
-  del.textContent="刪除";
+  del.className="danger";del.textContent="刪除";
   del.onclick=()=>{
-   people.splice(i,1);save();renderPeople();draw();
+   people.splice(i,1);
+   Object.values(layouts).forEach(l=>delete l[p.id]);
+   if(selectedText===p.id)selectedText="";
+   persist();renderPeople();draw();
   };
-  div.append(check,span,del);
-  box.appendChild(div);
+  row.append(check,name,edit,del);
+  box.appendChild(row);
  });
+}
+
+function dateText(){
+ const value=$("date").value;
+ if(!value)return "";
+ const [y,m,d]=value.split("-").map(Number);
+ const weekday=["日","一","二","三","四","五","六"][
+  new Date(y,m-1,d).getDay()
+ ];
+ switch($("dateStyle").value){
+  case "short":return `${y}.${String(m).padStart(2,"0")}.${String(d).padStart(2,"0")}`;
+  case "chinese":return `${y}年${m}月${d}日`;
+  default:return `${y} / ${String(m).padStart(2,"0")} / ${String(d).padStart(2,"0")}（${weekday}）`;
+ }
+}
+
+function labels(){
+ const result=[];
+ if($("showDate").checked&&$("date").value)
+  result.push({key:"date",text:dateText()});
+ if($("showLeader").checked&&$("leader").value.trim())
+  result.push({key:"leader",text:$("leader").value.trim()});
+ people.filter(p=>p.checked).forEach(p=>result.push({key:p.id,text:p.name}));
+ return result;
+}
+
+function itemFont(item,size){
+ return `700 ${size}px "PingFang TC","PingFang SC","Hiragino Kaku Gothic ProN","Noto Sans CJK TC","Arial Unicode MS",system-ui,sans-serif`;
 }
 
 function draw(){
- const w=canvas.width,h=canvas.height;
+ const w=canvas.width,h=canvas.height,scale=w/1086;
  ctx.clearRect(0,0,w,h);
- if(!image){
-  ctx.fillStyle="#f5f1e9";
-  ctx.fillRect(0,0,w,h);
-  ctx.fillStyle="#667";
-  ctx.font="28px sans-serif";
-  ctx.textAlign="center";
+ if(backgroundImage)ctx.drawImage(backgroundImage,0,0,w,h);
+ else{
+  ctx.fillStyle="#f5f1e9";ctx.fillRect(0,0,w,h);
+  ctx.fillStyle="#52695d";ctx.textAlign="center";
+  ctx.font=`${28*scale}px sans-serif`;
   ctx.fillText("請先選擇海報底圖",w/2,h/2);
-  return;
  }
- ctx.drawImage(image,0,0,w,h);
- const scale=w/1086;
- const color=$("color").value;
- ctx.fillStyle=color;
- ctx.textAlign="center";
- ctx.textBaseline="middle";
-
- if($("showDate").checked&&$("date").value){
-  const d=new Date($("date").value+"T12:00:00");
-  const dateText=`${d.getFullYear()} / ${d.getMonth()+1} / ${d.getDate()}`;
-  ctx.font=`bold ${25*scale}px sans-serif`;
-  ctx.fillText(dateText,w*.50,h*.091,w*.43);
+ hitBoxes=[];
+ for(const label of labels()){
+  const item=getItem(label.key);
+  const size=item.size*scale;
+  ctx.save();
+  ctx.textAlign="center";
+  ctx.textBaseline="middle";
+  ctx.font=itemFont(item,size);
+  ctx.lineJoin="round";
+  const x=item.x*w,y=item.y*h;
+  if(label.key==="date"&&$("dateOutline").checked){
+   ctx.strokeStyle="#fff4d9";
+   ctx.lineWidth=Math.max(3,3.4*scale);
+   ctx.strokeText(label.text,x,y,w*.54);
+  }
+  ctx.fillStyle=label.key==="date"?$("dateColor").value:item.color;
+  ctx.fillText(label.text,x,y,w*.64);
+  const measured=Math.min(ctx.measureText(label.text).width,w*.64);
+  const boxWidth=Math.max(measured,size*1.6);
+  hitBoxes.push({
+   key:label.key,x,y,
+   left:x-boxWidth/2-12*scale,
+   right:x+boxWidth/2+12*scale,
+   top:y-size*.85,
+   bottom:y+size*.85
+  });
+  ctx.restore();
  }
+}
 
- const arr=people.filter(p=>p.checked).map(p=>p.name);
- const rows=Math.ceil(arr.length/2);
- const baseSize=Number($("nameSize").value)*scale;
- const maxAreaHeight=h*.20;
- const lineHeight=Math.min(baseSize*1.8,maxAreaHeight/Math.max(rows,1));
- const fontSize=Math.min(baseSize,lineHeight*.75);
- const start=h*Number($("position").value)/100;
- ctx.font=`bold ${fontSize}px sans-serif`;
- arr.forEach((n,i)=>{
-  const col=i%2;
-  const row=Math.floor(i/2);
-  const x=w*(col===0?.32:.68);
-  const y=start+row*lineHeight;
-  ctx.fillText(n,x,y,w*.30);
+function pointerPoint(e){
+ const r=canvas.getBoundingClientRect();
+ return {
+  x:(e.clientX-r.left)*canvas.width/r.width,
+  y:(e.clientY-r.top)*canvas.height/r.height
+ };
+}
+
+function chooseText(key){
+ selectedText=key;
+ const label=labels().find(x=>x.key===key);
+ $("selectedText").textContent=label?
+  "已選取："+label.text:"尚未選擇文字";
+ if(label){
+  const item=getItem(key);
+  $("fontSize").value=item.size;
+  $("fontColor").value=item.color;
+ }
+ updateSizeLabels();
+}
+
+canvas.addEventListener("pointerdown",e=>{
+ const p=pointerPoint(e);
+ const hit=[...hitBoxes].reverse().find(b=>
+  p.x>=b.left&&p.x<=b.right&&p.y>=b.top&&p.y<=b.bottom
+ );
+ if(!hit){chooseText("");return}
+ chooseText(hit.key);
+ dragging=true;
+ dragOffset.x=p.x-hit.x;
+ dragOffset.y=p.y-hit.y;
+ canvas.setPointerCapture(e.pointerId);
+ e.preventDefault();
+});
+
+canvas.addEventListener("pointermove",e=>{
+ if(!dragging||!selectedText)return;
+ const p=pointerPoint(e);
+ const x=Math.max(.08,Math.min(.92,(p.x-dragOffset.x)/canvas.width));
+ const y=Math.max(.03,Math.min(.97,(p.y-dragOffset.y)/canvas.height));
+ modifyItem(selectedText,{x,y});
+ e.preventDefault();
+});
+function stopDrag(){dragging=false}
+canvas.addEventListener("pointerup",stopDrag);
+canvas.addEventListener("pointercancel",stopDrag);
+
+function nudge(dx,dy){
+ if(!selectedText)return;
+ const item=getItem(selectedText);
+ modifyItem(selectedText,{
+  x:Math.max(0,Math.min(1,item.x+dx/canvas.width)),
+  y:Math.max(0,Math.min(1,item.y+dy/canvas.height))
  });
+}
 
- if($("showLeader").checked&&$("leader").value.trim()){
-  ctx.font=`bold ${29*scale}px sans-serif`;
-  ctx.fillText($("leader").value.trim(),w*.64,h*.915,w*.45);
- }
+function updateSizeLabels(){
+ $("fontValue").textContent=$("fontSize").value;
+ $("dateSizeValue").textContent=$("dateSize").value;
+}
+
+function resetLayout(){
+ if(!selectedFile)return;
+ if(!confirm("重設目前底圖的全部文字位置？"))return;
+ delete layouts[selectedFile];
+ persist();
+ chooseText("");
+ draw();
 }
 
 function downloadPoster(){
- if(!image){alert("請先選擇底圖");return;}
+ if(!backgroundImage){alert("請先選擇海報底圖");return}
  draw();
  try{
   canvas.toBlob(blob=>{
-   if(!blob){alert("無法產生圖片");return;}
-   const a=document.createElement("a");
+   if(!blob){alert("圖片產生失敗");return}
    const url=URL.createObjectURL(blob);
+   const a=document.createElement("a");
    a.href=url;
-   a.download=(names[selected]||"Locwarp")+"-海報.png";
-   document.body.appendChild(a);
-   a.click();a.remove();
+   a.download=(flowerNames[selectedFile]||"Locwarp")+"-海報.png";
+   document.body.appendChild(a);a.click();a.remove();
    setTimeout(()=>URL.revokeObjectURL(url),30000);
   },"image/png");
- }catch(e){alert("圖片輸出失敗："+e.message);}
+ }catch(e){alert("無法輸出圖片："+e.message)}
 }
 
-["showDate","date","showLeader","leader","nameSize","color","position"]
+$("fontSize").addEventListener("input",()=>{
+ updateSizeLabels();
+ if(selectedText){
+  modifyItem(selectedText,{size:Number($("fontSize").value)});
+  if(selectedText==="date")$("dateSize").value=$("fontSize").value;
+ }
+});
+$("fontColor").addEventListener("input",()=>{
+ if(selectedText)modifyItem(selectedText,{color:$("fontColor").value});
+});
+$("dateSize").addEventListener("input",()=>{
+ updateSizeLabels();
+ modifyItem("date",{size:Number($("dateSize").value)});
+ if(selectedText==="date")$("fontSize").value=$("dateSize").value;
+});
+$("dateColor").addEventListener("input",()=>{
+ modifyItem("date",{color:$("dateColor").value});
+});
+["showDate","date","dateStyle","dateOutline","showLeader","leader"]
 .forEach(id=>{
  $(id).addEventListener("input",draw);
  $(id).addEventListener("change",draw);
 });
-$("search").addEventListener("input",showGallery);
-
+$("search").addEventListener("input",renderGallery);
 $("date").value=new Date().toLocaleDateString("en-CA");
-renderPeople();
-loadImages();
-draw();
+renderPeople();updateSizeLabels();loadImages();draw();
 </script>
 </body>
 </html>
