@@ -1,0 +1,16 @@
+
+{
+  "version": 1,
+  "updated": "2026-10-25",
+  "flowers": {},
+  "people": [],
+  "prefix": "🪄",
+  "event": {
+    "date": "",
+    "dateFormat": "full",
+    "showDate": true,
+    "leader": "",
+    "showLeader": false
+  },
+  "layouts": {}
+}
