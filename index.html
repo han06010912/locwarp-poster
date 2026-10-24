@@ -3,7 +3,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Locwarp 共用海報製作</title>
 <style>
 *{box-sizing:border-box}
@@ -19,13 +19,12 @@ textarea{min-height:90px;resize:vertical}
 button{border:0;border-radius:9px;background:#407358;color:white;padding:10px 13px;cursor:pointer}
 button.alt{background:#e6f0e9;color:#355b47}
 button.danger{background:#f6e6e6;color:#9d4242}
-button:disabled{opacity:.55}
 .row{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin:9px 0}
 input[type=checkbox]{width:18px;height:18px;vertical-align:middle;accent-color:#407358}
 input[type=range]{width:100%;accent-color:#407358}
 input[type=color]{width:68px;height:40px}
 .hint{font-size:13px;line-height:1.6;color:#6c8072}
-#status{font-size:13px;line-height:1.6;margin:8px 0;color:#607969}
+#status,#recovery{font-size:13px;line-height:1.6;margin:8px 0;color:#456f55}
 #gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;max-height:320px;overflow:auto;margin-top:12px}
 .thumb{border:2px solid transparent;background:#f4f7f2;color:#375543;padding:5px;border-radius:9px;min-width:0}
 .thumb.active{border-color:#3f8760}
@@ -54,14 +53,16 @@ input[type=color]{width:68px;height:40px}
 <div>
 
 <section>
-<h3>共用資源狀態</h3>
-<div id="status">正在載入共用資料……</div>
+<h3>共用資源與舊資料恢復</h3>
+<div id="status">正在讀取共用資料……</div>
+<div id="recovery"></div>
 <div class="row">
-<button class="alt" id="refresh">載入最新共用資料</button>
-<button class="alt" id="restore">還原共用版本</button>
+<button id="recover" class="alt">恢復舊版花種名稱</button>
+<button id="refresh" class="alt">重新讀取共用資料</button>
 </div>
 <div class="hint">
-團員可自由修改自己的海報。只有具備 GitHub 專案寫入權限的人，才能發布正式共用資料。
+舊版花名會保留在此瀏覽器，並匯入目前草稿。
+正式發布共用資料後，團員就能使用。
 </div>
 </section>
 
@@ -78,8 +79,8 @@ input[type=color]{width:68px;height:40px}
 <section>
 <h3>② 花農名單</h3>
 <div class="hint">
-每行一個名字，支援日文、Emoji 和特殊符號。
-海報會自動加上 🪄，不加圓點或編號。
+每行一位花農，支援日文、Emoji、顏文字及特殊符號。
+姓名前統一顯示 🪄。
 </div>
 <textarea id="newPeople" placeholder="夯夯&#10;さくら&#10;o(*≧▽≦)ツﾟ夯"></textarea>
 <div class="row">
@@ -112,10 +113,8 @@ input[type=color]{width:68px;height:40px}
 
 <section>
 <h3>⑤ 調整文字與位置</h3>
-<div class="hint">
-日期、總召和每個花農名字可獨立調整。可用滑桿或在預覽圖片上直接拖曳。
-</div>
-<label>選擇要調整的項目</label>
+<div class="hint">每一項文字都能單獨調整，也可直接在海報上拖曳。</div>
+<label>選擇要調整的文字</label>
 <select id="target"></select>
 <div id="selection"></div>
 <div class="controls">
@@ -131,24 +130,24 @@ input[type=color]{width:68px;height:40px}
 <label>字體大小 <span id="sizeValue"></span></label>
 <input id="fontSize" type="range" min="15" max="85">
 <div class="row">
-<label>字體顏色
+<label>文字顏色
 <input id="fontColor" type="color">
 </label>
 <label><input id="outline" type="checkbox"> 金色描邊</label>
 </div>
 <div class="row">
-<button class="alt" id="dateCenter">日期置中金框</button>
-<button class="alt" id="leaderCenter">總召置中欄位</button>
+<button id="dateCenter" class="alt">日期置中金框</button>
+<button id="leaderCenter" class="alt">總召置中欄位</button>
 </div>
 <button class="danger" id="resetLayout">重設目前底圖排版</button>
 </section>
 
 <section class="admin">
-<h3>⑥ 管理員｜發布共用資源</h3>
+<h3>⑥ 管理員｜發布共用資料</h3>
 <div class="notice">
-你可以在網站完成共用名單、花種名稱和各張海報排版後，按下方按鈕複製正式資料，再貼到 GitHub 的
-<strong>shared.json</strong> 並提交。<br>
-只有具有 GitHub 寫入權限的人能發布。
+花名恢復、名單及排版確認後，按「複製共用資料」，
+再將內容貼到 GitHub 的 <strong>shared.json</strong>。
+只有具備 GitHub 寫入權限的人可以正式發布。
 </div>
 <div class="row">
 <button id="copyShared">複製共用資料</button>
@@ -161,7 +160,7 @@ input[type=color]{width:68px;height:40px}
 
 <section id="preview">
 <h3>海報即時預覽</h3>
-<div class="hint">手機可拖曳文字，也可使用左側滑桿精準調整。</div>
+<div class="hint">可拖曳姓名、日期與總召，也可用滑桿調整。</div>
 <canvas id="canvas" width="1086" height="1448"></canvas>
 <button id="download">下載 PNG 海報</button>
 </section>
@@ -175,28 +174,64 @@ const OWNER="han06010912";
 const REPO="locwarp-poster";
 const API=`https://api.github.com/repos/${OWNER}/${REPO}/contents/images`;
 const $=id=>document.getElementById(id);
-
 const canvas=$("canvas");
 const ctx=canvas.getContext("2d");
 
-const blank=()=>({
- version:1,
- updated:"",
- flowers:{},
- people:[],
- prefix:"🪄",
- event:{
-  date:"",
-  dateFormat:"full",
-  showDate:true,
-  leader:"",
-  showLeader:false
- },
- layouts:{}
-});
+function clone(value){
+ return JSON.parse(JSON.stringify(value));
+}
 
-let shared=blank();
-let data=blank();
+function readJSON(key,fallback){
+ try{
+  const value=localStorage.getItem(key);
+  return value===null?fallback:JSON.parse(value);
+ }catch{
+  return fallback;
+ }
+}
+
+function emptyData(){
+ return{
+  version:1,
+  updated:"",
+  flowers:{},
+  people:[],
+  prefix:"🪄",
+  event:{
+   date:"",
+   dateFormat:"full",
+   showDate:true,
+   leader:"",
+   showLeader:false
+  },
+  layouts:{}
+ };
+}
+
+function normalize(input){
+ const base=emptyData();
+ if(!input||typeof input!=="object")return base;
+
+ return{
+  version:input.version||1,
+  updated:input.updated||"",
+  flowers:input.flowers&&typeof input.flowers==="object"?
+   {...input.flowers}:{},
+  people:Array.isArray(input.people)?
+   input.people.map((p,i)=>({
+    id:String(p.id||"person_"+i),
+    name:String(p.name||""),
+    checked:p.checked!==false
+   })):[],
+  prefix:typeof input.prefix==="string"?input.prefix:"🪄",
+  event:{...base.event,...(input.event||{})},
+  layouts:input.layouts&&typeof input.layouts==="object"?
+   clone(input.layouts):{}
+ };
+}
+
+let shared=emptyData();
+let data=emptyData();
 let images=[];
 let currentImage="";
 let poster=null;
@@ -204,32 +239,104 @@ let target="date";
 let hitBoxes=[];
 let dragging=null;
 let requestId=0;
+let sharedLoaded=false;
 
-function clone(obj){
- return JSON.parse(JSON.stringify(obj));
+function draftKey(){
+ return "locwarp_draft_"+String(shared.version);
 }
 
-function normalize(obj){
- const base=blank();
- if(!obj||typeof obj!=="object")return base;
-
- return {
-  version:obj.version||1,
-  updated:obj.updated||"",
-  flowers:obj.flowers&&typeof obj.flowers==="object"?obj.flowers:{},
-  people:Array.isArray(obj.people)?obj.people.map((p,i)=>({
-   id:String(p.id||"p_"+i),
-   name:String(p.name||""),
-   checked:p.checked!==false
-  })):[],
-  prefix:typeof obj.prefix==="string"?obj.prefix:"🪄",
-  event:{...base.event,...(obj.event||{})},
-  layouts:obj.layouts&&typeof obj.layouts==="object"?obj.layouts:{}
+function saveDraft(){
+ data.prefix=$("prefix").value;
+ data.event={
+  date:$("date").value,
+  dateFormat:$("dateFormat").value,
+  showDate:$("showDate").checked,
+  leader:$("leader").value,
+  showLeader:$("showLeader").checked
  };
+
+ try{
+  localStorage.setItem(draftKey(),JSON.stringify(data));
+ }catch{
+  $("status").textContent="無法儲存草稿，請檢查 Safari 儲存空間。";
+ }
+
+ render();
 }
 
-function applyData(obj){
- data=normalize(clone(obj));
+/* 舊資料恢復：不刪除原本的 lw_names */
+function recoverLegacyNames(){
+ const oldNames=readJSON("lw_names",{});
+ const entries=Object.entries(oldNames).filter(
+  ([file,name])=>typeof name==="string"&&name.trim()
+ );
+
+ let imported=0;
+
+ for(const [file,name] of entries){
+  if(data.flowers[file]!==name){
+   data.flowers[file]=name;
+   imported++;
+  }
+ }
+
+ const oldLayouts=readJSON("lw_layouts",{});
+ let layoutCount=0;
+
+ if(oldLayouts&&typeof oldLayouts==="object"){
+  for(const [file,layout] of Object.entries(oldLayouts)){
+   if(!layout||typeof layout!=="object")continue;
+   if(!data.layouts[file])data.layouts[file]={};
+   for(const [key,value] of Object.entries(layout)){
+    if(!data.layouts[file][key]){
+     data.layouts[file][key]=clone(value);
+     layoutCount++;
+    }
+   }
+  }
+ }
+
+ const previousPeople=readJSON("lw_people",[]);
+ let peopleCount=0;
+
+ if(Array.isArray(previousPeople)){
+  for(let i=0;i<previousPeople.length;i++){
+   const p=previousPeople[i];
+   if(!p||!p.name)continue;
+   const name=String(p.name);
+   if(!data.people.some(x=>x.name===name)){
+    data.people.push({
+     id:String(p.id||"legacy_"+i),
+     name,
+     checked:p.checked!==false
+    });
+    peopleCount++;
+   }
+  }
+ }
+
+ $("recovery").textContent=
+  `舊版資料檢查：找到 ${entries.length} 筆花名；`+
+  `本次恢復 ${imported} 筆花名、`+
+  `${peopleCount} 位花農、${layoutCount} 項排版。`;
+
+ if(entries.length===0){
+  $("recovery").textContent=
+   "這個瀏覽器目前找不到舊版 lw_names 花名資料。" +
+   "請確認使用原本編輯花名的同一個 Safari 和網站網址。";
+ }
+
+ drawGallery();
+ drawPeople();
+ updateTargets();
+ updateFlowerName();
+ saveDraft();
+
+ return entries.length;
+}
+
+function applyData(input){
+ data=normalize(input);
 
  $("prefix").value=data.prefix;
  $("date").value=data.event.date||"";
@@ -245,98 +352,68 @@ function applyData(obj){
  render();
 }
 
-async function loadShared(resetDraft=false){
- $("status").textContent="正在載入最新共用設定……";
+async function loadShared(){
+ $("status").textContent="正在讀取共用資料……";
 
  try{
-  const r=await fetch("./shared.json?t="+Date.now(),{
+  const response=await fetch("./shared.json?t="+Date.now(),{
    cache:"no-store"
   });
+  if(!response.ok)throw Error("HTTP "+response.status);
 
-  if(!r.ok)throw Error("shared.json 尚未建立或讀取失敗");
+  shared=normalize(await response.json());
+  sharedLoaded=true;
 
-  const obj=await r.json();
-  shared=normalize(obj);
-
-  const draftKey="locwarp_draft_"+String(shared.version);
-
-  if(!resetDraft){
-   try{
-    const old=localStorage.getItem(draftKey);
-    applyData(old?JSON.parse(old):shared);
-   }catch{
-    applyData(shared);
-   }
-  }else{
-   applyData(shared);
-  }
+  const existing=readJSON(draftKey(),null);
+  applyData(existing?existing:shared);
 
   $("status").textContent=
-   "已載入共用版本 "+shared.version+
+   "共用版本："+shared.version+
    (shared.updated?"｜更新："+shared.updated:"");
 
  }catch(e){
+  sharedLoaded=false;
+  shared=emptyData();
+
+  const existing=readJSON(draftKey(),null);
+  applyData(existing?existing:shared);
+
   $("status").textContent=
-   "目前無法讀取共用資料。請確認 GitHub 已建立 shared.json。";
-
-  shared=blank();
-  applyData(shared);
- }
-}
-
-function saveDraft(){
- data.prefix=$("prefix").value;
-
- data.event={
-  date:$("date").value,
-  dateFormat:$("dateFormat").value,
-  showDate:$("showDate").checked,
-  leader:$("leader").value,
-  showLeader:$("showLeader").checked
- };
-
- try{
-  localStorage.setItem(
-   "locwarp_draft_"+String(shared.version),
-   JSON.stringify(data)
-  );
- }catch(e){
-  $("status").textContent="本機草稿儲存失敗，請檢查瀏覽器儲存空間。";
+   "共用資料暫時無法載入，已保留本機草稿。"+
+   "請確認 shared.json 已存在。";
  }
 
- render();
+ recoverLegacyNames();
 }
 
 async function loadImages(){
  try{
-  const r=await fetch(API+"?t="+Date.now());
-  if(!r.ok)throw Error("GitHub "+r.status);
+  const response=await fetch(API+"?t="+Date.now());
+  if(!response.ok)throw Error("GitHub "+response.status);
 
-  const list=await r.json();
+  const list=await response.json();
 
-  images=list
-   .filter(f=>f.type==="file"&&/\.(png|jpg|jpeg|webp)$/i.test(f.name))
-   .map(f=>({
-    name:f.name,
-    url:f.download_url
-   }));
+  images=list.filter(f=>
+   f.type==="file"&&/\.(png|jpg|jpeg|webp)$/i.test(f.name)
+  ).map(f=>({
+   name:f.name,
+   url:f.download_url
+  }));
 
   $("imageCount").textContent="共 "+images.length+" 張底圖";
-
   drawGallery();
 
   if(images.length){
    chooseImage(images[0].name);
   }
  }catch(e){
-  $("imageCount").textContent="底圖讀取失敗："+e.message;
+  $("imageCount").textContent="圖片讀取失敗："+e.message;
  }
 }
 
 function drawGallery(){
  const box=$("gallery");
  const keyword=$("search").value.trim().toLowerCase();
-
  box.replaceChildren();
 
  images.filter(f=>
@@ -351,50 +428,52 @@ function drawGallery(){
   img.alt=data.flowers[f.name]||f.name;
 
   const title=document.createElement("span");
-  title.textContent=data.flowers[f.name]||f.name.replace(/\.[^.]+$/,"");
+  title.textContent=
+   data.flowers[f.name]||f.name.replace(/\.[^.]+$/,"");
 
   button.append(img,title);
   button.onclick=()=>chooseImage(f.name);
-
   box.appendChild(button);
  });
 }
 
 function chooseImage(filename){
- const f=images.find(i=>i.name===filename);
- if(!f)return;
+ const file=images.find(f=>f.name===filename);
+ if(!file)return;
 
  currentImage=filename;
  poster=null;
- const myId=++requestId;
+
+ const id=++requestId;
 
  drawGallery();
  updateFlowerName();
 
- const img=new Image();
- img.crossOrigin="anonymous";
+ const image=new Image();
+ image.crossOrigin="anonymous";
 
- img.onload=()=>{
-  if(myId!==requestId)return;
-  poster=img;
-  canvas.width=img.naturalWidth;
-  canvas.height=img.naturalHeight;
+ image.onload=()=>{
+  if(id!==requestId)return;
+
+  poster=image;
+  canvas.width=image.naturalWidth;
+  canvas.height=image.naturalHeight;
+
   updateControls();
   render();
  };
 
- img.onerror=()=>{
-  $("imageCount").textContent="這張底圖載入失敗";
+ image.onerror=()=>{
+  $("imageCount").textContent="圖片無法載入："+filename;
  };
 
- img.src=f.url;
-
+ image.src=file.url;
  render();
 }
 
 function updateFlowerName(){
- $("flowerName").value=
-  currentImage?(data.flowers[currentImage]||""):"";
+ $("flowerName").value=currentImage?
+  (data.flowers[currentImage]||""):"";
 }
 
 function drawPeople(){
@@ -463,7 +542,8 @@ function addPeople(){
  names.forEach(name=>{
   if(!data.people.some(p=>p.name===name)){
    data.people.push({
-    id:"p_"+Date.now()+"_"+Math.random().toString(36).slice(2,8),
+    id:"p_"+Date.now()+"_"+
+      Math.random().toString(36).slice(2,8),
     name,
     checked:true
    });
@@ -476,27 +556,32 @@ function addPeople(){
  saveDraft();
 }
 
-function getLayout(){
+function layout(){
  if(!currentImage)return {};
- return data.layouts[currentImage]||(data.layouts[currentImage]={});
+ return data.layouts[currentImage]||
+  (data.layouts[currentImage]={});
 }
 
-function defaults(key){
+function defaultItem(key){
  if(key==="date"){
-  return{x:.5,y:.112,size:43,color:"#513d33",outline:true};
+  return{
+   x:.5,y:.112,size:43,
+   color:"#513d33",outline:true
+  };
  }
 
  if(key==="leader"){
-  return{x:.60,y:.926,size:42,color:"#513d33",outline:true};
+  return{
+   x:.60,y:.926,size:42,
+   color:"#513d33",outline:true
+  };
  }
 
- const idx=Math.max(0,data.people.findIndex(p=>p.id===key));
- const col=idx%2;
- const row=Math.floor(idx/2);
+ const index=Math.max(0,data.people.findIndex(p=>p.id===key));
 
  return{
-  x:col===0?.34:.68,
-  y:.735+row*.029,
+  x:index%2===0?.34:.68,
+  y:.735+Math.floor(index/2)*.029,
   size:31,
   color:"#344b40",
   outline:false
@@ -504,57 +589,65 @@ function defaults(key){
 }
 
 function getItem(key){
- return{...defaults(key),...(getLayout()[key]||{})};
+ return{
+  ...defaultItem(key),
+  ...(layout()[key]||{})
+ };
 }
 
 function setItem(key,changes){
  if(!currentImage)return;
 
- getLayout()[key]={...getItem(key),...changes};
+ layout()[key]={
+  ...getItem(key),
+  ...changes
+ };
 
  saveDraft();
  updateControls();
 }
 
 function updateTargets(){
- const el=$("target");
- el.replaceChildren();
+ const select=$("target");
+ select.replaceChildren();
 
- [
+ const options=[
   {id:"date",name:"📅 日期"},
   {id:"leader",name:"👑 本日總召"},
   ...data.people.map(p=>({
-   id:p.id,name:"🪄 "+p.name
+   id:p.id,
+   name:"🪄 "+p.name
   }))
- ].forEach(p=>{
+ ];
+
+ options.forEach(o=>{
   const option=document.createElement("option");
-  option.value=p.id;
-  option.textContent=p.name;
-  el.appendChild(option);
+  option.value=o.id;
+  option.textContent=o.name;
+  select.appendChild(option);
  });
 
- if(target!=="date"&&target!=="leader"&&
-    !data.people.some(p=>p.id===target)){
+ if(!options.some(o=>o.id===target)){
   target="date";
  }
 
- el.value=target;
+ select.value=target;
  updateControls();
 }
 
 function updateControls(){
- const p=getItem(target);
+ const item=getItem(target);
 
  $("target").value=target;
- $("posX").value=p.x*100;
- $("posY").value=p.y*100;
- $("fontSize").value=p.size;
- $("fontColor").value=p.color;
- $("outline").checked=p.outline;
+ $("posX").value=item.x*100;
+ $("posY").value=item.y*100;
+ $("fontSize").value=item.size;
+ $("fontColor").value=item.color;
+ $("outline").checked=item.outline;
 
- $("xValue").textContent=Math.round(p.x*100)+"%";
- $("yValue").textContent=Math.round(p.y*100)+"%";
- $("sizeValue").textContent=p.size+"px";
+ $("xValue").textContent=Math.round(item.x*100)+"%";
+ $("yValue").textContent=Math.round(item.y*100)+"%";
+ $("sizeValue").textContent=item.size+"px";
 
  $("selection").textContent=
   $("target").selectedOptions[0]?.textContent||"選擇文字";
@@ -565,36 +658,46 @@ function dateText(){
  if(!value)return "";
 
  const [y,m,d]=value.split("-").map(Number);
- const day="日一二三四五六"[new Date(y,m-1,d).getDay()];
+ const weekday="日一二三四五六"[
+  new Date(y,m-1,d).getDay()
+ ];
 
- switch($("dateFormat").value){
-  case "dots":
-   return `${y}.${String(m).padStart(2,"0")}.${String(d).padStart(2,"0")}`;
-
-  case "zh":
-   return `${y}年${m}月${d}日`;
-
-  default:
-   return `${y} / ${String(m).padStart(2,"0")} / ${String(d).padStart(2,"0")}（${day}）`;
+ if($("dateFormat").value==="dots"){
+  return `${y}.${String(m).padStart(2,"0")}.`+
+   String(d).padStart(2,"0");
  }
+
+ if($("dateFormat").value==="zh"){
+  return `${y}年${m}月${d}日`;
+ }
+
+ return `${y} / ${String(m).padStart(2,"0")} / `+
+  `${String(d).padStart(2,"0")}（${weekday}）`;
 }
 
 function labels(){
  const result=[];
 
  if($("showDate").checked&&$("date").value){
-  result.push({id:"date",text:dateText()});
+  result.push({
+   id:"date",
+   text:dateText()
+  });
  }
 
  if($("showLeader").checked&&$("leader").value.trim()){
-  result.push({id:"leader",text:$("leader").value.trim()});
+  result.push({
+   id:"leader",
+   text:$("leader").value.trim()
+  });
  }
+
+ const prefix=$("prefix").value.trim();
 
  data.people.filter(p=>p.checked).forEach(p=>{
   result.push({
    id:p.id,
-   text:($("prefix").value||"").trim()+
-    (($("prefix").value||"").trim()?" ":"")+p.name
+   text:(prefix?prefix+" ":"")+p.name
   });
  });
 
@@ -602,59 +705,65 @@ function labels(){
 }
 
 function render(){
- const w=canvas.width;
- const h=canvas.height;
- const scale=w/1086;
+ const width=canvas.width;
+ const height=canvas.height;
+ const scale=width/1086;
 
- ctx.clearRect(0,0,w,h);
+ ctx.clearRect(0,0,width,height);
 
  if(poster){
-  ctx.drawImage(poster,0,0,w,h);
+  ctx.drawImage(poster,0,0,width,height);
  }else{
   ctx.fillStyle="#f3f0e8";
-  ctx.fillRect(0,0,w,h);
+  ctx.fillRect(0,0,width,height);
   ctx.fillStyle="#536f5e";
   ctx.textAlign="center";
   ctx.font=`${28*scale}px sans-serif`;
-  ctx.fillText("請選擇底圖",w/2,h/2);
+  ctx.fillText("請選擇底圖",width/2,height/2);
  }
 
  hitBoxes=[];
 
  labels().forEach(label=>{
-  const p=getItem(label.id);
-
-  const x=p.x*w;
-  const y=p.y*h;
-  const size=p.size*scale;
-  const maxWidth=w*.75;
+  const item=getItem(label.id);
+  const x=item.x*width;
+  const y=item.y*height;
+  const size=item.size*scale;
+  const maxWidth=width*.75;
 
   ctx.save();
 
   ctx.font=
-   `700 ${size}px "PingFang TC","Hiragino Kaku Gothic ProN","Noto Sans CJK TC","Apple Color Emoji",system-ui,sans-serif`;
+   `700 ${size}px "PingFang TC",`+
+   `"Hiragino Kaku Gothic ProN",`+
+   `"Noto Sans CJK TC","Apple Color Emoji",`+
+   `system-ui,sans-serif`;
 
   ctx.textAlign="center";
   ctx.textBaseline="middle";
   ctx.lineJoin="round";
 
-  if(p.outline){
+  if(item.outline){
    ctx.strokeStyle="#fff4d9";
    ctx.lineWidth=Math.max(2,3.5*scale);
    ctx.strokeText(label.text,x,y,maxWidth);
   }
 
-  ctx.fillStyle=p.color;
+  ctx.fillStyle=item.color;
   ctx.fillText(label.text,x,y,maxWidth);
 
-  const actualWidth=Math.min(ctx.measureText(label.text).width,maxWidth);
-  const width=Math.max(actualWidth,size*1.5);
+  const measured=Math.min(
+   ctx.measureText(label.text).width,
+   maxWidth
+  );
+
+  const boxWidth=Math.max(measured,size*1.5);
 
   hitBoxes.push({
    id:label.id,
    x,y,
-   left:x-width/2-15*scale,
-   right:x+width/2+15*scale,
+   left:x-boxWidth/2-15*scale,
+   right:x+boxWidth/2+15*scale,
    top:y-size,
    bottom:y+size
   });
@@ -663,16 +772,18 @@ function render(){
  });
 }
 
-function point(e){
- const r=canvas.getBoundingClientRect();
+function pointerPosition(e){
+ const rect=canvas.getBoundingClientRect();
+
  return{
-  x:(e.clientX-r.left)*canvas.width/r.width,
-  y:(e.clientY-r.top)*canvas.height/r.height
+  x:(e.clientX-rect.left)*canvas.width/rect.width,
+  y:(e.clientY-rect.top)*canvas.height/rect.height
  };
 }
 
 canvas.addEventListener("pointerdown",e=>{
- const p=point(e);
+ const p=pointerPosition(e);
+
  const hit=[...hitBoxes].reverse().find(b=>
   p.x>=b.left&&p.x<=b.right&&
   p.y>=b.top&&p.y<=b.bottom
@@ -683,7 +794,10 @@ canvas.addEventListener("pointerdown",e=>{
  target=hit.id;
  updateControls();
 
- dragging={dx:p.x-hit.x,dy:p.y-hit.y};
+ dragging={
+  dx:p.x-hit.x,
+  dy:p.y-hit.y
+ };
 
  canvas.setPointerCapture(e.pointerId);
  e.preventDefault();
@@ -692,18 +806,26 @@ canvas.addEventListener("pointerdown",e=>{
 canvas.addEventListener("pointermove",e=>{
  if(!dragging)return;
 
- const p=point(e);
+ const p=pointerPosition(e);
 
  setItem(target,{
-  x:Math.max(.03,Math.min(.97,(p.x-dragging.dx)/canvas.width)),
-  y:Math.max(.02,Math.min(.98,(p.y-dragging.dy)/canvas.height))
+  x:Math.max(.03,Math.min(.97,
+   (p.x-dragging.dx)/canvas.width)),
+  y:Math.max(.02,Math.min(.98,
+   (p.y-dragging.dy)/canvas.height))
  });
 
  e.preventDefault();
 });
 
-["pointerup","pointercancel","lostpointercapture"].forEach(event=>{
- canvas.addEventListener(event,()=>dragging=null);
+[
+ "pointerup",
+ "pointercancel",
+ "lostpointercapture"
+].forEach(type=>{
+ canvas.addEventListener(type,()=>{
+  dragging=null;
+ });
 });
 
 function downloadPoster(){
@@ -716,7 +838,7 @@ function downloadPoster(){
 
  canvas.toBlob(blob=>{
   if(!blob){
-   alert("無法產生圖片");
+   alert("PNG 產生失敗");
    return;
   }
 
@@ -724,7 +846,8 @@ function downloadPoster(){
   const a=document.createElement("a");
 
   a.href=url;
-  a.download=(data.flowers[currentImage]||"Locwarp")+"-海報.png";
+  a.download=
+   (data.flowers[currentImage]||"Locwarp")+"-海報.png";
 
   document.body.appendChild(a);
   a.click();
@@ -740,6 +863,7 @@ function publishedData(){
  result.version=Number(shared.version||0)+1;
 
  const now=new Date();
+
  result.updated=
   now.getFullYear()+"-"+
   String(now.getMonth()+1).padStart(2,"0")+"-"+
@@ -763,24 +887,27 @@ async function copyShared(){
 
  try{
   await navigator.clipboard.writeText(content);
+
   $("adminStatus").textContent=
-   "已複製！現在可貼到 GitHub 的 shared.json，提交後即可發布。";
+   "共用資料已複製，請貼到 GitHub 的 shared.json 並提交。";
  }catch{
-  const box=document.createElement("textarea");
-  box.value=content;
-  box.style.position="fixed";
-  box.style.top="0";
-  box.style.left="0";
-  document.body.appendChild(box);
-  box.focus();
-  box.select();
+  const textarea=document.createElement("textarea");
 
-  const ok=document.execCommand("copy");
-  box.remove();
+  textarea.value=content;
+  textarea.style.position="fixed";
+  textarea.style.top="0";
+  textarea.style.left="0";
 
-  $("adminStatus").textContent=ok?
+  document.body.appendChild(textarea);
+  textarea.focus();
+  textarea.select();
+
+  const success=document.execCommand("copy");
+  textarea.remove();
+
+  $("adminStatus").textContent=success?
    "已複製，可貼到 shared.json。":
-   "瀏覽器未允許複製，請改按「下載 shared.json」。";
+   "無法自動複製，請使用下載 shared.json。";
  }
 }
 
@@ -802,15 +929,16 @@ function downloadShared(){
  setTimeout(()=>URL.revokeObjectURL(url),60000);
 }
 
-$("refresh").onclick=()=>loadShared(false);
-
-$("restore").onclick=()=>{
- if(!confirm("確定捨棄這台裝置的草稿，還原為最新共用版本？"))return;
-
- localStorage.removeItem("locwarp_draft_"+String(shared.version));
- applyData(shared);
+$("recover").onclick=()=>{
+ const found=recoverLegacyNames();
+ if(found){
+  alert("已找到並匯入 "+found+" 筆舊版花名。");
+ }else{
+  alert("這個 Safari 網站儲存空間沒有找到舊版花名資料。");
+ }
 };
 
+$("refresh").onclick=loadShared;
 $("search").oninput=drawGallery;
 
 $("saveFlower").onclick=()=>{
@@ -818,8 +946,11 @@ $("saveFlower").onclick=()=>{
 
  const value=$("flowerName").value.trim();
 
- if(value)data.flowers[currentImage]=value;
- else delete data.flowers[currentImage];
+ if(value){
+  data.flowers[currentImage]=value;
+ }else{
+  delete data.flowers[currentImage];
+ }
 
  drawGallery();
  saveDraft();
@@ -859,11 +990,15 @@ $("target").onchange=()=>{
 });
 
 $("fontColor").oninput=()=>{
- setItem(target,{color:$("fontColor").value});
+ setItem(target,{
+  color:$("fontColor").value
+ });
 };
 
 $("outline").onchange=()=>{
- setItem(target,{outline:$("outline").checked});
+ setItem(target,{
+  outline:$("outline").checked
+ });
 };
 
 $("dateCenter").onclick=()=>{
@@ -878,7 +1013,10 @@ $("leaderCenter").onclick=()=>{
 
 $("resetLayout").onclick=()=>{
  if(!currentImage)return;
- if(!confirm("確定重設這張底圖的所有文字位置？"))return;
+
+ if(!confirm("確定重設這張底圖所有文字的位置？")){
+  return;
+ }
 
  delete data.layouts[currentImage];
  saveDraft();
@@ -898,7 +1036,7 @@ $("copyShared").onclick=copyShared;
 $("downloadShared").onclick=downloadShared;
 
 async function start(){
- await loadShared(false);
+ await loadShared();
  await loadImages();
 }
 
