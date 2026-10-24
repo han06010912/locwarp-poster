@@ -1,33 +1,302 @@
-<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Locwarp｜花園木牌海報</title><style>
-:root{font-family:system-ui,-apple-system,'Noto Sans TC',sans-serif;color:#254436;background:#edf3e9}*{box-sizing:border-box}body{margin:0}header{background:#214e3d;color:white;padding:20px max(18px,calc((100vw - 1240px)/2));font-size:24px;font-weight:800}header small{display:block;font-size:12px;font-weight:400;margin-top:5px;opacity:.85}.layout{max-width:1240px;margin:24px auto;padding:0 16px;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(320px,.9fr);gap:22px}.panel{background:white;border-radius:18px;padding:20px;box-shadow:0 5px 20px #25443614;min-width:0}h2{margin:0 0 18px;font-size:20px}.preview canvas{display:block;width:100%;height:auto;border-radius:10px;box-shadow:0 6px 20px #0002}label{display:block;font-size:14px;font-weight:700;margin:14px 0 6px}input,textarea,select{width:100%;padding:12px;border:1px solid #cbd8cd;border-radius:10px;font:inherit;color:#244235;background:white}textarea{min-height:135px;resize:vertical}.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.flowers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;max-height:245px;overflow:auto;margin-top:10px}.flower{border:1px solid #d3dfd4;background:#f8fbf7;border-radius:12px;padding:9px 4px;cursor:pointer;font:inherit;font-size:13px}.flower span{display:block;font-size:27px}.flower.active{background:#e2f2e7;border:2px solid #287453;font-weight:800}button.action{border:0;background:#28664c;color:white;border-radius:12px;padding:13px 16px;font:inherit;font-weight:800;cursor:pointer;width:100%;margin-top:14px}.hint{font-size:12px;color:#698174;line-height:1.7}.credit{font-size:12px;text-align:center;margin:20px} @media(max-width:850px){.layout{grid-template-columns:1fr;max-width:620px}.preview{order:0}.controls{order:1}header{font-size:20px}.flowers{grid-template-columns:repeat(4,minmax(0,1fr))}}@media(max-width:400px){.flowers{grid-template-columns:repeat(3,minmax(0,1fr))}}
-</style></head><body><header>Locwarp｜強開團海報生成網站<small>花園木牌風・手機與電腦皆可使用・Made by 夯</small></header><main class="layout"><section class="panel preview"><h2>海報即時預覽</h2><canvas id="poster" width="900" height="1200"></canvas><button class="action" id="download">下載 900 × 1200 PNG 海報</button><p class="hint">可直接在 iPhone、Android、電腦瀏覽器使用。資料會儲存在目前裝置的瀏覽器中。</p></section><section class="panel controls"><h2>海報設定</h2><div class="row"><div><label for="date">日期</label><input id="date" value="10/30"></div><div><label for="title">活動標題</label><input id="title" value="Locwarp 強開團"></div></div><label for="search">本週強開花種（點選花圖）</label><input id="search" placeholder="搜尋花種，例如 銀蓮花"><div id="flowers" class="flowers"></div><label for="members">花農名單（每行一位）</label><textarea id="members">夯
-飄飄
-初飛者🦎
-Willie
-小PP
-大文</textarea><label for="leader">本日總召</label><input id="leader" value="初飛者🦎🦎🦎"><label for="notice">總召公告</label><textarea id="notice" style="min-height:85px">下週公休一週，我們月底見</textarea><label for="background">上傳自訂背景圖（選填）</label><input id="background" type="file" accept="image/*"><p class="hint">不選圖片時使用內建花園木牌背景。上傳的圖片只會在你的瀏覽器中處理，不會傳到伺服器。</p><button class="action" id="reset" style="background:#647b6b">恢復預設文字</button></section></main><p class="credit">Locwarp ・ Made by 夯</p><script>
-const names='薊花,萬壽菊,銀蓮花,風鈴草,九重葛,海芋,山茶花,美人蕉,油菜花,康乃馨,嘉德麗雅蘭,雞冠花,櫻花,菊花,鐵線蓮,彼岸花,鈴蘭,大波斯菊,兔耳花,大理花,石竹,曇花,勿忘草,小蒼蘭,龍膽,聖誕玫瑰,扶桑花,風信子,繡球花,鳶尾花,百合,洋桔梗,牽牛花,蝴蝶蘭,水仙花,粉蝶花,睡蓮,三色堇,牡丹,矮牽牛,梅花,雞蛋花,聖誕紅,櫻草花,玫瑰,週年紀念玫瑰,鼠尾草,金魚草,雪花蓮,天堂鳥,向日葵,豌豆花,鬱金香,鸚鵡鬱金香,天竺葵'.split(',');
-const flowerEmoji={'銀蓮花':'🌼','玫瑰':'🌹','週年紀念玫瑰':'🌹','向日葵':'🌻','櫻花':'🌸','鬱金香':'🌷','鸚鵡鬱金香':'🌷','百合':'🌺','睡蓮':'🪷','天竺葵':'🌺','薊花':'🪻','鼠尾草':'🪻','風信子':'🪻','小蒼蘭':'🌼','繡球花':'💠'};const $=id=>document.getElementById(id);let selected='銀蓮花',uploaded=null;const ctx=$('poster').getContext('2d');
-function rounded(x,y,w,h,r,fill,stroke,lw=1){ctx.beginPath();ctx.roundRect(x,y,w,h,r);if(fill){ctx.fillStyle=fill;ctx.fill()}if(stroke){ctx.lineWidth=lw;ctx.strokeStyle=stroke;ctx.stroke()}}
-function text(t,x,y,size,color='#4b2518',align='center',weight=800,stroke=null){ctx.textAlign=align;ctx.textBaseline='middle';ctx.font=`${weight} ${size}px system-ui,-apple-system,sans-serif`;if(stroke){ctx.lineWidth=8;ctx.strokeStyle=stroke;ctx.lineJoin='round';ctx.strokeText(t,x,y)}ctx.fillStyle=color;ctx.fillText(t,x,y)}
-function fit(t,max,start,min=16){let s=start;while(s>min){ctx.font=`800 ${s}px system-ui`;if(ctx.measureText(t).width<=max)break;s--}return s}
-function flower(x,y,scale=1,petal='#fffaf5',center='#4e265c'){ctx.save();ctx.translate(x,y);ctx.scale(scale,scale);for(let k=0;k<10;k++){ctx.save();ctx.rotate(k*Math.PI/5);ctx.beginPath();ctx.ellipse(0,-22,13,25,0,0,Math.PI*2);ctx.fillStyle=petal;ctx.fill();ctx.strokeStyle='#d7c4dd';ctx.lineWidth=1;ctx.stroke();ctx.restore()}ctx.beginPath();ctx.arc(0,0,14,0,Math.PI*2);ctx.fillStyle=center;ctx.fill();for(let i=0;i<14;i++){const a=i*Math.PI/7;ctx.beginPath();ctx.arc(Math.cos(a)*10,Math.sin(a)*10,2.1,0,7);ctx.fillStyle='#e9cf80';ctx.fill()}ctx.restore()}
-function leaf(x,y,a=0,s=1){ctx.save();ctx.translate(x,y);ctx.rotate(a);ctx.scale(s,s);ctx.beginPath();ctx.ellipse(0,0,12,25,.4,0,Math.PI*2);ctx.fillStyle='#3f8c4d';ctx.fill();ctx.beginPath();ctx.moveTo(-7,20);ctx.lineTo(8,-19);ctx.strokeStyle='#c0d87a';ctx.lineWidth=2;ctx.stroke();ctx.restore()}
-function wood(x,y,w,h,r=20){rounded(x+5,y+8,w,h,r,'#70451f');rounded(x,y,w,h,r,'#d99b4b','#8b4c24',5);rounded(x+11,y+10,w-22,h-20,r-8,'#f7dba4','#fff1c8',3)}
-function wrap(t,max,size){ctx.font=`800 ${size}px system-ui`;let out=[],line='';for(const c of t){if(ctx.measureText(line+c).width>max&&line){out.push(line);line=c}else line+=c}if(line)out.push(line);return out}
-function draw(){let W=900,H=1200;ctx.clearRect(0,0,W,H);let sky=ctx.createLinearGradient(0,0,0,H);sky.addColorStop(0,'#7fd8fa');sky.addColorStop(.55,'#e1f9e9');sky.addColorStop(1,'#c9e5b6');ctx.fillStyle=sky;ctx.fillRect(0,0,W,H);if(uploaded){ctx.save();ctx.globalAlpha=.35;const k=Math.max(W/uploaded.width,H/uploaded.height),w=uploaded.width*k,h=uploaded.height*k;ctx.drawImage(uploaded,(W-w)/2,(H-h)/2,w,h);ctx.restore()}
-// foliage and decorative blooms
-for(let i=0;i<52;i++){const x=(i*97+33)%920-10,y=(i*173+41)%1200; if(x>100&&x<800&&y>740&&y<1080)continue;leaf(x,y,(i*2.4)%6, .65+(i%4)*.15)}for(let i=0;i<38;i++){let x=(i*157+27)%900,y=(i*229+21)%1200;if(x>115&&x<785&&y>740&&y<1080)continue;flower(x,y,.3+(i%3)*.13,i%4===0?'#ffe3f1':'#fff9f0')}
-// title
-wood(35,40,640,270,30);rounded(58,61,592,228,20,'#81502b','#f4c56d',5);text($('date').value||'10/30',185,120,fit($('date').value||'10/30',245,78,42),'#fff9d7','center',950,'#3d7b43');text('強開',520,120,67,'#fff5df','center',950,'#6b2f1b');text(selected,350,223,fit(selected,550,105,48),'#fff8ee','center',950,'#d94b74');
-// warning hanging signs
-['Locwarp限定','勿轉傳','隨意收'].forEach((t,i)=>{const y=42+i*99;wood(700,y,178,84,12);text(t,789,y+41,fit(t,155,27,17),'#6c2d22')});
-// big flower scene
-for(let i=0;i<8;i++){let x=110+i*100,y=570+(i%3)*30;ctx.strokeStyle='#408e58';ctx.lineWidth=10;ctx.beginPath();ctx.moveTo(x,755);ctx.quadraticCurveTo(x-15,650,x,y);ctx.stroke();leaf(x-13,680,-.9,1.3);leaf(x+12,705,.8,1.1);flower(x,y,1.15+(i%3)*.27,selected.includes('玫瑰')?'#f9b4bd':selected==='天竺葵'?'#f39db0':selected==='小蒼蘭'?'#fff1b2':'#fffaf5')}
-wood(55,760,790,340,23);rounded(72,778,756,302,14,'#fff3d4','#b67c41',4);wood(255,724,390,65,25);text('花農成員如下',450,756,39);let members=$('members').value.split('\n').map(v=>v.trim()).filter(Boolean).slice(0,24),rows=Math.ceil(members.length/2),font=Math.min(31,Math.max(16,Math.floor(245/Math.max(rows,1))));members.forEach((m,i)=>{let col=i<rows?0:1,row=col===0?i:i-rows;let x=col?493:112,y=826+row*Math.min(41,260/Math.max(rows,1));flower(x,y,.35);text(m,x+35,y,fit(m,280,font,14),'#5d2d22','left')});
-wood(30,1110,840,75,17);const lead='本日總召：'+$('leader').value;let notice=$('notice').value.trim(),whole=lead+(notice?'，'+notice:'');let lines=wrap(whole,770,27);if(lines.length>2){lines=wrap(whole,790,21)}let fs=lines.length>2?18:lines.length===2?23:fit(whole,785,27,17);lines=wrap(whole,790,fs).slice(0,3);lines.forEach((line,i)=>text(line,450,1148+(i-(lines.length-1)/2)*23,fs,'#642c25'));text('Made by 夯',830,1193,13,'#295d46','right');}
-function populate(){const q=$('search').value.trim();$('flowers').innerHTML='';names.filter(n=>n.includes(q)).forEach(n=>{let b=document.createElement('button');b.className='flower'+(n===selected?' active':'');b.innerHTML=`<span>${flowerEmoji[n]||'🌼'}</span>${n}`;b.onclick=()=>{selected=n;populate();save();draw()};$('flowers').append(b)})}
-function save(){try{localStorage.setItem('locwarpPosterV2',JSON.stringify({selected,fields:Object.fromEntries(['date','title','members','leader','notice'].map(k=>[k,$(k).value]))}))}catch(e){}}
-try{let s=JSON.parse(localStorage.getItem('locwarpPosterV2')||'null');if(s){if(names.includes(s.selected))selected=s.selected;for(let [k,v]of Object.entries(s.fields||{})){if($(k))$(k).value=v}}}catch(e){};
-['date','title','members','leader','notice'].forEach(k=>$(k).addEventListener('input',()=>{save();draw()}));$('search').addEventListener('input',populate);$('background').addEventListener('change',e=>{let f=e.target.files[0];if(!f)return;let img=new Image();img.onload=()=>{uploaded=img;draw();URL.revokeObjectURL(img.src)};img.src=URL.createObjectURL(f)});$('reset').onclick=()=>{if(!confirm('要恢復預設文字嗎？'))return;localStorage.removeItem('locwarpPosterV2');location.reload()};$('download').onclick=()=>{draw();$('poster').toBlob(blob=>{if(!blob)return;let url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`Locwarp_${$('date').value.replaceAll('/','-')}_${selected}.png`;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000)},'image/png')};populate();draw();
-</script></body></html>
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Locwarp 海報製作</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f5f3ed;color:#304b42;font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC",sans-serif}
+header{background:#436b59;color:white;text-align:center;padding:18px;font-size:23px;font-weight:bold}
+main{max-width:1150px;margin:auto;padding:14px;display:grid;grid-template-columns:380px 1fr;gap:16px}
+section{background:white;padding:16px;border-radius:16px;margin-bottom:14px;box-shadow:0 2px 10px #0000000a}
+h3{margin:0 0 12px;font-size:17px}
+input,textarea,button{font:inherit}
+input[type=text],input[type=date],textarea{width:100%;padding:11px;border:1px solid #c9d6cd;border-radius:9px;margin:6px 0}
+textarea{height:95px;resize:vertical}
+button{border:0;border-radius:9px;padding:10px 14px;background:#436b59;color:white;cursor:pointer}
+button.secondary{background:#e4eee7;color:#304b42}
+button:disabled{opacity:.5}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.row>*{flex-shrink:0}
+label{display:block;margin:9px 0}
+label input[type=checkbox]{accent-color:#436b59;width:18px;height:18px;vertical-align:middle}
+#gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;max-height:365px;overflow:auto;margin-top:12px}
+.thumb{background:#f6f6f2;border:2px solid transparent;border-radius:10px;padding:5px;min-width:0}
+.thumb.active{border-color:#4c8a69}
+.thumb img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:6px}
+.thumb span{display:block;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#people{max-height:230px;overflow:auto}
+.person{display:flex;align-items:center;gap:8px;padding:6px;border-bottom:1px solid #eee}
+.person input{accent-color:#436b59;width:18px;height:18px}
+.person span{flex:1;overflow-wrap:anywhere}
+.person button{padding:5px 9px;background:#eee;color:#555}
+#preview{position:sticky;top:12px;align-self:start;text-align:center}
+canvas{display:block;width:100%;height:auto;max-width:480px;margin:12px auto;border-radius:6px;box-shadow:0 3px 18px #0002;background:#f0eee8}
+small{color:#718077}
+#status{font-size:13px;color:#69796e;margin:8px 0}
+@media(max-width:760px){main{display:block}#preview{position:static}header{font-size:21px}}
+</style>
+</head>
+<body>
+<header>🌸 Locwarp 海報製作</header>
+<main>
+<div>
+<section>
+<h3>① 選擇花種底圖</h3>
+<input type="text" id="search" placeholder="搜尋花種名稱">
+<div class="row">
+<button onclick="loadImages()">重新讀取圖片</button>
+<span id="imageCount">讀取中</span>
+</div>
+<div id="gallery"></div>
+<div id="status"></div>
+<div id="renameBox" hidden>
+<label>選取圖片的花種名稱</label>
+<input id="flowerName" type="text" placeholder="例如：櫻花">
+<button class="secondary" onclick="saveFlowerName()">儲存名稱</button>
+</div>
+</section>
+
+<section>
+<h3>② 花農名單</h3>
+<small>每行輸入一位花農，可儲存並重複勾選。</small>
+<textarea id="newPeople" placeholder="夯夯&#10;大文&#10;飄飄"></textarea>
+<div class="row">
+<button onclick="addPeople()">加入名單</button>
+<button class="secondary" onclick="toggleAll(true)">全選</button>
+<button class="secondary" onclick="toggleAll(false)">全不選</button>
+</div>
+<div id="people"></div>
+</section>
+
+<section>
+<h3>③ 日期與總召</h3>
+<label><input type="checkbox" id="showDate" checked> 顯示日期</label>
+<input type="date" id="date">
+<label><input type="checkbox" id="showLeader"> 顯示本日總召姓名</label>
+<input type="text" id="leader" placeholder="輸入總召姓名">
+</section>
+
+<section>
+<h3>④ 字體設定</h3>
+<label>花農名字大小</label>
+<input type="range" id="nameSize" min="20" max="52" value="33" style="width:100%">
+<label>字體顏色</label>
+<input type="color" id="color" value="#344c43">
+<label>名單上下位置</label>
+<input type="range" id="position" min="65" max="83" value="72" style="width:100%">
+<button onclick="downloadPoster()" style="width:100%;margin-top:15px">下載 PNG 海報</button>
+</section>
+</div>
+
+<section id="preview">
+<h3>海報即時預覽</h3>
+<small>選擇圖片、花農及日期後自動更新</small>
+<canvas id="canvas" width="1086" height="1448"></canvas>
+</section>
+</main>
+
+<script>
+const owner="han06010912";
+const repo="locwarp-poster";
+const api=`https://api.github.com/repos/${owner}/${repo}/contents/images`;
+const $=id=>document.getElementById(id);
+const canvas=$("canvas");
+const ctx=canvas.getContext("2d");
+
+let files=[];
+let selected=null;
+let image=null;
+let people=JSON.parse(localStorage.getItem("lw_people")||"[]");
+let names=JSON.parse(localStorage.getItem("lw_names")||"{}");
+
+function save(){
+ localStorage.setItem("lw_people",JSON.stringify(people));
+ localStorage.setItem("lw_names",JSON.stringify(names));
+}
+
+async function loadImages(){
+ $("status").textContent="正在讀取 GitHub 圖片...";
+ try{
+  const r=await fetch(api+"?t="+Date.now(),{
+   headers:{"Accept":"application/vnd.github+json"}
+  });
+  if(!r.ok)throw Error("GitHub 回應 "+r.status);
+  const data=await r.json();
+  files=data.filter(f=>/\.(png|jpg|jpeg|webp)$/i.test(f.name))
+   .map(f=>({name:f.name,url:f.download_url}));
+  $("imageCount").textContent=files.length+" 張";
+  $("status").textContent="圖片讀取完成";
+  showGallery();
+  if(files.length&&!selected)chooseImage(files[0].name);
+  if(!files.length)$("status").textContent="images 資料夾尚無可用圖片";
+ }catch(e){
+  $("status").textContent="讀取失敗："+e.message;
+ }
+}
+
+function showGallery(){
+ const keyword=$("search").value.trim().toLowerCase();
+ const box=$("gallery");
+ box.innerHTML="";
+ files.filter(f=>(names[f.name]||f.name).toLowerCase().includes(keyword))
+ .forEach(f=>{
+  const b=document.createElement("button");
+  b.className="thumb"+(selected===f.name?" active":"");
+  const img=document.createElement("img");
+  img.src=f.url;img.loading="lazy";
+  const label=document.createElement("span");
+  label.textContent=names[f.name]||f.name.replace(/\.[^.]+$/,"");
+  b.append(img,label);
+  b.onclick=()=>chooseImage(f.name);
+  box.appendChild(b);
+ });
+}
+
+function chooseImage(filename){
+ const f=files.find(x=>x.name===filename);
+ if(!f)return;
+ selected=filename;
+ $("renameBox").hidden=false;
+ $("flowerName").value=names[filename]||"";
+ showGallery();
+ const im=new Image();
+ im.crossOrigin="anonymous";
+ im.onload=()=>{
+  image=im;
+  canvas.width=im.naturalWidth;
+  canvas.height=im.naturalHeight;
+  draw();
+ };
+ im.onerror=()=>{$("status").textContent="無法載入這張圖片";};
+ im.src=f.url;
+}
+
+function saveFlowerName(){
+ if(!selected)return;
+ const n=$("flowerName").value.trim();
+ if(n)names[selected]=n;
+ else delete names[selected];
+ save();
+ showGallery();
+}
+
+function addPeople(){
+ const arr=$("newPeople").value.split(/\n|,|，/)
+ .map(s=>s.trim()).filter(Boolean);
+ arr.forEach(n=>{
+  if(!people.some(p=>p.name===n))
+   people.push({name:n,checked:true});
+ });
+ $("newPeople").value="";
+ save();renderPeople();draw();
+}
+
+function toggleAll(value){
+ people.forEach(p=>p.checked=value);
+ save();renderPeople();draw();
+}
+
+function renderPeople(){
+ const box=$("people");box.innerHTML="";
+ people.forEach((p,i)=>{
+  const div=document.createElement("div");
+  div.className="person";
+  const check=document.createElement("input");
+  check.type="checkbox";check.checked=p.checked;
+  check.onchange=()=>{
+   p.checked=check.checked;save();draw();
+  };
+  const span=document.createElement("span");
+  span.textContent=p.name;
+  const del=document.createElement("button");
+  del.textContent="刪除";
+  del.onclick=()=>{
+   people.splice(i,1);save();renderPeople();draw();
+  };
+  div.append(check,span,del);
+  box.appendChild(div);
+ });
+}
+
+function draw(){
+ const w=canvas.width,h=canvas.height;
+ ctx.clearRect(0,0,w,h);
+ if(!image){
+  ctx.fillStyle="#f5f1e9";
+  ctx.fillRect(0,0,w,h);
+  ctx.fillStyle="#667";
+  ctx.font="28px sans-serif";
+  ctx.textAlign="center";
+  ctx.fillText("請先選擇海報底圖",w/2,h/2);
+  return;
+ }
+ ctx.drawImage(image,0,0,w,h);
+ const scale=w/1086;
+ const color=$("color").value;
+ ctx.fillStyle=color;
+ ctx.textAlign="center";
+ ctx.textBaseline="middle";
+
+ if($("showDate").checked&&$("date").value){
+  const d=new Date($("date").value+"T12:00:00");
+  const dateText=`${d.getFullYear()} / ${d.getMonth()+1} / ${d.getDate()}`;
+  ctx.font=`bold ${25*scale}px sans-serif`;
+  ctx.fillText(dateText,w*.50,h*.091,w*.43);
+ }
+
+ const arr=people.filter(p=>p.checked).map(p=>p.name);
+ const rows=Math.ceil(arr.length/2);
+ const baseSize=Number($("nameSize").value)*scale;
+ const maxAreaHeight=h*.20;
+ const lineHeight=Math.min(baseSize*1.8,maxAreaHeight/Math.max(rows,1));
+ const fontSize=Math.min(baseSize,lineHeight*.75);
+ const start=h*Number($("position").value)/100;
+ ctx.font=`bold ${fontSize}px sans-serif`;
+ arr.forEach((n,i)=>{
+  const col=i%2;
+  const row=Math.floor(i/2);
+  const x=w*(col===0?.32:.68);
+  const y=start+row*lineHeight;
+  ctx.fillText(n,x,y,w*.30);
+ });
+
+ if($("showLeader").checked&&$("leader").value.trim()){
+  ctx.font=`bold ${29*scale}px sans-serif`;
+  ctx.fillText($("leader").value.trim(),w*.64,h*.915,w*.45);
+ }
+}
+
+function downloadPoster(){
+ if(!image){alert("請先選擇底圖");return;}
+ draw();
+ try{
+  canvas.toBlob(blob=>{
+   if(!blob){alert("無法產生圖片");return;}
+   const a=document.createElement("a");
+   const url=URL.createObjectURL(blob);
+   a.href=url;
+   a.download=(names[selected]||"Locwarp")+"-海報.png";
+   document.body.appendChild(a);
+   a.click();a.remove();
+   setTimeout(()=>URL.revokeObjectURL(url),30000);
+  },"image/png");
+ }catch(e){alert("圖片輸出失敗："+e.message);}
+}
+
+["showDate","date","showLeader","leader","nameSize","color","position"]
+.forEach(id=>{
+ $(id).addEventListener("input",draw);
+ $(id).addEventListener("change",draw);
+});
+$("search").addEventListener("input",showGallery);
+
+$("date").value=new Date().toLocaleDateString("en-CA");
+renderPeople();
+loadImages();
+draw();
+</script>
+</body>
+</html>
