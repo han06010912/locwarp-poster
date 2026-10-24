@@ -1,16 +1,273 @@
-
 {
-  "version": 1,
+  "version": 2,
   "updated": "2026-10-25",
-  "flowers": {},
-  "people": [],
+  "flowers": {
+    "0837DA32-04A1-4D9D-B3C1-04CF0ED4A2DF.png": "牽牛花",
+    "0B833B7E-4771-4F7E-B82C-F3B217EB0254.png": "粉蝶花",
+    "12347548-45D5-480D-B8AE-3BE0E025BC48.png": "百合",
+    "139B7A38-068F-490D-99C5-B06FDA60D203.png": "天竺葵",
+    "1FA140E2-6810-4484-88FC-806A81BC957C.png": "玫瑰",
+    "20896A25-D188-4A43-836A-1A3051FDA37E.png": "牡丹",
+    "280599F4-02DF-41E3-8C2F-E7DE7ACA5167.png": "康乃馨",
+    "242BC38B-3D9C-4E3B-8B39-280ADF9CDFED.png": "扶桑花",
+    "21F74B40-73DE-4E59-A192-0AB4174AB11E.png": "風鈴草",
+    "321ACEE2-93BF-4F1E-BB5B-DDCA410622D4.png": "銀蓮花",
+    "3143C719-256F-469A-83D9-638808BE1EFF.png": "櫻草花",
+    "2AAA9D07-F527-4EC3-95C9-D87E7E9516EA.png": "三色堇",
+    "41AE1857-755E-4441-81EE-99F6671E6A0A.png": "勿忘草",
+    "411E98B8-C04B-4FFC-84CB-E03547EC2E9A.png": "油菜花",
+    "356A0DD0-2CC6-4425-86BF-15B50E105944.png": "矮牽牛",
+    "586AD4F9-8247-4D47-A761-FB502B9432E0.png": "雪花蓮",
+    "46F4CE2E-C380-45AB-A2DC-C02F225FADC2.png": "海芋",
+    "4F47C8E6-DC06-4AEA-B2EC-0FC6BB589066.png": "水仙花",
+    "5AED9E5B-D811-4405-AE08-64515545179D.png": "鐵線蓮",
+    "5D94741C-B1E2-4201-9A44-FA6EF68107E7.png": "梅花",
+    "630E0975-9DB5-4293-B6C3-C9909C9D5F98.png": "鼠尾草",
+    "6C5BC4F7-685E-421B-AA65-C7859DD5A23C.png": "向日葵",
+    "6D53CBAB-5E72-4AB2-8B9D-70EF5260A50E.png": "風信子",
+    "74395B3D-A274-4224-9D3F-35921BE682EA.png": "鈴蘭",
+    "7A8C00BC-8E07-46F7-94F0-9490B11E18E8.png": "蝴蝶蘭",
+    "77B064C9-49CC-487B-9419-EEA5D5E3E6CA.png": "大理花",
+    "7541163C-40BF-4061-AF14-F6DDE0C83AE8.png": "萬壽菊",
+    "8B807C34-7BE6-4951-A67D-3931A68D5010.png": "九重葛",
+    "8B18A0C2-26CF-48ED-A983-9833BAD98853.png": "彼岸花",
+    "85D58247-991A-4907-92A8-871B9206279B.png": "兔耳花",
+    "9289684E-EC5D-4B8F-8C61-6AFC6F31F13B.png": "雞冠花",
+    "939F0AA5-F534-4192-8A77-4CDA4877C668.png": "菊花",
+    "9711E071-9664-43BC-A300-98A3AF30E1C6.png": "山茶花",
+    "BBAED009-10F6-453B-B17F-38F39C44E611.png": "鬱金香",
+    "A63B010C-3849-4993-94F8-9B039344DD29.png": "大波斯菊",
+    "A103FBAF-E3C4-4872-8CEC-6F2C2A763AB3.png": "鳶尾花",
+    "BCFCFC8A-3659-4850-94CB-DEB6315E6353.png": "金魚草",
+    "CB815647-2BFC-4DC5-B47B-F7D6AAECE6DB.png": "曇花",
+    "CB9C718D-B7A9-4CEA-9C85-493634A02AC9.png": "石竹",
+    "D75AB438-94B3-4B8D-9996-054DADE98DEC.png": "洋桔梗",
+    "D4D560E7-6E03-4BAD-8D54-CC4F3678FD28.png": "鸚鵡鬱金香",
+    "D2A3D7A6-F28D-4144-A193-B25FDC4FC633.png": "美人焦",
+    "DBFF17E2-9AE7-4A80-A714-BD7A4E4A842F.png": "繡球花",
+    "DB6E65BC-D28A-4607-B654-408D2FEE0BE1.png": "小蒼蘭",
+    "D896BEE7-493D-47B6-A1A0-972D90C2DCA9.png": "聖誕紅",
+    "E73F2739-AA20-491E-983A-1CC6AE9869AE.png": "櫻花",
+    "E59B6EF8-5720-4997-8F7D-8BA57428F626.png": "薊花",
+    "E3C5B2DE-46DE-4D30-8DEF-05D4AB1F083F.png": "嘉德麗雅蘭",
+    "EB7ECD82-4645-4844-80FF-CFCD5811AF02.png": "週年紀念玫瑰",
+    "EB30E400-929A-4FC4-A2A4-B6F6E7A5A60C.png": "聖誕玫瑰",
+    "E96C74F4-5C74-4437-ABB1-B1CAA17B868E.png": "雞蛋花",
+    "F08CC53A-78C1-40AB-B494-9A68EDBE3910.png": "天堂鳥",
+    "F02E478B-01B3-4B21-B6A0-0307A77445D1.png": "龍膽",
+    "EF83B3A3-1E19-4E28-A3CD-7FB3E0B83CD7.png": "碗豆花",
+    "F1F88A5E-176C-4823-AF96-6D1340397A57.png": "睡蓮"
+  },
+  "people": [
+    {
+      "id": "p_1792878181043_qwx06e",
+      "name": "☆飄飄",
+      "checked": false
+    },
+    {
+      "id": "p_1792878181043_8lu9kd",
+      "name": "☆👻",
+      "checked": false
+    },
+    {
+      "id": "p_1792878181043_2nv6lu",
+      "name": "五十嵐 真乃",
+      "checked": false
+    },
+    {
+      "id": "p_1792878181043_c7evuo",
+      "name": "初飛者🦎🦎🦎",
+      "checked": false
+    },
+    {
+      "id": "p_1792878181043_6o63wa",
+      "name": "誠誠種花花",
+      "checked": false
+    },
+    {
+      "id": "p_1792878181043_lhxk99",
+      "name": "大文-是個Mac種花文",
+      "checked": false
+    },
+    {
+      "id": "p_1792878181043_1tvqn5",
+      "name": "✈️win",
+      "checked": false
+    },
+    {
+      "id": "p_1792878181043_upsqw6",
+      "name": "太后監察人",
+      "checked": false
+    },
+    {
+      "id": "p_1792878181043_cp9p61",
+      "name": "小PP",
+      "checked": false
+    },
+    {
+      "id": "p_1792878181043_x56upv",
+      "name": "o(*≧▽≦)ツﾟ夯",
+      "checked": false
+    },
+    {
+      "id": "p_1792878181043_w2mp5w",
+      "name": "北極啵啵南總",
+      "checked": false
+    },
+    {
+      "id": "p_1792878181043_yew6xk",
+      "name": "魚兒魚兒水中游",
+      "checked": false
+    },
+    {
+      "id": "p_1792878181043_3k4dka",
+      "name": "魚子將將將將將",
+      "checked": false
+    },
+    {
+      "id": "p_1792878181043_6cj3g4",
+      "name": "Willie",
+      "checked": false
+    },
+    {
+      "id": "p_1792878181043_mq7sbm",
+      "name": "Hsin",
+      "checked": false
+    },
+    {
+      "id": "p_1792878181043_h2r6fp",
+      "name": "IvyIvy",
+      "checked": false
+    },
+    {
+      "id": "p_1792878181043_9x4383",
+      "name": "Wen.",
+      "checked": false
+    },
+    {
+      "id": "p_1792878181043_yo5opl",
+      "name": "蔓越莓",
+      "checked": false
+    },
+    {
+      "id": "p_1792878181043_klqaxn",
+      "name": "阿北叫我種花",
+      "checked": false
+    },
+    {
+      "id": "p_1792878181043_9bptyg",
+      "name": "麥芽",
+      "checked": false
+    },
+    {
+      "id": "p_1792878181043_k16eol",
+      "name": "O",
+      "checked": false
+    },
+    {
+      "id": "p_1792878181043_0ta661",
+      "name": "Smile",
+      "checked": false
+    },
+    {
+      "id": "p_1792878181043_tgvuve",
+      "name": "Tom",
+      "checked": false
+    },
+    {
+      "id": "p_1792878181043_uqc22w",
+      "name": "くコ:彡",
+      "checked": false
+    },
+    {
+      "id": "p_1792878181043_w4mfmd",
+      "name": "球球媽",
+      "checked": false
+    },
+    {
+      "id": "p_1792878181043_plu5r8",
+      "name": "Cynthia",
+      "checked": false
+    }
+  ],
   "prefix": "🪄",
   "event": {
-    "date": "",
+    "date": "2026-10-25",
     "dateFormat": "full",
     "showDate": true,
     "leader": "",
     "showLeader": false
   },
-  "layouts": {}
+  "layouts": {
+    "0837DA32-04A1-4D9D-B3C1-04CF0ED4A2DF.png": {
+      "leader": {
+        "x": 0.6,
+        "y": 0.926,
+        "size": 32,
+        "color": "#513d33",
+        "outline": true
+      },
+      "date": {
+        "x": 0.505,
+        "y": 0.105,
+        "size": 30,
+        "color": "#513d33",
+        "outline": true
+      }
+    },
+    "0B833B7E-4771-4F7E-B82C-F3B217EB0254.png": {},
+    "12347548-45D5-480D-B8AE-3BE0E025BC48.png": {},
+    "139B7A38-068F-490D-99C5-B06FDA60D203.png": {},
+    "1FA140E2-6810-4484-88FC-806A81BC957C.png": {},
+    "20896A25-D188-4A43-836A-1A3051FDA37E.png": {},
+    "280599F4-02DF-41E3-8C2F-E7DE7ACA5167.png": {},
+    "242BC38B-3D9C-4E3B-8B39-280ADF9CDFED.png": {},
+    "21F74B40-73DE-4E59-A192-0AB4174AB11E.png": {},
+    "321ACEE2-93BF-4F1E-BB5B-DDCA410622D4.png": {},
+    "3143C719-256F-469A-83D9-638808BE1EFF.png": {},
+    "2AAA9D07-F527-4EC3-95C9-D87E7E9516EA.png": {},
+    "41AE1857-755E-4441-81EE-99F6671E6A0A.png": {},
+    "411E98B8-C04B-4FFC-84CB-E03547EC2E9A.png": {},
+    "356A0DD0-2CC6-4425-86BF-15B50E105944.png": {},
+    "586AD4F9-8247-4D47-A761-FB502B9432E0.png": {},
+    "4F47C8E6-DC06-4AEA-B2EC-0FC6BB589066.png": {},
+    "46F4CE2E-C380-45AB-A2DC-C02F225FADC2.png": {},
+    "5AED9E5B-D811-4405-AE08-64515545179D.png": {},
+    "5D94741C-B1E2-4201-9A44-FA6EF68107E7.png": {},
+    "630E0975-9DB5-4293-B6C3-C9909C9D5F98.png": {},
+    "6C5BC4F7-685E-421B-AA65-C7859DD5A23C.png": {},
+    "6D53CBAB-5E72-4AB2-8B9D-70EF5260A50E.png": {},
+    "74395B3D-A274-4224-9D3F-35921BE682EA.png": {},
+    "7A8C00BC-8E07-46F7-94F0-9490B11E18E8.png": {},
+    "77B064C9-49CC-487B-9419-EEA5D5E3E6CA.png": {},
+    "7541163C-40BF-4061-AF14-F6DDE0C83AE8.png": {},
+    "8B807C34-7BE6-4951-A67D-3931A68D5010.png": {},
+    "8B18A0C2-26CF-48ED-A983-9833BAD98853.png": {},
+    "85D58247-991A-4907-92A8-871B9206279B.png": {},
+    "9289684E-EC5D-4B8F-8C61-6AFC6F31F13B.png": {},
+    "939F0AA5-F534-4192-8A77-4CDA4877C668.png": {},
+    "9711E071-9664-43BC-A300-98A3AF30E1C6.png": {},
+    "BBAED009-10F6-453B-B17F-38F39C44E611.png": {},
+    "A63B010C-3849-4993-94F8-9B039344DD29.png": {},
+    "A103FBAF-E3C4-4872-8CEC-6F2C2A763AB3.png": {},
+    "BCFCFC8A-3659-4850-94CB-DEB6315E6353.png": {},
+    "CB815647-2BFC-4DC5-B47B-F7D6AAECE6DB.png": {},
+    "CB9C718D-B7A9-4CEA-9C85-493634A02AC9.png": {},
+    "D75AB438-94B3-4B8D-9996-054DADE98DEC.png": {},
+    "D4D560E7-6E03-4BAD-8D54-CC4F3678FD28.png": {},
+    "D2A3D7A6-F28D-4144-A193-B25FDC4FC633.png": {},
+    "DBFF17E2-9AE7-4A80-A714-BD7A4E4A842F.png": {},
+    "DB6E65BC-D28A-4607-B654-408D2FEE0BE1.png": {},
+    "D896BEE7-493D-47B6-A1A0-972D90C2DCA9.png": {},
+    "E73F2739-AA20-491E-983A-1CC6AE9869AE.png": {},
+    "E59B6EF8-5720-4997-8F7D-8BA57428F626.png": {},
+    "E3C5B2DE-46DE-4D30-8DEF-05D4AB1F083F.png": {},
+    "EB7ECD82-4645-4844-80FF-CFCD5811AF02.png": {},
+    "EB30E400-929A-4FC4-A2A4-B6F6E7A5A60C.png": {},
+    "E96C74F4-5C74-4437-ABB1-B1CAA17B868E.png": {},
+    "F08CC53A-78C1-40AB-B494-9A68EDBE3910.png": {},
+    "F02E478B-01B3-4B21-B6A0-0307A77445D1.png": {},
+    "EF83B3A3-1E19-4E28-A3CD-7FB3E0B83CD7.png": {},
+    "F1F88A5E-176C-4823-AF96-6D1340397A57.png": {}
+  }
 }
