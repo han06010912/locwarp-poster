@@ -11,9 +11,9 @@ body{margin:0;background:#f5f5ef;color:#304e40;font-family:-apple-system,BlinkMa
 header{padding:18px;background:#416f57;color:white;text-align:center;font-size:22px;font-weight:800}
 .version{font-size:12px;font-weight:400;margin-top:5px}
 main{max-width:1150px;margin:auto;padding:14px;display:grid;grid-template-columns:370px minmax(0,1fr);gap:15px}
-section{background:white;border-radius:15px;padding:16px;margin-bottom:14px;box-shadow:0 2px 12px #0000000b}
+section{background:#fff;border-radius:15px;padding:16px;margin-bottom:14px;box-shadow:0 2px 12px #0000000b}
 h3{margin:0 0 12px;font-size:17px}
-label{display:block;margin:11px 0 5px;font-size:14px}
+label{display:block;margin:10px 0 5px;font-size:14px}
 input,button,textarea,select{font:inherit}
 input[type=text],input[type=date],textarea,select{width:100%;padding:10px;border:1px solid #cbd8d0;border-radius:9px;background:white;color:#304e40}
 textarea{min-height:90px;resize:vertical}
@@ -48,7 +48,7 @@ input[type=color]{width:65px;height:39px}
 
 <header>
 🌸 Locwarp 共用海報製作
-<div class="version">手動字體大小修正版 V7</div>
+<div class="version">日期金框覆蓋版 V8</div>
 </header>
 
 <main>
@@ -62,7 +62,7 @@ input[type=color]{width:65px;height:39px}
 <button id="reload" class="alt">重新讀取共用資料</button>
 <button id="restore" class="alt">還原共用版本</button>
 </div>
-<div class="hint">個人修改儲存在目前瀏覽器；管理員可透過 shared.json 發布正式共用資料。</div>
+<div class="hint">原始底圖不會修改。個人草稿儲存在瀏覽器，正式共用資料由 shared.json 提供。</div>
 </section>
 
 <section>
@@ -71,13 +71,13 @@ input[type=color]{width:65px;height:39px}
 <div id="gallery"></div>
 <div id="imageCount" class="status"></div>
 <label>這張底圖的花種名稱</label>
-<input id="flowerName" type="text" placeholder="例如：週年紀念玫瑰">
+<input id="flowerName" type="text" placeholder="例如：粉蝶花">
 <button id="saveFlower" class="alt">儲存花種名稱</button>
 </section>
 
 <section>
 <h3>② 參與花農｜自動分欄</h3>
-<div class="hint">每行一位花農，支援日文、顏文字與 Emoji。姓名前不加魔法棒、圓點或編號。</div>
+<div class="hint">每行一位花農，支援日文、Emoji、特殊符號。姓名前不加圖示或編號。</div>
 <textarea id="newPeople" placeholder="夯夯&#10;さくら&#10;o(*≧▽≦)ツﾟ夯"></textarea>
 <div class="row">
 <button id="addPeople">加入名單</button>
@@ -87,24 +87,23 @@ input[type=color]{width:65px;height:39px}
 <div id="people"></div>
 <div class="count">目前參與：<span id="participantCount">0</span> 人</div>
 
-<label>字體粗細</label>
+<label>花農字體粗細</label>
 <select id="peopleWeight">
 <option value="400">一般</option>
 <option value="700">粗體</option>
 <option value="900">特粗體</option>
 </select>
 
-<label>花農統一字體大小：<strong id="peopleSizeValue"></strong> px</label>
+<label>花農字體大小：<strong id="peopleSizeValue"></strong> px</label>
 <input id="peopleSize" type="range" min="12" max="75" step="1">
-<div class="hint">這次字體大小完全由你決定，不會自動縮小。</div>
 
-<h3 style="margin-top:19px">欄距與行距</h3>
 <label>左右欄距：<strong id="columnGapValue"></strong> px</label>
 <input id="columnGap" type="range" min="100" max="340" step="2">
+
 <label>上下行距：<strong id="rowGapValue"></strong> px</label>
 <input id="rowGap" type="range" min="16" max="65" step="1">
 
-<h3 style="margin-top:19px">整組位置</h3>
+<h3 style="margin-top:18px">花農整組位置</h3>
 <div class="pair">
 <div>
 <label>左右 <span id="groupXValue"></span></label>
@@ -116,22 +115,49 @@ input[type=color]{width:65px;height:39px}
 </div>
 </div>
 <div class="row">
-<button id="resetGroup" class="alt">花農排版還原預設</button>
+<button id="resetGroup" class="alt">還原花農排版</button>
 </div>
 <div id="layoutWarning" class="warning"></div>
-<div class="hint">依參與人數自動分成 1～4 欄，字體大小、欄距、行距及整組位置皆由你手動調整。</div>
 </section>
 
 <section>
-<h3>③ 日期</h3>
+<h3>③ 日期與新金框</h3>
+
 <label><input id="showDate" type="checkbox" checked> 顯示日期</label>
 <input id="date" type="date">
+
 <label>日期格式</label>
 <select id="dateFormat">
 <option value="full">2026 / 10 / 25（日）</option>
 <option value="dots">2026.10.25</option>
 <option value="zh">2026年10月25日</option>
 </select>
+
+<label><input id="showDateFrame" type="checkbox" checked> 使用新金框遮住底圖原本的日期框</label>
+
+<h3 style="margin-top:18px">新日期金框調整</h3>
+<div class="hint">新框會直接蓋在原本框上，預覽與下載 PNG 的效果一致。</div>
+
+<label>金框寬度：<strong id="frameWValue"></strong></label>
+<input id="frameW" type="range" min="25" max="57" step=".5">
+
+<label>金框高度：<strong id="frameHValue"></strong></label>
+<input id="frameH" type="range" min="3" max="10" step=".2">
+
+<div class="pair">
+<div>
+<label>框左右位置 <span id="frameXValue"></span></label>
+<input id="frameX" type="range" min="35" max="65" step=".5">
+</div>
+<div>
+<label>框上下位置 <span id="frameYValue"></span></label>
+<input id="frameY" type="range" min="6" max="17" step=".2">
+</div>
+</div>
+
+<div class="row">
+<button id="resetFrame" class="alt">還原日期金框預設</button>
+</div>
 </section>
 
 <section>
@@ -141,10 +167,11 @@ input[type=color]{width:65px;height:39px}
 </section>
 
 <section>
-<h3>⑤ 日期與總召調整</h3>
-<label>選擇調整項目</label>
+<h3>⑤ 日期與總召文字調整</h3>
+<div class="hint">金框與日期文字可分開調整，總召也維持獨立設定。</div>
+<label>調整項目</label>
 <select id="target">
-<option value="date">📅 日期</option>
+<option value="date">📅 日期文字</option>
 <option value="leader">👑 本日總召</option>
 </select>
 <div class="pair">
@@ -164,15 +191,15 @@ input[type=color]{width:65px;height:39px}
 <label><input id="outline" type="checkbox"> 淺金描邊</label>
 </div>
 <div class="row">
-<button id="dateCenter" class="alt">日期置中金框</button>
+<button id="dateCenter" class="alt">日期文字置中金框</button>
 <button id="leaderCenter" class="alt">總召置中欄位</button>
 </div>
-<button id="resetLayout" class="danger">重設日期與總召位置</button>
+<button id="resetLayout" class="danger">重設日期與總召文字</button>
 </section>
 
 <section class="admin">
 <h3>⑥ 管理員｜發布共用資源</h3>
-<div class="hint">調整完成後，複製共用資料並貼到 GitHub 的 <strong>shared.json</strong>，提交後團員就能取得最新版。</div>
+<div class="hint">確認資料及金框設定後，按「複製共用資料」，貼到 GitHub 的 <strong>shared.json</strong> 並提交，團員就能使用新版設定。</div>
 <div class="row">
 <button id="copyShared">複製共用資料</button>
 <button id="downloadShared" class="alt">下載 shared.json</button>
@@ -184,7 +211,7 @@ input[type=color]{width:65px;height:39px}
 
 <section id="preview">
 <h3>海報即時預覽</h3>
-<div class="hint">花農字體大小直接生效，可拖曳整組名單、日期與總召。</div>
+<div class="hint">新金框蓋在底圖上，日期文字位於金框上方。可拖曳文字及花農整組位置。</div>
 <canvas id="canvas" width="1086" height="1448"></canvas>
 <button id="download">下載 PNG 海報</button>
 <div id="info" class="status"></div>
@@ -198,28 +225,35 @@ const OWNER="han06010912";
 const REPO="locwarp-poster";
 const API=`https://api.github.com/repos/${OWNER}/${REPO}/contents/images`;
 const $=id=>document.getElementById(id);
-const canvas=$("canvas");
-const ctx=canvas.getContext("2d");
+const canvas=$("canvas"),ctx=canvas.getContext("2d");
 
-function clone(v){return JSON.parse(JSON.stringify(v))}
-function readJSON(k,f){
+const clone=v=>JSON.parse(JSON.stringify(v));
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+
+function readJSON(key,fallback){
  try{
-  const v=localStorage.getItem(k);
-  return v===null?f:JSON.parse(v);
- }catch{return f}
+  const value=localStorage.getItem(key);
+  return value===null?fallback:JSON.parse(value);
+ }catch{return fallback}
 }
-function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
+function validNum(v,fallback){
+ return v!==null&&v!==undefined&&v!==""&&
+ Number.isFinite(Number(v))?Number(v):fallback;
+}
+
+function frameDefault(){
+ return{x:.5,y:.111,w:.43,h:.062};
+}
+
 function blank(){
  return{
   version:1,updated:"",
-  flowers:{},people:[],
-  prefix:"",
-  peopleSize:31,
-  peopleWeight:900,
-  columnGap:270,
-  rowGap:36,
-  groupX:.5,
-  groupY:.795,
+  flowers:{},people:[],prefix:"",
+  peopleSize:31,peopleWeight:900,
+  columnGap:270,rowGap:36,
+  groupX:.5,groupY:.795,
+  showDateFrame:true,
+  dateFrame:frameDefault(),
   event:{
    date:"",
    dateFormat:"full",
@@ -230,24 +264,19 @@ function blank(){
   layouts:{}
  };
 }
-function validNum(v,f){
- return v!==null&&v!==undefined&&v!==""&&
- Number.isFinite(Number(v))?Number(v):f;
-}
+
 function normalize(s){
  const d=blank();
  if(!s||typeof s!=="object")return d;
  return{
   version:validNum(s.version,1),
   updated:s.updated||"",
-  flowers:s.flowers&&typeof s.flowers==="object"?
-   clone(s.flowers):{},
-  people:Array.isArray(s.people)?
-   s.people.map((p,i)=>({
-    id:String(p.id||"p_"+i),
-    name:String(p.name||""),
-    checked:p.checked!==false
-   })):[],
+  flowers:s.flowers&&typeof s.flowers==="object"?clone(s.flowers):{},
+  people:Array.isArray(s.people)?s.people.map((p,i)=>({
+   id:String(p.id||"p_"+i),
+   name:String(p.name||""),
+   checked:p.checked!==false
+  })):[],
   prefix:"",
   peopleSize:validNum(s.peopleSize,31),
   peopleWeight:[400,700,900].includes(Number(s.peopleWeight))?
@@ -256,9 +285,15 @@ function normalize(s){
   rowGap:validNum(s.rowGap,36),
   groupX:validNum(s.groupX,.5),
   groupY:validNum(s.groupY,.795),
+  showDateFrame:s.showDateFrame!==false,
+  dateFrame:{
+   x:validNum(s.dateFrame?.x,.5),
+   y:validNum(s.dateFrame?.y,.111),
+   w:validNum(s.dateFrame?.w,.43),
+   h:validNum(s.dateFrame?.h,.062)
+  },
   event:{...d.event,...(s.event||{})},
-  layouts:s.layouts&&typeof s.layouts==="object"?
-   clone(s.layouts):{}
+  layouts:s.layouts&&typeof s.layouts==="object"?clone(s.layouts):{}
  };
 }
 
@@ -269,12 +304,29 @@ let hitAreas=[],drag=null,imageToken=0,sharedReady=false;
 function draftKey(){
  return "locwarp_draft_"+shared.version;
 }
+
+function currentLayout(){
+ if(!selectedFile)return {};
+ return data.layouts[selectedFile]||
+  (data.layouts[selectedFile]={});
+}
+
+function getFrame(){
+ const saved=currentLayout().dateFrame||{};
+ return{
+  ...data.dateFrame,
+  ...saved
+ };
+}
+
 function saveDraft(){
  data.peopleSize=Number($("peopleSize").value);
  data.peopleWeight=Number($("peopleWeight").value);
  data.columnGap=Number($("columnGap").value);
  data.rowGap=Number($("rowGap").value);
+ data.showDateFrame=$("showDateFrame").checked;
  data.prefix="";
+
  data.event={
   date:$("date").value,
   dateFormat:$("dateFormat").value,
@@ -282,6 +334,7 @@ function saveDraft(){
   leader:$("leader").value,
   showLeader:$("showLeader").checked
  };
+
  try{
   localStorage.setItem(draftKey(),JSON.stringify(data));
  }catch{
@@ -289,35 +342,67 @@ function saveDraft(){
  }
  render();
 }
+
+function updateGroupControls(){
+ $("groupX").value=clamp(data.groupX*100,20,80);
+ $("groupY").value=clamp(data.groupY*100,65,90);
+ $("groupXValue").textContent=Math.round(data.groupX*100)+"%";
+ $("groupYValue").textContent=Math.round(data.groupY*100)+"%";
+ $("peopleSizeValue").textContent=$("peopleSize").value;
+ $("columnGapValue").textContent=$("columnGap").value;
+ $("rowGapValue").textContent=$("rowGap").value;
+}
+
+function updateFrameControls(){
+ const f=getFrame();
+ $("frameX").value=clamp(f.x*100,35,65);
+ $("frameY").value=clamp(f.y*100,6,17);
+ $("frameW").value=clamp(f.w*100,25,57);
+ $("frameH").value=clamp(f.h*100,3,10);
+
+ $("frameXValue").textContent=Math.round(f.x*100)+"%";
+ $("frameYValue").textContent=(f.y*100).toFixed(1)+"%";
+ $("frameWValue").textContent=(f.w*100).toFixed(1)+"%";
+ $("frameHValue").textContent=(f.h*100).toFixed(1)+"%";
+}
+
 function applyData(v){
  data=normalize(v);
  $("peopleSize").value=clamp(data.peopleSize,12,75);
  $("peopleWeight").value=String(data.peopleWeight);
  $("columnGap").value=clamp(data.columnGap,100,340);
  $("rowGap").value=clamp(data.rowGap,16,65);
+
  $("date").value=data.event.date||"";
  $("dateFormat").value=data.event.dateFormat||"full";
  $("showDate").checked=data.event.showDate!==false;
+ $("showDateFrame").checked=data.showDateFrame;
  $("leader").value=data.event.leader||"";
  $("showLeader").checked=!!data.event.showLeader;
+
  updateGroupControls();
+ updateFrameControls();
  drawPeopleList();
  drawGallery();
  updateFlowerInput();
  updateFixedControls();
  render();
 }
+
 function recoverLegacy(){
  const names=readJSON("lw_names",{});
  const people=readJSON("lw_people",[]);
  let nc=0,pc=0;
+
  if(names&&typeof names==="object"){
   for(const [file,name] of Object.entries(names)){
    if(typeof name==="string"&&name.trim()&&!data.flowers[file]){
-    data.flowers[file]=name;nc++;
+    data.flowers[file]=name;
+    nc++;
    }
   }
  }
+
  if(Array.isArray(people)){
   people.forEach((p,i)=>{
    if(!p||!p.name)return;
@@ -331,12 +416,16 @@ function recoverLegacy(){
    }
   });
  }
+
  if(nc||pc){
   $("recovery").textContent=
-   `補入舊版資料：${nc} 筆花名、${pc} 位花農。`;
-  drawPeopleList();drawGallery();saveDraft();
+   `補入舊資料：${nc} 筆花名、${pc} 位花農。`;
+  drawPeopleList();
+  drawGallery();
+  saveDraft();
  }
 }
+
 async function loadShared(official=false){
  $("status").textContent="正在讀取共用資料……";
  try{
@@ -344,12 +433,15 @@ async function loadShared(official=false){
    cache:"no-store"
   });
   if(!r.ok)throw Error("HTTP "+r.status);
+
   shared=normalize(await r.json());
   sharedReady=true;
   const draft=official?null:readJSON(draftKey(),null);
   applyData(draft||shared);
+
   $("status").textContent="已載入共用版本 "+shared.version+
    (shared.updated?"｜更新："+shared.updated:"");
+
   if(!official)recoverLegacy();
  }catch(e){
   sharedReady=false;
@@ -359,6 +451,7 @@ async function loadShared(official=false){
    "共用資料讀取失敗："+e.message+"；未刪除草稿。";
  }
 }
+
 async function loadImages(){
  $("imageCount").textContent="正在讀取底圖……";
  try{
@@ -368,8 +461,10 @@ async function loadImages(){
   files=list.filter(f=>
    f.type==="file"&&/\.(png|jpe?g|webp)$/i.test(f.name)
   ).map(f=>({name:f.name,url:f.download_url}));
+
   $("imageCount").textContent="共 "+files.length+" 張底圖";
   drawGallery();
+
   if(files.length){
    chooseImage(files.some(f=>f.name===selectedFile)?
     selectedFile:files[0].name);
@@ -378,31 +473,45 @@ async function loadImages(){
   $("imageCount").textContent="底圖讀取失敗："+e.message;
  }
 }
+
 function drawGallery(){
  const q=$("search").value.trim().toLocaleLowerCase();
- const box=$("gallery");box.replaceChildren();
+ const box=$("gallery");
+ box.replaceChildren();
+
  files.filter(f=>
   (data.flowers[f.name]||f.name).toLocaleLowerCase().includes(q)
  ).forEach(f=>{
   const button=document.createElement("button");
   button.className="thumb"+(selectedFile===f.name?" active":"");
+
   const img=document.createElement("img");
-  img.src=f.url;img.loading="lazy";
+  img.src=f.url;
+  img.loading="lazy";
   img.alt=data.flowers[f.name]||f.name;
+
   const title=document.createElement("span");
   title.textContent=data.flowers[f.name]||
    f.name.replace(/\.[^.]+$/,"");
+
   button.append(img,title);
   button.onclick=()=>chooseImage(f.name);
   box.appendChild(button);
  });
 }
+
 function chooseImage(filename){
  const f=files.find(x=>x.name===filename);
  if(!f)return;
- selectedFile=filename;poster=null;
+
+ selectedFile=filename;
+ poster=null;
  const token=++imageToken;
- drawGallery();updateFlowerInput();
+
+ drawGallery();
+ updateFlowerInput();
+ updateFrameControls();
+
  const img=new Image();
  img.crossOrigin="anonymous";
  img.onload=()=>{
@@ -410,49 +519,73 @@ function chooseImage(filename){
   poster=img;
   canvas.width=img.naturalWidth;
   canvas.height=img.naturalHeight;
-  updateFixedControls();render();
+  updateFixedControls();
+  render();
  };
  img.onerror=()=>{
   $("imageCount").textContent="無法載入："+filename;
  };
- img.src=f.url;render();
+ img.src=f.url;
+ render();
 }
+
 function updateFlowerInput(){
  $("flowerName").value=selectedFile?
   (data.flowers[selectedFile]||""):"";
 }
-function drawPeopleList(){
- const box=$("people");box.replaceChildren();
- data.people.forEach((p,i)=>{
-  const row=document.createElement("div");row.className="person";
-  const check=document.createElement("input");
-  check.type="checkbox";check.checked=p.checked;
-  check.onchange=()=>{
-   p.checked=check.checked;countPeople();saveDraft();
-  };
-  const name=document.createElement("span");
-  name.textContent=p.name;
-  const edit=document.createElement("button");
-  edit.className="alt";edit.textContent="修改";
-  edit.onclick=()=>{
-   const n=prompt("修改花農姓名",p.name);
-   if(n===null||!n.trim())return;
-   p.name=n.trim();drawPeopleList();saveDraft();
-  };
-  const del=document.createElement("button");
-  del.className="danger";del.textContent="刪除";
-  del.onclick=()=>{
-   if(!confirm("確定刪除「"+p.name+"」？"))return;
-   data.people.splice(i,1);drawPeopleList();saveDraft();
-  };
-  row.append(check,name,edit,del);box.appendChild(row);
- });
- countPeople();
-}
+
 function countPeople(){
  $("participantCount").textContent=
   data.people.filter(p=>p.checked).length;
 }
+
+function drawPeopleList(){
+ const box=$("people");
+ box.replaceChildren();
+
+ data.people.forEach((p,i)=>{
+  const row=document.createElement("div");
+  row.className="person";
+
+  const check=document.createElement("input");
+  check.type="checkbox";
+  check.checked=p.checked;
+  check.onchange=()=>{
+   p.checked=check.checked;
+   countPeople();
+   saveDraft();
+  };
+
+  const name=document.createElement("span");
+  name.textContent=p.name;
+
+  const edit=document.createElement("button");
+  edit.className="alt";
+  edit.textContent="修改";
+  edit.onclick=()=>{
+   const n=prompt("修改花農姓名",p.name);
+   if(n===null||!n.trim())return;
+   p.name=n.trim();
+   drawPeopleList();
+   saveDraft();
+  };
+
+  const del=document.createElement("button");
+  del.className="danger";
+  del.textContent="刪除";
+  del.onclick=()=>{
+   if(!confirm("確定刪除「"+p.name+"」？"))return;
+   data.people.splice(i,1);
+   drawPeopleList();
+   saveDraft();
+  };
+
+  row.append(check,name,edit,del);
+  box.appendChild(row);
+ });
+ countPeople();
+}
+
 function addPeople(){
  $("newPeople").value.split(/\r?\n/)
   .map(x=>x.trim()).filter(Boolean).forEach(name=>{
@@ -463,27 +596,31 @@ function addPeople(){
     });
    }
   });
- $("newPeople").value="";drawPeopleList();saveDraft();
+ $("newPeople").value="";
+ drawPeopleList();
+ saveDraft();
 }
-function currentLayout(){
- if(!selectedFile)return {};
- return data.layouts[selectedFile]||
-  (data.layouts[selectedFile]={});
-}
+
 function fixedDefault(key){
  return key==="date"?
-  {x:.5,y:.112,size:43,color:"#513d33",outline:true}:
+  {x:.5,y:.111,size:43,color:"#6a3826",outline:false}:
   {x:.60,y:.926,size:42,color:"#513d33",outline:true};
 }
+
 function getFixed(key){
- const previous=currentLayout()[key]||{};
- return {...fixedDefault(key),...previous};
+ return{
+  ...fixedDefault(key),
+  ...(currentLayout()[key]||{})
+ };
 }
+
 function setFixed(key,changes){
  if(!selectedFile)return;
  currentLayout()[key]={...getFixed(key),...changes};
- saveDraft();updateFixedControls();
+ saveDraft();
+ updateFixedControls();
 }
+
 function updateFixedControls(){
  const p=getFixed(selectedTarget);
  $("target").value=selectedTarget;
@@ -496,52 +633,139 @@ function updateFixedControls(){
  $("yValue").textContent=Math.round(p.y*100)+"%";
  $("sizeValue").textContent=p.size+"px";
 }
-function updateGroupControls(){
- $("groupX").value=clamp(data.groupX*100,20,80);
- $("groupY").value=clamp(data.groupY*100,65,90);
- $("groupXValue").textContent=Math.round(data.groupX*100)+"%";
- $("groupYValue").textContent=Math.round(data.groupY*100)+"%";
- $("peopleSizeValue").textContent=$("peopleSize").value;
- $("columnGapValue").textContent=$("columnGap").value;
- $("rowGapValue").textContent=$("rowGap").value;
-}
+
 function dateText(){
  const v=$("date").value;
  if(!v)return "";
  const [y,m,d]=v.split("-").map(Number);
  const weekday="日一二三四五六"[new Date(y,m-1,d).getDay()];
+
  if($("dateFormat").value==="dots")
   return `${y}.${String(m).padStart(2,"0")}.${String(d).padStart(2,"0")}`;
  if($("dateFormat").value==="zh")
   return `${y}年${m}月${d}日`;
+
  return `${y} / ${String(m).padStart(2,"0")} / ${String(d).padStart(2,"0")}（${weekday}）`;
 }
+
 function font(size,weight){
  return `${weight} ${size}px "PingFang TC","Hiragino Kaku Gothic ProN","Noto Sans CJK TC","Apple Color Emoji",system-ui,sans-serif`;
 }
+
+function roundedRect(x,y,w,h,r){
+ r=Math.min(r,w/2,h/2);
+ ctx.beginPath();
+ ctx.moveTo(x+r,y);
+ ctx.lineTo(x+w-r,y);
+ ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+ ctx.lineTo(x+w,y+h-r);
+ ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+ ctx.lineTo(x+r,y+h);
+ ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+ ctx.lineTo(x,y+r);
+ ctx.quadraticCurveTo(x,y,x+r,y);
+ ctx.closePath();
+}
+
+/* 新金框蓋住原始底圖的舊金框 */
+function drawDateFrame(){
+ if(!$("showDateFrame").checked||
+    !$("showDate").checked||
+    !$("date").value)return;
+
+ const w=canvas.width,h=canvas.height;
+ const f=getFrame();
+
+ const bw=f.w*w;
+ const bh=f.h*h;
+ const x=f.x*w-bw/2;
+ const y=f.y*h-bh/2;
+ const radius=bh*.24;
+ const scale=w/1086;
+
+ ctx.save();
+
+ ctx.shadowColor="rgba(90,58,20,.28)";
+ ctx.shadowBlur=12*scale;
+ ctx.shadowOffsetY=3*scale;
+
+ const fill=ctx.createLinearGradient(0,y,0,y+bh);
+ fill.addColorStop(0,"#fffdf5");
+ fill.addColorStop(.52,"#fff8e9");
+ fill.addColorStop(1,"#f0dfba");
+
+ roundedRect(x,y,bw,bh,radius);
+ ctx.fillStyle=fill;
+ ctx.fill();
+
+ ctx.shadowColor="transparent";
+ ctx.shadowBlur=0;
+ ctx.shadowOffsetY=0;
+
+ roundedRect(x,y,bw,bh,radius);
+ ctx.lineWidth=5*scale;
+ ctx.strokeStyle="#8c5723";
+ ctx.stroke();
+
+ roundedRect(
+  x+3*scale,y+3*scale,
+  bw-6*scale,bh-6*scale,
+  radius*.85
+ );
+ ctx.lineWidth=3*scale;
+ ctx.strokeStyle="#d6aa5c";
+ ctx.stroke();
+
+ roundedRect(
+  x+8*scale,y+8*scale,
+  bw-16*scale,bh-16*scale,
+  radius*.67
+ );
+ ctx.lineWidth=1.5*scale;
+ ctx.strokeStyle="#fff4d3";
+ ctx.stroke();
+
+ ctx.restore();
+}
+
 function drawFixed(key,text){
- const p=getFixed(key),w=canvas.width,h=canvas.height;
- const scale=w/1086,x=p.x*w,y=p.y*h,size=p.size*scale;
- const maxWidth=key==="date"?w*.65:w*.56;
+ const p=getFixed(key);
+ const w=canvas.width,h=canvas.height;
+ const scale=w/1086;
+
+ const x=p.x*w,y=p.y*h,size=p.size*scale;
+ const maxWidth=key==="date"?
+  (getFrame().w*w*.88):w*.56;
+
  ctx.save();
  ctx.font=font(size,800);
- ctx.textAlign="center";ctx.textBaseline="middle";
+ ctx.textAlign="center";
+ ctx.textBaseline="middle";
  ctx.lineJoin="round";
+
  if(p.outline){
   ctx.strokeStyle="#fff4da";
   ctx.lineWidth=Math.max(2,3.5*scale);
   ctx.strokeText(text,x,y,maxWidth);
  }
+
  ctx.fillStyle=p.color;
  ctx.fillText(text,x,y,maxWidth);
- const tw=Math.max(Math.min(ctx.measureText(text).width,maxWidth),size*1.5);
+
+ const tw=Math.max(
+  Math.min(ctx.measureText(text).width,maxWidth),
+  size*1.5
+ );
+
  hitAreas.push({
-  key,x,y,left:x-tw/2-15*scale,
+  key,x,y,
+  left:x-tw/2-15*scale,
   right:x+tw/2+15*scale,
   top:y-size,bottom:y+size
  });
  ctx.restore();
 }
+
 function columnsFor(n){
  if(n<=6)return 1;
  if(n<=16)return 2;
@@ -549,7 +773,6 @@ function columnsFor(n){
  return 4;
 }
 
-/* 關鍵修正：花農字體大小不再自動縮小 */
 function drawPeopleGroup(){
  const persons=data.people.filter(p=>p.checked);
  const count=persons.length;
@@ -560,13 +783,13 @@ function drawPeopleGroup(){
  const cols=columnsFor(count);
  const size=Number($("peopleSize").value)*scale;
  const weight=Number($("peopleWeight").value);
- const colGap=Number($("columnGap").value)*scale;
- const rowGap=Number($("rowGap").value)*scale;
+ const gapX=Number($("columnGap").value)*scale;
+ const gapY=Number($("rowGap").value)*scale;
  const cx=data.groupX*w,cy=data.groupY*h;
+
  const base=Math.floor(count/cols),extra=count%cols;
- const lengths=Array.from({length:cols},(_,i)=>
-  base+(i<extra?1:0)
- );
+ const rows=Array.from({length:cols},
+  (_,i)=>base+(i<extra?1:0));
 
  ctx.save();
  ctx.fillStyle="#344b40";
@@ -575,40 +798,35 @@ function drawPeopleGroup(){
  ctx.textAlign="center";
 
  let index=0;
- let widest=0;
- let outerLeft=w,outerRight=0,outerTop=h,outerBottom=0;
- let overlap=false;
-
+ let left=w,right=0,top=h,bottom=0;
  const rects=[];
 
  for(let c=0;c<cols;c++){
-  const rows=lengths[c];
-  const x=cx+(c-(cols-1)/2)*colGap;
-  const firstY=cy-(rows-1)*rowGap/2;
+  const x=cx+(c-(cols-1)/2)*gapX;
+  const startY=cy-(rows[c]-1)*gapY/2;
 
-  for(let r=0;r<rows;r++){
-   const p=persons[index++];
-   const y=firstY+r*rowGap;
+  for(let r=0;r<rows[c];r++){
+   const person=persons[index++];
+   const y=startY+r*gapY;
+   const tw=ctx.measureText(person.name).width;
 
-   const width=ctx.measureText(p.name).width;
-   widest=Math.max(widest,width);
+   ctx.fillText(person.name,x,y);
+
    const rect={
-    left:x-width/2,right:x+width/2,
+    left:x-tw/2,right:x+tw/2,
     top:y-size*.65,bottom:y+size*.65
    };
    rects.push(rect);
 
-   /* 不使用 maxWidth：尊重滑桿字體大小 */
-   ctx.fillText(p.name,x,y);
-
-   outerLeft=Math.min(outerLeft,rect.left);
-   outerRight=Math.max(outerRight,rect.right);
-   outerTop=Math.min(outerTop,rect.top);
-   outerBottom=Math.max(outerBottom,rect.bottom);
+   left=Math.min(left,rect.left);
+   right=Math.max(right,rect.right);
+   top=Math.min(top,rect.top);
+   bottom=Math.max(bottom,rect.bottom);
   }
  }
 
- for(let a=0;a<rects.length;a++){
+ let overlap=false;
+ for(let a=0;a<rects.length&&!overlap;a++){
   for(let b=a+1;b<rects.length;b++){
    const A=rects[a],B=rects[b];
    if(A.left<B.right&&A.right>B.left&&
@@ -617,112 +835,140 @@ function drawPeopleGroup(){
     break;
    }
   }
-  if(overlap)break;
  }
 
- const outside=outerLeft<w*.07||
-  outerRight>w*.93||
-  outerTop<h*.69||
-  outerBottom>h*.895;
-
- if(overlap||outside){
+ if(overlap||left<w*.07||right>w*.93||
+    top<h*.69||bottom>h*.895){
   $("layoutWarning").textContent=
-   "提醒：目前的字體大小、欄距或行距可能讓姓名重疊，或超出金框。可以調整間距或縮小字體。";
+   "提醒：目前姓名可能重疊或超出金框，請調整字體、欄距、行距或整組位置。";
  }
 
  hitAreas.push({
   key:"group",x:cx,y:cy,
-  left:clamp(outerLeft-15*scale,0,w),
-  right:clamp(outerRight+15*scale,0,w),
-  top:clamp(outerTop-15*scale,0,h),
-  bottom:clamp(outerBottom+15*scale,0,h)
+  left:clamp(left-15*scale,0,w),
+  right:clamp(right+15*scale,0,w),
+  top:clamp(top-15*scale,0,h),
+  bottom:clamp(bottom+15*scale,0,h)
  });
 
  ctx.restore();
 }
+
 function render(){
  const w=canvas.width,h=canvas.height;
  ctx.clearRect(0,0,w,h);
- if(poster)ctx.drawImage(poster,0,0,w,h);
- else{
-  ctx.fillStyle="#f3f0e7";ctx.fillRect(0,0,w,h);
-  ctx.fillStyle="#58705e";ctx.textAlign="center";
+
+ if(poster){
+  ctx.drawImage(poster,0,0,w,h);
+ }else{
+  ctx.fillStyle="#f3f0e7";
+  ctx.fillRect(0,0,w,h);
+  ctx.fillStyle="#58705e";
   ctx.font="28px sans-serif";
-  ctx.fillText("請先選擇海報底圖",w/2,h/2);
+  ctx.textAlign="center";
+  ctx.fillText("請先選擇底圖",w/2,h/2);
  }
+
  hitAreas=[];
+
+ /* 必須先畫金框，再畫日期文字 */
+ drawDateFrame();
+
  if($("showDate").checked&&$("date").value)
   drawFixed("date",dateText());
+
  if($("showLeader").checked&&$("leader").value.trim())
   drawFixed("leader",$("leader").value.trim());
+
  drawPeopleGroup();
 }
+
 function point(e){
- const r=canvas.getBoundingClientRect();
+ const rect=canvas.getBoundingClientRect();
  return{
-  x:(e.clientX-r.left)*canvas.width/r.width,
-  y:(e.clientY-r.top)*canvas.height/r.height
+  x:(e.clientX-rect.left)*canvas.width/rect.width,
+  y:(e.clientY-rect.top)*canvas.height/rect.height
  };
 }
+
 canvas.addEventListener("pointerdown",e=>{
  const p=point(e);
  const hit=[...hitAreas].reverse().find(a=>
-  p.x>=a.left&&p.x<=a.right&&p.y>=a.top&&p.y<=a.bottom
+  p.x>=a.left&&p.x<=a.right&&
+  p.y>=a.top&&p.y<=a.bottom
  );
  if(!hit)return;
+
  if(hit.key!=="group"){
-  selectedTarget=hit.key;updateFixedControls();
+  selectedTarget=hit.key;
+  updateFixedControls();
  }
+
  drag={key:hit.key,dx:p.x-hit.x,dy:p.y-hit.y};
  canvas.setPointerCapture(e.pointerId);
  e.preventDefault();
 });
+
 canvas.addEventListener("pointermove",e=>{
  if(!drag)return;
  const p=point(e);
  const x=(p.x-drag.dx)/canvas.width;
  const y=(p.y-drag.dy)/canvas.height;
+
  if(drag.key==="group"){
   data.groupX=clamp(x,.20,.80);
   data.groupY=clamp(y,.65,.90);
-  updateGroupControls();saveDraft();
+  updateGroupControls();
+  saveDraft();
  }else{
   setFixed(drag.key,{
-   x:clamp(x,.03,.97),y:clamp(y,.02,.98)
+   x:clamp(x,.03,.97),
+   y:clamp(y,.02,.98)
   });
  }
  e.preventDefault();
 });
+
 ["pointerup","pointercancel","lostpointercapture"].forEach(name=>
  canvas.addEventListener(name,()=>drag=null)
 );
 
 function downloadPoster(){
- if(!poster){alert("請先選擇海報底圖");return}
+ if(!poster){alert("請先選擇底圖");return}
  render();
+
  canvas.toBlob(blob=>{
   if(!blob){alert("PNG 產生失敗");return}
   const url=URL.createObjectURL(blob);
   const a=document.createElement("a");
+
   a.href=url;
   a.download=(data.flowers[selectedFile]||"Locwarp")+"-海報.png";
-  document.body.appendChild(a);a.click();a.remove();
-  $("info").textContent="已產生海報，請查看 Safari 下載項目。";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+
+  $("info").textContent="海報已產生，請查看 Safari 下載項目。";
   setTimeout(()=>URL.revokeObjectURL(url),60000);
  },"image/png");
 }
+
 function publishedData(){
  const output=clone(data);
  output.version=Number(shared.version||0)+1;
+
  const now=new Date();
  output.updated=now.getFullYear()+"-"+
   String(now.getMonth()+1).padStart(2,"0")+"-"+
   String(now.getDate()).padStart(2,"0");
+
  output.prefix="";
  output.peopleSize=Number($("peopleSize").value);
  output.peopleWeight=Number($("peopleWeight").value);
  output.columnGap=Number($("columnGap").value);
  output.rowGap=Number($("rowGap").value);
+ output.showDateFrame=$("showDateFrame").checked;
+
  output.event={
   date:$("date").value,
   dateFormat:$("dateFormat").value,
@@ -730,84 +976,146 @@ function publishedData(){
   leader:$("leader").value,
   showLeader:$("showLeader").checked
  };
+
  return JSON.stringify(output,null,2);
 }
+
 async function copyShared(){
  if(!sharedReady){alert("尚未讀取 shared.json");return}
- const value=publishedData();
+
+ const content=publishedData();
  try{
-  await navigator.clipboard.writeText(value);
+  await navigator.clipboard.writeText(content);
   $("adminStatus").textContent=
    "已複製，請貼到 GitHub 的 shared.json 並提交。";
  }catch{
   const t=document.createElement("textarea");
-  t.value=value;t.style.position="fixed";t.style.top="0";
-  document.body.appendChild(t);t.focus();t.select();
-  const ok=document.execCommand("copy");t.remove();
+  t.value=content;
+  t.style.position="fixed";
+  t.style.top="0";
+  document.body.appendChild(t);
+  t.focus();
+  t.select();
+
+  const ok=document.execCommand("copy");
+  t.remove();
+
   $("adminStatus").textContent=ok?
-   "已複製，請貼到 shared.json。":"複製失敗，請改用下載。";
+   "已複製，可貼到 shared.json。":
+   "複製失敗，請改用下載功能。";
  }
 }
+
 function downloadShared(){
  if(!sharedReady){alert("尚未讀取 shared.json");return}
+
  const blob=new Blob([publishedData()],{
   type:"application/json;charset=utf-8"
  });
  const url=URL.createObjectURL(blob);
  const a=document.createElement("a");
- a.href=url;a.download="shared.json";
- document.body.appendChild(a);a.click();a.remove();
+
+ a.href=url;
+ a.download="shared.json";
+ document.body.appendChild(a);
+ a.click();
+ a.remove();
+
  setTimeout(()=>URL.revokeObjectURL(url),60000);
 }
 
+/* 按鈕事件 */
+
 $("reload").onclick=()=>loadShared(false);
+
 $("restore").onclick=async()=>{
  if(!sharedReady)return;
  if(!confirm("確定捨棄目前草稿，還原共用版本？"))return;
  localStorage.removeItem(draftKey());
  await loadShared(true);
 };
+
 $("search").oninput=drawGallery;
+
 $("saveFlower").onclick=()=>{
  if(!selectedFile)return;
  const name=$("flowerName").value.trim();
  if(name)data.flowers[selectedFile]=name;
  else delete data.flowers[selectedFile];
- drawGallery();saveDraft();
+ drawGallery();
+ saveDraft();
 };
+
 $("addPeople").onclick=addPeople;
+
 $("selectAll").onclick=()=>{
  data.people.forEach(p=>p.checked=true);
- drawPeopleList();saveDraft();
+ drawPeopleList();
+ saveDraft();
 };
+
 $("selectNone").onclick=()=>{
  data.people.forEach(p=>p.checked=false);
- drawPeopleList();saveDraft();
+ drawPeopleList();
+ saveDraft();
 };
+
 ["peopleSize","columnGap","rowGap"].forEach(id=>{
  $(id).oninput=()=>{
   updateGroupControls();
   saveDraft();
  };
 });
+
 $("peopleWeight").onchange=saveDraft;
+
 ["groupX","groupY"].forEach(id=>{
  $(id).oninput=()=>{
   data.groupX=Number($("groupX").value)/100;
   data.groupY=Number($("groupY").value)/100;
-  updateGroupControls();saveDraft();
+  updateGroupControls();
+  saveDraft();
  };
 });
+
 $("resetGroup").onclick=()=>{
- data.groupX=.5;data.groupY=.795;
+ data.groupX=.5;
+ data.groupY=.795;
+ $("peopleSize").value=31;
  $("columnGap").value=270;
  $("rowGap").value=36;
- $("peopleSize").value=31;
- updateGroupControls();saveDraft();
+ updateGroupControls();
+ saveDraft();
 };
+
+/* 日期框設定：只存到目前這張底圖 */
+["frameX","frameY","frameW","frameH"].forEach(id=>{
+ $(id).oninput=()=>{
+  currentLayout().dateFrame={
+   x:Number($("frameX").value)/100,
+   y:Number($("frameY").value)/100,
+   w:Number($("frameW").value)/100,
+   h:Number($("frameH").value)/100
+  };
+  updateFrameControls();
+  saveDraft();
+ };
+});
+
+$("showDateFrame").onchange=saveDraft;
+
+$("resetFrame").onclick=()=>{
+ if(!selectedFile)return;
+ delete currentLayout().dateFrame;
+ updateFrameControls();
+ saveDraft();
+};
+
 $("target").onchange=()=>{
- selectedTarget=$("target").value;updateFixedControls();
+ selectedTarget=$("target").value;
+ updateFixedControls();
 };
+
 [["posX","x"],["posY","y"],["fontSize","size"]].forEach(([id,key])=>{
  $(id).oninput=()=>{
   setFixed(selectedTarget,{
@@ -816,29 +1124,41 @@ $("target").onchange=()=>{
   });
  };
 });
+
 $("fontColor").oninput=()=>
  setFixed(selectedTarget,{color:$("fontColor").value});
+
 $("outline").onchange=()=>
  setFixed(selectedTarget,{outline:$("outline").checked});
+
 $("dateCenter").onclick=()=>{
- selectedTarget="date";setFixed("date",{x:.5,y:.112});
+ selectedTarget="date";
+ const frame=getFrame();
+ setFixed("date",{x:frame.x,y:frame.y});
 };
+
 $("leaderCenter").onclick=()=>{
- selectedTarget="leader";setFixed("leader",{x:.60,y:.926});
+ selectedTarget="leader";
+ setFixed("leader",{x:.60,y:.926});
 };
+
 $("resetLayout").onclick=()=>{
  if(!selectedFile)return;
- if(!confirm("重設日期與總召位置？"))return;
+ if(!confirm("確定重設日期與總召文字設定？"))return;
+
  if(data.layouts[selectedFile]){
   delete data.layouts[selectedFile].date;
   delete data.layouts[selectedFile].leader;
  }
- saveDraft();updateFixedControls();
+ saveDraft();
+ updateFixedControls();
 };
+
 ["date","dateFormat","showDate","showLeader","leader"].forEach(id=>{
  $(id).addEventListener("input",saveDraft);
  $(id).addEventListener("change",saveDraft);
 });
+
 $("download").onclick=downloadPoster;
 $("copyShared").onclick=copyShared;
 $("downloadShared").onclick=downloadShared;
@@ -847,6 +1167,7 @@ async function start(){
  await loadShared(false);
  await loadImages();
 }
+
 start();
 </script>
 </body>
