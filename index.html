@@ -25,6 +25,7 @@ input[type=checkbox]{width:18px;height:18px;vertical-align:middle;accent-color:#
 input[type=range]{width:100%;accent-color:#407358}
 input[type=color]{width:65px;height:39px}
 .hint,.status{font-size:13px;line-height:1.6;color:#617666}
+.warning{font-size:13px;color:#98532a;line-height:1.6}
 #gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;max-height:330px;overflow:auto;margin:12px 0}
 .thumb{border:2px solid transparent;border-radius:9px;padding:5px;background:#f3f6f1;color:#345743;min-width:0}
 .thumb.active{border-color:#428762}
@@ -47,7 +48,7 @@ input[type=color]{width:65px;height:39px}
 
 <header>
 🌸 Locwarp 共用海報製作
-<div class="version">手動欄距／行距版 V6</div>
+<div class="version">手動字體大小修正版 V7</div>
 </header>
 
 <main>
@@ -61,10 +62,7 @@ input[type=color]{width:65px;height:39px}
 <button id="reload" class="alt">重新讀取共用資料</button>
 <button id="restore" class="alt">還原共用版本</button>
 </div>
-<div class="hint">
-個人修改會先儲存在瀏覽器。
-管理員可透過 shared.json 發布正式共用資料。
-</div>
+<div class="hint">個人修改儲存在目前瀏覽器；管理員可透過 shared.json 發布正式共用資料。</div>
 </section>
 
 <section>
@@ -72,107 +70,61 @@ input[type=color]{width:65px;height:39px}
 <input id="search" type="text" placeholder="搜尋花種名稱">
 <div id="gallery"></div>
 <div id="imageCount" class="status"></div>
-<label>目前圖片的花種名稱</label>
-<input id="flowerName" type="text" placeholder="例如：鳶尾花">
+<label>這張底圖的花種名稱</label>
+<input id="flowerName" type="text" placeholder="例如：週年紀念玫瑰">
 <button id="saveFlower" class="alt">儲存花種名稱</button>
 </section>
 
 <section>
 <h3>② 參與花農｜自動分欄</h3>
-<div class="hint">
-每行一位花農，支援日文、Emoji、顏文字與特殊符號。
-姓名前面不會出現魔法棒、圓點或編號。
-</div>
-
-<textarea id="newPeople"
-placeholder="夯夯&#10;さくら&#10;o(*≧▽≦)ツﾟ夯"></textarea>
-
+<div class="hint">每行一位花農，支援日文、顏文字與 Emoji。姓名前不加魔法棒、圓點或編號。</div>
+<textarea id="newPeople" placeholder="夯夯&#10;さくら&#10;o(*≧▽≦)ツﾟ夯"></textarea>
 <div class="row">
 <button id="addPeople">加入名單</button>
 <button id="selectAll" class="alt">全選</button>
 <button id="selectNone" class="alt">全不選</button>
 </div>
-
 <div id="people"></div>
+<div class="count">目前參與：<span id="participantCount">0</span> 人</div>
 
-<div class="count">
-目前參與：<span id="participantCount">0</span> 人
-</div>
-
-<label>花農字體粗細</label>
+<label>字體粗細</label>
 <select id="peopleWeight">
 <option value="400">一般</option>
 <option value="700">粗體</option>
 <option value="900">特粗體</option>
 </select>
 
-<label>
-花農字體大小：
-<span id="peopleSizeValue"></span> px
-</label>
-<input id="peopleSize" type="range" min="15" max="60">
+<label>花農統一字體大小：<strong id="peopleSizeValue"></strong> px</label>
+<input id="peopleSize" type="range" min="12" max="75" step="1">
+<div class="hint">這次字體大小完全由你決定，不會自動縮小。</div>
 
-<h3 style="margin-top:18px">花農欄距與行距</h3>
-<div class="hint">
-欄數仍依參與人數自動決定；
-欄與欄之間、每一行之間的距離由你手動設定。
-</div>
+<h3 style="margin-top:19px">欄距與行距</h3>
+<label>左右欄距：<strong id="columnGapValue"></strong> px</label>
+<input id="columnGap" type="range" min="100" max="340" step="2">
+<label>上下行距：<strong id="rowGapValue"></strong> px</label>
+<input id="rowGap" type="range" min="16" max="65" step="1">
 
-<label>
-左右欄距：
-<strong id="columnGapValue"></strong> px
-</label>
-<input id="columnGap" type="range"
-min="120" max="320" step="2">
-
-<label>
-上下行距：
-<strong id="rowGapValue"></strong> px
-</label>
-<input id="rowGap" type="range"
-min="18" max="55" step="1">
-
-<h3 style="margin-top:18px">花農整組位置</h3>
-<div class="hint">
-可以拖曳預覽中的花農名單，
-或使用滑桿整組移動。
-</div>
-
+<h3 style="margin-top:19px">整組位置</h3>
 <div class="pair">
 <div>
-<label>左右位置 <span id="groupXValue"></span></label>
-<input id="groupX" type="range"
-min="25" max="75" step=".5">
+<label>左右 <span id="groupXValue"></span></label>
+<input id="groupX" type="range" min="20" max="80" step=".5">
 </div>
 <div>
-<label>上下位置 <span id="groupYValue"></span></label>
-<input id="groupY" type="range"
-min="65" max="90" step=".5">
+<label>上下 <span id="groupYValue"></span></label>
+<input id="groupY" type="range" min="65" max="90" step=".5">
 </div>
 </div>
-
 <div class="row">
-<button id="resetGroup" class="alt">
-花農排版還原預設
-</button>
+<button id="resetGroup" class="alt">花農排版還原預設</button>
 </div>
-
-<div class="hint">
-1～6 人：1 欄；
-7～16 人：2 欄；
-17～30 人：3 欄；
-31 人以上：4 欄。
-長名字會使整份名單使用較小但一致的字體。
-調整欄距或行距時，請確認文字仍在金框內。
-</div>
+<div id="layoutWarning" class="warning"></div>
+<div class="hint">依參與人數自動分成 1～4 欄，字體大小、欄距、行距及整組位置皆由你手動調整。</div>
 </section>
 
 <section>
 <h3>③ 日期</h3>
-<label>
-<input id="showDate" type="checkbox" checked>
-顯示日期
-</label>
+<label><input id="showDate" type="checkbox" checked> 顯示日期</label>
 <input id="date" type="date">
 <label>日期格式</label>
 <select id="dateFormat">
@@ -184,67 +136,43 @@ min="65" max="90" step=".5">
 
 <section>
 <h3>④ 本日總召</h3>
-<label>
-<input id="showLeader" type="checkbox">
-顯示總召
-</label>
+<label><input id="showLeader" type="checkbox"> 顯示總召</label>
 <input id="leader" type="text" placeholder="輸入總召姓名">
 </section>
 
 <section>
 <h3>⑤ 日期與總召調整</h3>
-<div class="hint">
-日期與總召可分別調整位置、大小、顏色與描邊。
-</div>
-
 <label>選擇調整項目</label>
 <select id="target">
 <option value="date">📅 日期</option>
 <option value="leader">👑 本日總召</option>
 </select>
-
 <div class="pair">
 <div>
-<label>左右位置 <span id="xValue"></span></label>
+<label>左右 <span id="xValue"></span></label>
 <input id="posX" type="range" min="3" max="97" step=".5">
 </div>
 <div>
-<label>上下位置 <span id="yValue"></span></label>
+<label>上下 <span id="yValue"></span></label>
 <input id="posY" type="range" min="2" max="98" step=".5">
 </div>
 </div>
-
 <label>字體大小 <span id="sizeValue"></span></label>
 <input id="fontSize" type="range" min="15" max="85">
-
 <div class="row">
-<label>文字顏色
-<input id="fontColor" type="color">
-</label>
-<label>
-<input id="outline" type="checkbox">
-淺金描邊
-</label>
+<label>文字顏色 <input id="fontColor" type="color"></label>
+<label><input id="outline" type="checkbox"> 淺金描邊</label>
 </div>
-
 <div class="row">
 <button id="dateCenter" class="alt">日期置中金框</button>
 <button id="leaderCenter" class="alt">總召置中欄位</button>
 </div>
-
-<button id="resetLayout" class="danger">
-重設日期與總召位置
-</button>
+<button id="resetLayout" class="danger">重設日期與總召位置</button>
 </section>
 
 <section class="admin">
 <h3>⑥ 管理員｜發布共用資源</h3>
-<div class="hint">
-整理完成後，按「複製共用資料」，
-貼到 GitHub 的 <strong>shared.json</strong> 並提交，
-其他團員就能取得共用資料。
-</div>
-
+<div class="hint">調整完成後，複製共用資料並貼到 GitHub 的 <strong>shared.json</strong>，提交後團員就能取得最新版。</div>
 <div class="row">
 <button id="copyShared">複製共用資料</button>
 <button id="downloadShared" class="alt">下載 shared.json</button>
@@ -256,15 +184,11 @@ min="65" max="90" step=".5">
 
 <section id="preview">
 <h3>海報即時預覽</h3>
-<div class="hint">
-花農自動分欄，欄距與行距手動調整。
-可直接拖曳整份名單。
-</div>
+<div class="hint">花農字體大小直接生效，可拖曳整組名單、日期與總召。</div>
 <canvas id="canvas" width="1086" height="1448"></canvas>
 <button id="download">下載 PNG 海報</button>
 <div id="info" class="status"></div>
 </section>
-
 </main>
 
 <script>
@@ -272,36 +196,28 @@ min="65" max="90" step=".5">
 
 const OWNER="han06010912";
 const REPO="locwarp-poster";
-const API=
- "https://api.github.com/repos/"+
- OWNER+"/"+REPO+"/contents/images";
-
+const API=`https://api.github.com/repos/${OWNER}/${REPO}/contents/images`;
 const $=id=>document.getElementById(id);
 const canvas=$("canvas");
 const ctx=canvas.getContext("2d");
 
-const clone=x=>JSON.parse(JSON.stringify(x));
-
-function readJSON(key,fallback){
+function clone(v){return JSON.parse(JSON.stringify(v))}
+function readJSON(k,f){
  try{
-  const s=localStorage.getItem(key);
-  return s===null?fallback:JSON.parse(s);
- }catch{
-  return fallback;
- }
+  const v=localStorage.getItem(k);
+  return v===null?f:JSON.parse(v);
+ }catch{return f}
 }
-
+function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
 function blank(){
  return{
-  version:1,
-  updated:"",
-  flowers:{},
-  people:[],
+  version:1,updated:"",
+  flowers:{},people:[],
   prefix:"",
   peopleSize:31,
   peopleWeight:900,
   columnGap:270,
-  rowGap:27,
+  rowGap:36,
   groupX:.5,
   groupY:.795,
   event:{
@@ -314,68 +230,51 @@ function blank(){
   layouts:{}
  };
 }
-
-function normalize(source){
+function validNum(v,f){
+ return v!==null&&v!==undefined&&v!==""&&
+ Number.isFinite(Number(v))?Number(v):f;
+}
+function normalize(s){
  const d=blank();
- if(!source||typeof source!=="object")return d;
-
+ if(!s||typeof s!=="object")return d;
  return{
-  version:Number(source.version)||1,
-  updated:source.updated||"",
-  flowers:
-   source.flowers&&typeof source.flowers==="object"?
-   clone(source.flowers):{},
-  people:Array.isArray(source.people)?
-   source.people.map((p,i)=>({
+  version:validNum(s.version,1),
+  updated:s.updated||"",
+  flowers:s.flowers&&typeof s.flowers==="object"?
+   clone(s.flowers):{},
+  people:Array.isArray(s.people)?
+   s.people.map((p,i)=>({
     id:String(p.id||"p_"+i),
     name:String(p.name||""),
     checked:p.checked!==false
    })):[],
   prefix:"",
-  peopleSize:Number(source.peopleSize)||31,
-  peopleWeight:
-   [400,700,900].includes(Number(source.peopleWeight))?
-   Number(source.peopleWeight):900,
-  columnGap:Number(source.columnGap)||270,
-  rowGap:Number(source.rowGap)||27,
-  groupX:
-   Number.isFinite(Number(source.groupX))?
-   Number(source.groupX):.5,
-  groupY:
-   Number.isFinite(Number(source.groupY))?
-   Number(source.groupY):.795,
-  event:{
-   ...d.event,
-   ...(source.event||{})
-  },
-  layouts:
-   source.layouts&&typeof source.layouts==="object"?
-   clone(source.layouts):{}
+  peopleSize:validNum(s.peopleSize,31),
+  peopleWeight:[400,700,900].includes(Number(s.peopleWeight))?
+   Number(s.peopleWeight):900,
+  columnGap:validNum(s.columnGap,270),
+  rowGap:validNum(s.rowGap,36),
+  groupX:validNum(s.groupX,.5),
+  groupY:validNum(s.groupY,.795),
+  event:{...d.event,...(s.event||{})},
+  layouts:s.layouts&&typeof s.layouts==="object"?
+   clone(s.layouts):{}
  };
 }
 
-let shared=blank();
-let data=blank();
-let files=[];
-let selectedFile="";
-let poster=null;
-let target="date";
-let hitAreas=[];
-let drag=null;
-let imageToken=0;
-let sharedReady=false;
+let shared=blank(),data=blank(),files=[];
+let selectedFile="",poster=null,selectedTarget="date";
+let hitAreas=[],drag=null,imageToken=0,sharedReady=false;
 
 function draftKey(){
  return "locwarp_draft_"+shared.version;
 }
-
 function saveDraft(){
  data.peopleSize=Number($("peopleSize").value);
  data.peopleWeight=Number($("peopleWeight").value);
  data.columnGap=Number($("columnGap").value);
  data.rowGap=Number($("rowGap").value);
  data.prefix="";
-
  data.event={
   date:$("date").value,
   dateFormat:$("dateFormat").value,
@@ -383,44 +282,24 @@ function saveDraft(){
   leader:$("leader").value,
   showLeader:$("showLeader").checked
  };
-
  try{
-  localStorage.setItem(
-   draftKey(),
-   JSON.stringify(data)
-  );
+  localStorage.setItem(draftKey(),JSON.stringify(data));
  }catch{
-  $("status").textContent=
-   "草稿儲存失敗，請檢查瀏覽器空間。";
+  $("status").textContent="草稿儲存失敗，請檢查瀏覽器空間。";
  }
-
  render();
 }
-
-function applyData(source){
- data=normalize(source);
-
- $("peopleSize").value=
-  Math.max(15,Math.min(60,data.peopleSize));
-
- $("peopleWeight").value=
-  String(data.peopleWeight);
-
- $("columnGap").value=
-  Math.max(120,Math.min(320,data.columnGap));
-
- $("rowGap").value=
-  Math.max(18,Math.min(55,data.rowGap));
-
+function applyData(v){
+ data=normalize(v);
+ $("peopleSize").value=clamp(data.peopleSize,12,75);
+ $("peopleWeight").value=String(data.peopleWeight);
+ $("columnGap").value=clamp(data.columnGap,100,340);
+ $("rowGap").value=clamp(data.rowGap,16,65);
  $("date").value=data.event.date||"";
- $("dateFormat").value=
-  data.event.dateFormat||"full";
- $("showDate").checked=
-  data.event.showDate!==false;
+ $("dateFormat").value=data.event.dateFormat||"full";
+ $("showDate").checked=data.event.showDate!==false;
  $("leader").value=data.event.leader||"";
- $("showLeader").checked=
-  !!data.event.showLeader;
-
+ $("showLeader").checked=!!data.event.showLeader;
  updateGroupControls();
  drawPeopleList();
  drawGallery();
@@ -428,803 +307,422 @@ function applyData(source){
  updateFixedControls();
  render();
 }
-
 function recoverLegacy(){
  const names=readJSON("lw_names",{});
  const people=readJSON("lw_people",[]);
-
- let nameCount=0;
- let personCount=0;
-
+ let nc=0,pc=0;
  if(names&&typeof names==="object"){
   for(const [file,name] of Object.entries(names)){
-   if(
-    typeof name==="string"&&
-    name.trim()&&
-    !data.flowers[file]
-   ){
-    data.flowers[file]=name;
-    nameCount++;
+   if(typeof name==="string"&&name.trim()&&!data.flowers[file]){
+    data.flowers[file]=name;nc++;
    }
   }
  }
-
  if(Array.isArray(people)){
   people.forEach((p,i)=>{
    if(!p||!p.name)return;
-
    const name=String(p.name);
-
    if(!data.people.some(x=>x.name===name)){
     data.people.push({
      id:String(p.id||"legacy_"+i),
-     name,
-     checked:p.checked!==false
+     name,checked:p.checked!==false
     });
-    personCount++;
+    pc++;
    }
   });
  }
-
- if(nameCount||personCount){
+ if(nc||pc){
   $("recovery").textContent=
-   "補入舊資料："+nameCount+
-   " 筆花名、"+personCount+" 位花農。";
-
-  drawPeopleList();
-  drawGallery();
-  saveDraft();
+   `補入舊版資料：${nc} 筆花名、${pc} 位花農。`;
+  drawPeopleList();drawGallery();saveDraft();
  }
 }
-
 async function loadShared(official=false){
  $("status").textContent="正在讀取共用資料……";
-
  try{
-  const r=await fetch(
-   "./shared.json?t="+Date.now(),
-   {cache:"no-store"}
-  );
-
+  const r=await fetch("./shared.json?t="+Date.now(),{
+   cache:"no-store"
+  });
   if(!r.ok)throw Error("HTTP "+r.status);
-
   shared=normalize(await r.json());
   sharedReady=true;
-
-  const draft=official?
-   null:readJSON(draftKey(),null);
-
+  const draft=official?null:readJSON(draftKey(),null);
   applyData(draft||shared);
-
-  $("status").textContent=
-   "已載入共用版本 "+shared.version+
+  $("status").textContent="已載入共用版本 "+shared.version+
    (shared.updated?"｜更新："+shared.updated:"");
-
   if(!official)recoverLegacy();
-
  }catch(e){
   sharedReady=false;
   const draft=readJSON(draftKey(),null);
   if(draft)applyData(draft);
-
   $("status").textContent=
-   "共用資料讀取失敗："+e.message+
-   "，不會清除既有草稿。";
+   "共用資料讀取失敗："+e.message+"；未刪除草稿。";
  }
 }
-
 async function loadImages(){
  $("imageCount").textContent="正在讀取底圖……";
-
  try{
   const r=await fetch(API+"?t="+Date.now());
-
   if(!r.ok)throw Error("GitHub "+r.status);
-
   const list=await r.json();
-
   files=list.filter(f=>
-   f.type==="file"&&
-   /\.(png|jpg|jpeg|webp)$/i.test(f.name)
-  ).map(f=>({
-   name:f.name,
-   url:f.download_url
-  }));
-
-  $("imageCount").textContent=
-   "共 "+files.length+" 張底圖";
-
+   f.type==="file"&&/\.(png|jpe?g|webp)$/i.test(f.name)
+  ).map(f=>({name:f.name,url:f.download_url}));
+  $("imageCount").textContent="共 "+files.length+" 張底圖";
   drawGallery();
-
   if(files.length){
-   chooseImage(
-    files.some(f=>f.name===selectedFile)?
-    selectedFile:files[0].name
-   );
+   chooseImage(files.some(f=>f.name===selectedFile)?
+    selectedFile:files[0].name);
   }
-
  }catch(e){
-  $("imageCount").textContent=
-   "底圖讀取失敗："+e.message;
+  $("imageCount").textContent="底圖讀取失敗："+e.message;
  }
 }
-
 function drawGallery(){
- const q=$("search").value
-  .trim().toLocaleLowerCase();
-
- const box=$("gallery");
- box.replaceChildren();
-
+ const q=$("search").value.trim().toLocaleLowerCase();
+ const box=$("gallery");box.replaceChildren();
  files.filter(f=>
-  (data.flowers[f.name]||f.name)
-   .toLocaleLowerCase().includes(q)
+  (data.flowers[f.name]||f.name).toLocaleLowerCase().includes(q)
  ).forEach(f=>{
-
   const button=document.createElement("button");
-  button.className="thumb"+
-   (selectedFile===f.name?" active":"");
-
+  button.className="thumb"+(selectedFile===f.name?" active":"");
   const img=document.createElement("img");
-  img.src=f.url;
-  img.loading="lazy";
+  img.src=f.url;img.loading="lazy";
   img.alt=data.flowers[f.name]||f.name;
-
   const title=document.createElement("span");
-  title.textContent=
-   data.flowers[f.name]||
+  title.textContent=data.flowers[f.name]||
    f.name.replace(/\.[^.]+$/,"");
-
   button.append(img,title);
   button.onclick=()=>chooseImage(f.name);
-
   box.appendChild(button);
  });
 }
-
 function chooseImage(filename){
- const file=files.find(f=>f.name===filename);
- if(!file)return;
-
- selectedFile=filename;
- poster=null;
-
+ const f=files.find(x=>x.name===filename);
+ if(!f)return;
+ selectedFile=filename;poster=null;
  const token=++imageToken;
-
- drawGallery();
- updateFlowerInput();
-
+ drawGallery();updateFlowerInput();
  const img=new Image();
  img.crossOrigin="anonymous";
-
  img.onload=()=>{
   if(token!==imageToken)return;
-
   poster=img;
   canvas.width=img.naturalWidth;
   canvas.height=img.naturalHeight;
-
-  updateFixedControls();
-  render();
+  updateFixedControls();render();
  };
-
  img.onerror=()=>{
-  $("imageCount").textContent=
-   "無法載入圖片："+filename;
+  $("imageCount").textContent="無法載入："+filename;
  };
-
- img.src=file.url;
- render();
+ img.src=f.url;render();
 }
-
 function updateFlowerInput(){
  $("flowerName").value=selectedFile?
   (data.flowers[selectedFile]||""):"";
 }
-
+function drawPeopleList(){
+ const box=$("people");box.replaceChildren();
+ data.people.forEach((p,i)=>{
+  const row=document.createElement("div");row.className="person";
+  const check=document.createElement("input");
+  check.type="checkbox";check.checked=p.checked;
+  check.onchange=()=>{
+   p.checked=check.checked;countPeople();saveDraft();
+  };
+  const name=document.createElement("span");
+  name.textContent=p.name;
+  const edit=document.createElement("button");
+  edit.className="alt";edit.textContent="修改";
+  edit.onclick=()=>{
+   const n=prompt("修改花農姓名",p.name);
+   if(n===null||!n.trim())return;
+   p.name=n.trim();drawPeopleList();saveDraft();
+  };
+  const del=document.createElement("button");
+  del.className="danger";del.textContent="刪除";
+  del.onclick=()=>{
+   if(!confirm("確定刪除「"+p.name+"」？"))return;
+   data.people.splice(i,1);drawPeopleList();saveDraft();
+  };
+  row.append(check,name,edit,del);box.appendChild(row);
+ });
+ countPeople();
+}
 function countPeople(){
  $("participantCount").textContent=
   data.people.filter(p=>p.checked).length;
 }
-
-function drawPeopleList(){
- const box=$("people");
- box.replaceChildren();
-
- data.people.forEach((p,i)=>{
-  const row=document.createElement("div");
-  row.className="person";
-
-  const check=document.createElement("input");
-  check.type="checkbox";
-  check.checked=p.checked;
-
-  check.onchange=()=>{
-   p.checked=check.checked;
-   countPeople();
-   saveDraft();
-  };
-
-  const name=document.createElement("span");
-  name.textContent=p.name;
-
-  const edit=document.createElement("button");
-  edit.className="alt";
-  edit.textContent="修改";
-
-  edit.onclick=()=>{
-   const n=prompt("修改花農姓名",p.name);
-   if(n===null||!n.trim())return;
-
-   p.name=n.trim();
-   drawPeopleList();
-   saveDraft();
-  };
-
-  const del=document.createElement("button");
-  del.className="danger";
-  del.textContent="刪除";
-
-  del.onclick=()=>{
-   if(!confirm("確定刪除「"+p.name+"」？"))return;
-
-   data.people.splice(i,1);
-   drawPeopleList();
-   saveDraft();
-  };
-
-  row.append(check,name,edit,del);
-  box.appendChild(row);
- });
-
- countPeople();
-}
-
 function addPeople(){
- $("newPeople").value
-  .split(/\r?\n/)
-  .map(s=>s.trim())
-  .filter(Boolean)
-  .forEach(name=>{
+ $("newPeople").value.split(/\r?\n/)
+  .map(x=>x.trim()).filter(Boolean).forEach(name=>{
    if(!data.people.some(p=>p.name===name)){
     data.people.push({
-     id:"p_"+Date.now()+"_"+
-      Math.random().toString(36).slice(2,9),
-     name,
-     checked:true
+     id:"p_"+Date.now()+"_"+Math.random().toString(36).slice(2,9),
+     name,checked:true
     });
    }
   });
-
- $("newPeople").value="";
- drawPeopleList();
- saveDraft();
+ $("newPeople").value="";drawPeopleList();saveDraft();
 }
-
 function currentLayout(){
  if(!selectedFile)return {};
-
  return data.layouts[selectedFile]||
   (data.layouts[selectedFile]={});
 }
-
-function defaultFixed(key){
- if(key==="date"){
-  return{
-   x:.5,y:.112,
-   size:43,
-   color:"#513d33",
-   outline:true
-  };
- }
-
- return{
-  x:.60,y:.926,
-  size:42,
-  color:"#513d33",
-  outline:true
- };
+function fixedDefault(key){
+ return key==="date"?
+  {x:.5,y:.112,size:43,color:"#513d33",outline:true}:
+  {x:.60,y:.926,size:42,color:"#513d33",outline:true};
 }
-
 function getFixed(key){
- return{
-  ...defaultFixed(key),
-  ...(currentLayout()[key]||{})
- };
+ const previous=currentLayout()[key]||{};
+ return {...fixedDefault(key),...previous};
 }
-
-function setFixed(key,change){
+function setFixed(key,changes){
  if(!selectedFile)return;
-
- currentLayout()[key]={
-  ...getFixed(key),
-  ...change
- };
-
- saveDraft();
- updateFixedControls();
+ currentLayout()[key]={...getFixed(key),...changes};
+ saveDraft();updateFixedControls();
 }
-
 function updateFixedControls(){
- const item=getFixed(target);
-
- $("target").value=target;
- $("posX").value=item.x*100;
- $("posY").value=item.y*100;
- $("fontSize").value=item.size;
- $("fontColor").value=item.color;
- $("outline").checked=item.outline;
-
- $("xValue").textContent=
-  Math.round(item.x*100)+"%";
-
- $("yValue").textContent=
-  Math.round(item.y*100)+"%";
-
- $("sizeValue").textContent=item.size+"px";
+ const p=getFixed(selectedTarget);
+ $("target").value=selectedTarget;
+ $("posX").value=p.x*100;
+ $("posY").value=p.y*100;
+ $("fontSize").value=p.size;
+ $("fontColor").value=p.color;
+ $("outline").checked=p.outline;
+ $("xValue").textContent=Math.round(p.x*100)+"%";
+ $("yValue").textContent=Math.round(p.y*100)+"%";
+ $("sizeValue").textContent=p.size+"px";
 }
-
 function updateGroupControls(){
- $("groupX").value=
-  Math.max(25,Math.min(75,data.groupX*100));
-
- $("groupY").value=
-  Math.max(65,Math.min(90,data.groupY*100));
-
- $("groupXValue").textContent=
-  Math.round(data.groupX*100)+"%";
-
- $("groupYValue").textContent=
-  Math.round(data.groupY*100)+"%";
-
- $("peopleSizeValue").textContent=
-  $("peopleSize").value;
-
- $("columnGapValue").textContent=
-  $("columnGap").value;
-
- $("rowGapValue").textContent=
-  $("rowGap").value;
+ $("groupX").value=clamp(data.groupX*100,20,80);
+ $("groupY").value=clamp(data.groupY*100,65,90);
+ $("groupXValue").textContent=Math.round(data.groupX*100)+"%";
+ $("groupYValue").textContent=Math.round(data.groupY*100)+"%";
+ $("peopleSizeValue").textContent=$("peopleSize").value;
+ $("columnGapValue").textContent=$("columnGap").value;
+ $("rowGapValue").textContent=$("rowGap").value;
 }
-
 function dateText(){
- const value=$("date").value;
- if(!value)return "";
-
- const [y,m,d]=value.split("-").map(Number);
-
- const weekday="日一二三四五六"[
-  new Date(y,m-1,d).getDay()
- ];
-
- if($("dateFormat").value==="dots"){
-  return `${y}.`+
-   String(m).padStart(2,"0")+"."+
-   String(d).padStart(2,"0");
- }
-
- if($("dateFormat").value==="zh"){
+ const v=$("date").value;
+ if(!v)return "";
+ const [y,m,d]=v.split("-").map(Number);
+ const weekday="日一二三四五六"[new Date(y,m-1,d).getDay()];
+ if($("dateFormat").value==="dots")
+  return `${y}.${String(m).padStart(2,"0")}.${String(d).padStart(2,"0")}`;
+ if($("dateFormat").value==="zh")
   return `${y}年${m}月${d}日`;
- }
-
- return `${y} / `+
-  String(m).padStart(2,"0")+" / "+
-  String(d).padStart(2,"0")+
-  `（${weekday}）`;
+ return `${y} / ${String(m).padStart(2,"0")} / ${String(d).padStart(2,"0")}（${weekday}）`;
 }
-
-function textFont(size,weight=700){
- return weight+" "+size+
-  'px "PingFang TC",'+
-  '"Hiragino Kaku Gothic ProN",'+
-  '"Noto Sans CJK TC",'+
-  '"Apple Color Emoji",'+
-  'system-ui,sans-serif';
+function font(size,weight){
+ return `${weight} ${size}px "PingFang TC","Hiragino Kaku Gothic ProN","Noto Sans CJK TC","Apple Color Emoji",system-ui,sans-serif`;
 }
-
 function drawFixed(key,text){
- const item=getFixed(key);
-
- const w=canvas.width;
- const h=canvas.height;
- const scale=w/1086;
-
- const x=item.x*w;
- const y=item.y*h;
- const size=item.size*scale;
-
- const maxWidth=
-  key==="date"?w*.65:w*.56;
-
+ const p=getFixed(key),w=canvas.width,h=canvas.height;
+ const scale=w/1086,x=p.x*w,y=p.y*h,size=p.size*scale;
+ const maxWidth=key==="date"?w*.65:w*.56;
  ctx.save();
- ctx.font=textFont(size,800);
- ctx.textAlign="center";
- ctx.textBaseline="middle";
+ ctx.font=font(size,800);
+ ctx.textAlign="center";ctx.textBaseline="middle";
  ctx.lineJoin="round";
-
- if(item.outline){
+ if(p.outline){
   ctx.strokeStyle="#fff4da";
   ctx.lineWidth=Math.max(2,3.5*scale);
   ctx.strokeText(text,x,y,maxWidth);
  }
-
- ctx.fillStyle=item.color;
+ ctx.fillStyle=p.color;
  ctx.fillText(text,x,y,maxWidth);
-
- const width=Math.max(
-  Math.min(ctx.measureText(text).width,maxWidth),
-  size*1.5
- );
-
+ const tw=Math.max(Math.min(ctx.measureText(text).width,maxWidth),size*1.5);
  hitAreas.push({
-  key,x,y,
-  left:x-width/2-15*scale,
-  right:x+width/2+15*scale,
-  top:y-size,
-  bottom:y+size
+  key,x,y,left:x-tw/2-15*scale,
+  right:x+tw/2+15*scale,
+  top:y-size,bottom:y+size
  });
-
  ctx.restore();
 }
-
-function columnCount(count){
- if(count<=6)return 1;
- if(count<=16)return 2;
- if(count<=30)return 3;
+function columnsFor(n){
+ if(n<=6)return 1;
+ if(n<=16)return 2;
+ if(n<=30)return 3;
  return 4;
 }
 
-/*
- 花農排版 V6
-
- 欄數：依參與人數自動計算
- 欄距：使用者手動設定
- 行距：使用者手動設定
- 字體：整份名單統一大小及粗細
- 前綴：完全不顯示
- 位置：整組移動
-*/
+/* 關鍵修正：花農字體大小不再自動縮小 */
 function drawPeopleGroup(){
  const persons=data.people.filter(p=>p.checked);
  const count=persons.length;
+ $("layoutWarning").textContent="";
  if(!count)return;
 
- const w=canvas.width;
- const h=canvas.height;
- const scale=w/1086;
-
- const cols=columnCount(count);
-
- const centerX=data.groupX*w;
- const centerY=data.groupY*h;
-
- const columnGap=
-  Number($("columnGap").value)*scale;
-
- const rowGap=
-  Number($("rowGap").value)*scale;
-
- const weight=
-  Number($("peopleWeight").value);
-
- const requestedSize=
-  Number($("peopleSize").value)*scale;
-
- /*
-  各欄平均分配花農，
-  先填滿第一欄，再填第二欄。
- */
- const baseRows=Math.floor(count/cols);
- const extra=count%cols;
-
- const rowsPerCol=Array.from(
-  {length:cols},
-  (_,i)=>baseRows+(i<extra?1:0)
+ const w=canvas.width,h=canvas.height,scale=w/1086;
+ const cols=columnsFor(count);
+ const size=Number($("peopleSize").value)*scale;
+ const weight=Number($("peopleWeight").value);
+ const colGap=Number($("columnGap").value)*scale;
+ const rowGap=Number($("rowGap").value)*scale;
+ const cx=data.groupX*w,cy=data.groupY*h;
+ const base=Math.floor(count/cols),extra=count%cols;
+ const lengths=Array.from({length:cols},(_,i)=>
+  base+(i<extra?1:0)
  );
-
- /*
-  根據手動欄距計算每欄中心。
- */
- const centers=Array.from(
-  {length:cols},
-  (_,i)=>centerX+
-   (i-(cols-1)/2)*columnGap
- );
-
- /*
-  每欄文字可用寬度。
-  欄距縮小時，也會縮小可用寬度，
-  避免鄰欄文字互相重疊。
- */
- const edgeMargin=w*.08;
-
- let availableWidth;
-
- if(cols===1){
-  availableWidth=w*.76;
- }else{
-  availableWidth=Math.min(
-   columnGap*.90,
-   w*.40
-  );
- }
-
- /*
-  避免最左、最右欄超出圖片。
- */
- centers.forEach(x=>{
-  availableWidth=Math.min(
-   availableWidth,
-   2*Math.max(0,Math.min(
-    x-edgeMargin,
-    w-edgeMargin-x
-   ))
-  );
- });
-
- availableWidth=Math.max(
-  availableWidth,
-  20*scale
- );
-
- /*
-  先計算所有姓名的最長寬度，
-  再求出共同字體大小。
- */
- function fits(size){
-  ctx.font=textFont(size,weight);
-  return persons.every(p=>
-   ctx.measureText(p.name).width<=availableWidth
-  );
- }
-
- let commonSize=requestedSize;
-
- for(let size=requestedSize;size>=7*scale;size-=.5*scale){
-  commonSize=size;
-  if(fits(size))break;
- }
 
  ctx.save();
- ctx.textAlign="center";
- ctx.textBaseline="middle";
  ctx.fillStyle="#344b40";
- ctx.font=textFont(commonSize,weight);
+ ctx.font=font(size,weight);
+ ctx.textBaseline="middle";
+ ctx.textAlign="center";
 
- let personIndex=0;
+ let index=0;
+ let widest=0;
+ let outerLeft=w,outerRight=0,outerTop=h,outerBottom=0;
+ let overlap=false;
 
- let hitLeft=w;
- let hitRight=0;
- let hitTop=h;
- let hitBottom=0;
+ const rects=[];
 
- for(let col=0;col<cols;col++){
-  const rows=rowsPerCol[col];
-  if(!rows)continue;
+ for(let c=0;c<cols;c++){
+  const rows=lengths[c];
+  const x=cx+(c-(cols-1)/2)*colGap;
+  const firstY=cy-(rows-1)*rowGap/2;
 
-  const x=centers[col];
+  for(let r=0;r<rows;r++){
+   const p=persons[index++];
+   const y=firstY+r*rowGap;
 
-  /*
-   行距由使用者手動設定。
-   每欄以整欄高度置中。
-  */
-  const topY=centerY-
-   ((rows-1)*rowGap)/2;
+   const width=ctx.measureText(p.name).width;
+   widest=Math.max(widest,width);
+   const rect={
+    left:x-width/2,right:x+width/2,
+    top:y-size*.65,bottom:y+size*.65
+   };
+   rects.push(rect);
 
-  for(let row=0;row<rows;row++){
-   const person=persons[personIndex++];
-   const y=topY+row*rowGap;
+   /* 不使用 maxWidth：尊重滑桿字體大小 */
+   ctx.fillText(p.name,x,y);
 
-   ctx.fillText(
-    person.name,
-    x,y,
-    availableWidth
-   );
-
-   const textWidth=Math.min(
-    ctx.measureText(person.name).width,
-    availableWidth
-   );
-
-   hitLeft=Math.min(
-    hitLeft,x-textWidth/2
-   );
-
-   hitRight=Math.max(
-    hitRight,x+textWidth/2
-   );
-
-   hitTop=Math.min(
-    hitTop,y-commonSize
-   );
-
-   hitBottom=Math.max(
-    hitBottom,y+commonSize
-   );
+   outerLeft=Math.min(outerLeft,rect.left);
+   outerRight=Math.max(outerRight,rect.right);
+   outerTop=Math.min(outerTop,rect.top);
+   outerBottom=Math.max(outerBottom,rect.bottom);
   }
  }
 
+ for(let a=0;a<rects.length;a++){
+  for(let b=a+1;b<rects.length;b++){
+   const A=rects[a],B=rects[b];
+   if(A.left<B.right&&A.right>B.left&&
+      A.top<B.bottom&&A.bottom>B.top){
+    overlap=true;
+    break;
+   }
+  }
+  if(overlap)break;
+ }
+
+ const outside=outerLeft<w*.07||
+  outerRight>w*.93||
+  outerTop<h*.69||
+  outerBottom>h*.895;
+
+ if(overlap||outside){
+  $("layoutWarning").textContent=
+   "提醒：目前的字體大小、欄距或行距可能讓姓名重疊，或超出金框。可以調整間距或縮小字體。";
+ }
+
  hitAreas.push({
-  key:"group",
-  x:centerX,
-  y:centerY,
-  left:Math.max(0,hitLeft-20*scale),
-  right:Math.min(w,hitRight+20*scale),
-  top:Math.max(0,hitTop-16*scale),
-  bottom:Math.min(h,hitBottom+16*scale)
+  key:"group",x:cx,y:cy,
+  left:clamp(outerLeft-15*scale,0,w),
+  right:clamp(outerRight+15*scale,0,w),
+  top:clamp(outerTop-15*scale,0,h),
+  bottom:clamp(outerBottom+15*scale,0,h)
  });
 
  ctx.restore();
 }
-
 function render(){
- const w=canvas.width;
- const h=canvas.height;
-
+ const w=canvas.width,h=canvas.height;
  ctx.clearRect(0,0,w,h);
-
- if(poster){
-  ctx.drawImage(poster,0,0,w,h);
- }else{
-  ctx.fillStyle="#f3f0e7";
-  ctx.fillRect(0,0,w,h);
-
-  ctx.fillStyle="#58705e";
-  ctx.textAlign="center";
+ if(poster)ctx.drawImage(poster,0,0,w,h);
+ else{
+  ctx.fillStyle="#f3f0e7";ctx.fillRect(0,0,w,h);
+  ctx.fillStyle="#58705e";ctx.textAlign="center";
   ctx.font="28px sans-serif";
-  ctx.fillText(
-   "請先選擇海報底圖",
-   w/2,h/2
-  );
+  ctx.fillText("請先選擇海報底圖",w/2,h/2);
  }
-
  hitAreas=[];
-
- if($("showDate").checked&&$("date").value){
+ if($("showDate").checked&&$("date").value)
   drawFixed("date",dateText());
- }
-
- if(
-  $("showLeader").checked&&
-  $("leader").value.trim()
- ){
+ if($("showLeader").checked&&$("leader").value.trim())
   drawFixed("leader",$("leader").value.trim());
- }
-
  drawPeopleGroup();
 }
-
 function point(e){
- const rect=canvas.getBoundingClientRect();
-
+ const r=canvas.getBoundingClientRect();
  return{
-  x:(e.clientX-rect.left)*
-   canvas.width/rect.width,
-  y:(e.clientY-rect.top)*
-   canvas.height/rect.height
+  x:(e.clientX-r.left)*canvas.width/r.width,
+  y:(e.clientY-r.top)*canvas.height/r.height
  };
 }
-
 canvas.addEventListener("pointerdown",e=>{
  const p=point(e);
-
  const hit=[...hitAreas].reverse().find(a=>
-  p.x>=a.left&&p.x<=a.right&&
-  p.y>=a.top&&p.y<=a.bottom
+  p.x>=a.left&&p.x<=a.right&&p.y>=a.top&&p.y<=a.bottom
  );
-
  if(!hit)return;
-
  if(hit.key!=="group"){
-  target=hit.key;
-  updateFixedControls();
+  selectedTarget=hit.key;updateFixedControls();
  }
-
- drag={
-  key:hit.key,
-  dx:p.x-hit.x,
-  dy:p.y-hit.y
- };
-
+ drag={key:hit.key,dx:p.x-hit.x,dy:p.y-hit.y};
  canvas.setPointerCapture(e.pointerId);
  e.preventDefault();
 });
-
 canvas.addEventListener("pointermove",e=>{
  if(!drag)return;
-
  const p=point(e);
-
  const x=(p.x-drag.dx)/canvas.width;
  const y=(p.y-drag.dy)/canvas.height;
-
  if(drag.key==="group"){
-  data.groupX=Math.max(
-   .25,Math.min(.75,x)
-  );
-
-  data.groupY=Math.max(
-   .65,Math.min(.90,y)
-  );
-
-  updateGroupControls();
-  saveDraft();
-
+  data.groupX=clamp(x,.20,.80);
+  data.groupY=clamp(y,.65,.90);
+  updateGroupControls();saveDraft();
  }else{
   setFixed(drag.key,{
-   x:Math.max(.03,Math.min(.97,x)),
-   y:Math.max(.02,Math.min(.98,y))
+   x:clamp(x,.03,.97),y:clamp(y,.02,.98)
   });
  }
-
  e.preventDefault();
 });
-
-[
- "pointerup",
- "pointercancel",
- "lostpointercapture"
-].forEach(type=>{
- canvas.addEventListener(type,()=>drag=null);
-});
+["pointerup","pointercancel","lostpointercapture"].forEach(name=>
+ canvas.addEventListener(name,()=>drag=null)
+);
 
 function downloadPoster(){
- if(!poster){
-  alert("請先選擇海報底圖");
-  return;
- }
-
+ if(!poster){alert("請先選擇海報底圖");return}
  render();
-
  canvas.toBlob(blob=>{
-  if(!blob){
-   alert("無法產生 PNG");
-   return;
-  }
-
+  if(!blob){alert("PNG 產生失敗");return}
   const url=URL.createObjectURL(blob);
   const a=document.createElement("a");
-
   a.href=url;
-  a.download=
-   (data.flowers[selectedFile]||"Locwarp")+
-   "-海報.png";
-
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-
-  $("info").textContent=
-   "海報已產生，請查看 Safari 下載項目。";
-
-  setTimeout(()=>{
-   URL.revokeObjectURL(url);
-  },60000);
-
+  a.download=(data.flowers[selectedFile]||"Locwarp")+"-海報.png";
+  document.body.appendChild(a);a.click();a.remove();
+  $("info").textContent="已產生海報，請查看 Safari 下載項目。";
+  setTimeout(()=>URL.revokeObjectURL(url),60000);
  },"image/png");
 }
-
 function publishedData(){
  const output=clone(data);
-
- output.version=
-  Number(shared.version||0)+1;
-
+ output.version=Number(shared.version||0)+1;
  const now=new Date();
-
- output.updated=
-  now.getFullYear()+"-"+
+ output.updated=now.getFullYear()+"-"+
   String(now.getMonth()+1).padStart(2,"0")+"-"+
   String(now.getDate()).padStart(2,"0");
-
  output.prefix="";
  output.peopleSize=Number($("peopleSize").value);
  output.peopleWeight=Number($("peopleWeight").value);
  output.columnGap=Number($("columnGap").value);
  output.rowGap=Number($("rowGap").value);
- output.groupX=data.groupX;
- output.groupY=data.groupY;
-
  output.event={
   date:$("date").value,
   dateFormat:$("dateFormat").value,
@@ -1232,214 +730,115 @@ function publishedData(){
   leader:$("leader").value,
   showLeader:$("showLeader").checked
  };
-
  return JSON.stringify(output,null,2);
 }
-
 async function copyShared(){
- if(!sharedReady){
-  alert("尚未成功讀取 shared.json");
-  return;
- }
-
- const content=publishedData();
-
+ if(!sharedReady){alert("尚未讀取 shared.json");return}
+ const value=publishedData();
  try{
-  await navigator.clipboard.writeText(content);
-
+  await navigator.clipboard.writeText(value);
   $("adminStatus").textContent=
-   "已複製共用資料，請貼到 GitHub 的 shared.json。";
-
+   "已複製，請貼到 GitHub 的 shared.json 並提交。";
  }catch{
   const t=document.createElement("textarea");
-  t.value=content;
-  t.style.position="fixed";
-  t.style.top="0";
-
-  document.body.appendChild(t);
-  t.focus();
-  t.select();
-
-  const ok=document.execCommand("copy");
-  t.remove();
-
+  t.value=value;t.style.position="fixed";t.style.top="0";
+  document.body.appendChild(t);t.focus();t.select();
+  const ok=document.execCommand("copy");t.remove();
   $("adminStatus").textContent=ok?
-   "已複製，請貼到 shared.json。":
-   "複製失敗，請改用下載功能。";
+   "已複製，請貼到 shared.json。":"複製失敗，請改用下載。";
  }
 }
-
 function downloadShared(){
- if(!sharedReady){
-  alert("共用資料尚未載入成功");
-  return;
- }
-
- const blob=new Blob(
-  [publishedData()],
-  {type:"application/json;charset=utf-8"}
- );
-
+ if(!sharedReady){alert("尚未讀取 shared.json");return}
+ const blob=new Blob([publishedData()],{
+  type:"application/json;charset=utf-8"
+ });
  const url=URL.createObjectURL(blob);
  const a=document.createElement("a");
-
- a.href=url;
- a.download="shared.json";
-
- document.body.appendChild(a);
- a.click();
- a.remove();
-
- setTimeout(()=>{
-  URL.revokeObjectURL(url);
- },60000);
+ a.href=url;a.download="shared.json";
+ document.body.appendChild(a);a.click();a.remove();
+ setTimeout(()=>URL.revokeObjectURL(url),60000);
 }
 
 $("reload").onclick=()=>loadShared(false);
-
 $("restore").onclick=async()=>{
  if(!sharedReady)return;
-
- if(!confirm(
-  "確定捨棄目前草稿，還原成正式共用版本？"
- ))return;
-
+ if(!confirm("確定捨棄目前草稿，還原共用版本？"))return;
  localStorage.removeItem(draftKey());
  await loadShared(true);
 };
-
 $("search").oninput=drawGallery;
-
 $("saveFlower").onclick=()=>{
  if(!selectedFile)return;
-
  const name=$("flowerName").value.trim();
-
- if(name){
-  data.flowers[selectedFile]=name;
- }else{
-  delete data.flowers[selectedFile];
- }
-
- drawGallery();
- saveDraft();
+ if(name)data.flowers[selectedFile]=name;
+ else delete data.flowers[selectedFile];
+ drawGallery();saveDraft();
 };
-
 $("addPeople").onclick=addPeople;
-
 $("selectAll").onclick=()=>{
  data.people.forEach(p=>p.checked=true);
- drawPeopleList();
- saveDraft();
+ drawPeopleList();saveDraft();
 };
-
 $("selectNone").onclick=()=>{
  data.people.forEach(p=>p.checked=false);
- drawPeopleList();
- saveDraft();
+ drawPeopleList();saveDraft();
 };
-
-$("peopleSize").oninput=()=>{
- updateGroupControls();
- saveDraft();
-};
-
-$("peopleWeight").onchange=saveDraft;
-
-["columnGap","rowGap"].forEach(id=>{
+["peopleSize","columnGap","rowGap"].forEach(id=>{
  $(id).oninput=()=>{
   updateGroupControls();
   saveDraft();
  };
 });
-
+$("peopleWeight").onchange=saveDraft;
 ["groupX","groupY"].forEach(id=>{
  $(id).oninput=()=>{
   data.groupX=Number($("groupX").value)/100;
   data.groupY=Number($("groupY").value)/100;
-
-  updateGroupControls();
-  saveDraft();
+  updateGroupControls();saveDraft();
  };
 });
-
 $("resetGroup").onclick=()=>{
- data.groupX=.5;
- data.groupY=.795;
-
+ data.groupX=.5;data.groupY=.795;
  $("columnGap").value=270;
- $("rowGap").value=27;
-
- updateGroupControls();
- saveDraft();
+ $("rowGap").value=36;
+ $("peopleSize").value=31;
+ updateGroupControls();saveDraft();
 };
-
 $("target").onchange=()=>{
- target=$("target").value;
- updateFixedControls();
+ selectedTarget=$("target").value;updateFixedControls();
 };
-
-[
- ["posX","x"],
- ["posY","y"],
- ["fontSize","size"]
-].forEach(([id,key])=>{
+[["posX","x"],["posY","y"],["fontSize","size"]].forEach(([id,key])=>{
  $(id).oninput=()=>{
-  setFixed(target,{
+  setFixed(selectedTarget,{
    [key]:key==="size"?
-    Number($(id).value):
-    Number($(id).value)/100
+    Number($(id).value):Number($(id).value)/100
   });
  };
 });
-
-$("fontColor").oninput=()=>{
- setFixed(target,{
-  color:$("fontColor").value
- });
-};
-
-$("outline").onchange=()=>{
- setFixed(target,{
-  outline:$("outline").checked
- });
-};
-
+$("fontColor").oninput=()=>
+ setFixed(selectedTarget,{color:$("fontColor").value});
+$("outline").onchange=()=>
+ setFixed(selectedTarget,{outline:$("outline").checked});
 $("dateCenter").onclick=()=>{
- target="date";
- setFixed("date",{x:.5,y:.112});
+ selectedTarget="date";setFixed("date",{x:.5,y:.112});
 };
-
 $("leaderCenter").onclick=()=>{
- target="leader";
- setFixed("leader",{x:.60,y:.926});
+ selectedTarget="leader";setFixed("leader",{x:.60,y:.926});
 };
-
 $("resetLayout").onclick=()=>{
  if(!selectedFile)return;
-
- if(!confirm("確定重設日期與總召位置？"))return;
-
+ if(!confirm("重設日期與總召位置？"))return;
  if(data.layouts[selectedFile]){
   delete data.layouts[selectedFile].date;
   delete data.layouts[selectedFile].leader;
  }
-
- saveDraft();
- updateFixedControls();
+ saveDraft();updateFixedControls();
 };
-
-[
- "date",
- "dateFormat",
- "showDate",
- "showLeader",
- "leader"
-].forEach(id=>{
+["date","dateFormat","showDate","showLeader","leader"].forEach(id=>{
  $(id).addEventListener("input",saveDraft);
  $(id).addEventListener("change",saveDraft);
 });
-
 $("download").onclick=downloadPoster;
 $("copyShared").onclick=copyShared;
 $("downloadShared").onclick=downloadShared;
@@ -1448,7 +847,6 @@ async function start(){
  await loadShared(false);
  await loadImages();
 }
-
 start();
 </script>
 </body>
