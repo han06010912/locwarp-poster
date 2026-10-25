@@ -7,180 +7,47 @@
 <title>Locwarp 共用海報製作</title>
 <style>
 *{box-sizing:border-box}
-body{
- margin:0;
- background:#f5f5ef;
- color:#304e40;
- font-family:-apple-system,BlinkMacSystemFont,
- "PingFang TC","Noto Sans TC",sans-serif
-}
-header{
- background:#416f57;
- color:#fff;
- padding:18px;
- text-align:center;
- font-size:22px;
- font-weight:800
-}
-main{
- max-width:1150px;
- margin:auto;
- padding:14px;
- display:grid;
- grid-template-columns:370px minmax(0,1fr);
- gap:15px
-}
-section{
- background:white;
- padding:16px;
- border-radius:15px;
- margin-bottom:14px;
- box-shadow:0 2px 12px #0000000b
-}
+body{margin:0;background:#f5f5ef;color:#304e40;font-family:-apple-system,BlinkMacSystemFont,"PingFang TC",sans-serif}
+header{padding:18px;background:#416f57;color:white;text-align:center;font-size:22px;font-weight:800}
+.version{font-size:12px;font-weight:400;margin-top:5px}
+main{max-width:1150px;margin:auto;padding:14px;display:grid;grid-template-columns:370px minmax(0,1fr);gap:15px}
+section{background:white;border-radius:15px;padding:16px;margin-bottom:14px;box-shadow:0 2px 12px #0000000b}
 h3{margin:0 0 12px;font-size:17px}
-label{display:block;margin:10px 0 5px;font-size:14px}
+label{display:block;margin:11px 0 5px;font-size:14px}
 input,button,textarea,select{font:inherit}
-input[type=text],
-input[type=date],
-textarea,select{
- width:100%;
- padding:10px;
- border:1px solid #cbd8d0;
- border-radius:9px;
- background:#fff;
- color:#304e40
-}
+input[type=text],input[type=date],textarea,select{width:100%;padding:10px;border:1px solid #cbd8d0;border-radius:9px;background:white;color:#304e40}
 textarea{min-height:90px;resize:vertical}
-button{
- border:0;
- border-radius:9px;
- padding:10px 13px;
- background:#407358;
- color:white;
- cursor:pointer
-}
+button{border:0;border-radius:9px;background:#407358;color:white;padding:10px 13px;cursor:pointer}
 button.alt{background:#e6f0e9;color:#355b47}
 button.danger{background:#f6e6e6;color:#9d4242}
-.row{
- display:flex;
- align-items:center;
- flex-wrap:wrap;
- gap:7px;
- margin:9px 0
-}
-input[type=checkbox]{
- width:18px;
- height:18px;
- vertical-align:middle;
- accent-color:#407358
-}
+.row{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin:9px 0}
+input[type=checkbox]{width:18px;height:18px;vertical-align:middle;accent-color:#407358}
 input[type=range]{width:100%;accent-color:#407358}
 input[type=color]{width:65px;height:39px}
-.hint,.status{
- font-size:13px;
- line-height:1.6;
- color:#617666
-}
-#gallery{
- display:grid;
- grid-template-columns:repeat(3,minmax(0,1fr));
- gap:8px;
- max-height:330px;
- overflow:auto;
- margin:12px 0
-}
-.thumb{
- min-width:0;
- padding:5px;
- border:2px solid transparent;
- border-radius:9px;
- background:#f3f6f1;
- color:#345743
-}
+.hint,.status{font-size:13px;line-height:1.6;color:#617666}
+#gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;max-height:330px;overflow:auto;margin:12px 0}
+.thumb{border:2px solid transparent;border-radius:9px;padding:5px;background:#f3f6f1;color:#345743;min-width:0}
 .thumb.active{border-color:#428762}
-.thumb img{
- display:block;
- width:100%;
- aspect-ratio:3/4;
- object-fit:cover;
- border-radius:5px
-}
-.thumb span{
- display:block;
- white-space:nowrap;
- overflow:hidden;
- text-overflow:ellipsis;
- font-size:12px;
- padding-top:4px
-}
-.person{
- display:flex;
- align-items:center;
- gap:7px;
- padding:7px 0;
- border-bottom:1px solid #edf0eb
-}
-.person span{
- flex:1;
- overflow-wrap:anywhere;
- font-size:13px
-}
+.thumb img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:5px}
+.thumb span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:12px;padding-top:4px}
+.person{display:flex;align-items:center;gap:7px;border-bottom:1px solid #edf0eb;padding:7px 0}
+.person span{flex:1;overflow-wrap:anywhere;font-size:13px}
 .person button{padding:6px 8px}
 #people{max-height:260px;overflow:auto}
-.count{
- background:#e9f3ec;
- border-radius:10px;
- padding:11px;
- margin:12px 0;
- text-align:center;
- font-weight:700
-}
-.pair{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:12px
-}
-#preview{
- position:sticky;
- top:10px;
- align-self:start;
- text-align:center
-}
-#canvas{
- display:block;
- width:100%;
- max-width:490px;
- height:auto;
- margin:12px auto;
- background:#eee;
- border-radius:5px;
- box-shadow:0 3px 15px #0002;
- touch-action:none
-}
-#download{
- width:100%;
- max-width:490px;
- font-size:16px;
- font-weight:700
-}
+.count{padding:11px;border-radius:10px;background:#e9f3ec;text-align:center;font-weight:700;margin:12px 0}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+#preview{align-self:start;position:sticky;top:10px;text-align:center}
+#canvas{display:block;width:100%;max-width:490px;height:auto;margin:12px auto;background:#eee;border-radius:5px;box-shadow:0 3px 15px #0002;touch-action:none}
+#download{width:100%;max-width:490px;font-size:16px;font-weight:700}
 .admin{border:1px solid #c7dbcc}
-.version{
- font-size:12px;
- color:#53725f;
- padding-top:4px
-}
-@media(max-width:760px){
- main{display:block}
- #preview{position:static}
- header{font-size:20px}
-}
+@media(max-width:760px){main{display:block}#preview{position:static}header{font-size:20px}}
 </style>
 </head>
 <body>
 
 <header>
 🌸 Locwarp 共用海報製作
-<div class="version">自動整齊排版版 V5</div>
+<div class="version">手動欄距／行距版 V6</div>
 </header>
 
 <main>
@@ -188,49 +55,37 @@ input[type=color]{width:65px;height:39px}
 
 <section>
 <h3>共用資源狀態</h3>
-<div id="status" class="status">
-正在讀取共用資料……
-</div>
+<div id="status" class="status">正在讀取共用資料……</div>
 <div id="recovery" class="status"></div>
 <div class="row">
-<button id="reload" class="alt">
-重新讀取共用資料
-</button>
-<button id="restore" class="alt">
-還原共用版本
-</button>
+<button id="reload" class="alt">重新讀取共用資料</button>
+<button id="restore" class="alt">還原共用版本</button>
 </div>
 <div class="hint">
-花種名稱、花農名單及正式設定由
-shared.json 提供。
-個人編輯不會直接更動共用資料。
+個人修改會先儲存在瀏覽器。
+管理員可透過 shared.json 發布正式共用資料。
 </div>
 </section>
 
 <section>
 <h3>① 選擇花種底圖</h3>
-<input id="search" type="text"
- placeholder="搜尋花種名稱">
+<input id="search" type="text" placeholder="搜尋花種名稱">
 <div id="gallery"></div>
 <div id="imageCount" class="status"></div>
 <label>目前圖片的花種名稱</label>
-<input id="flowerName" type="text"
- placeholder="例如：鳶尾花">
-<button id="saveFlower" class="alt">
-儲存花種名稱
-</button>
+<input id="flowerName" type="text" placeholder="例如：鳶尾花">
+<button id="saveFlower" class="alt">儲存花種名稱</button>
 </section>
 
 <section>
-<h3>② 參與花農｜自動整齊排版</h3>
-
+<h3>② 參與花農｜自動分欄</h3>
 <div class="hint">
-每行輸入一位花農，支援日文、
-Emoji、顏文字及特殊符號。
+每行一位花農，支援日文、Emoji、顏文字與特殊符號。
+姓名前面不會出現魔法棒、圓點或編號。
 </div>
 
 <textarea id="newPeople"
- placeholder="夯夯&#10;さくら&#10;o(*≧▽≦)ツﾟ夯"></textarea>
+placeholder="夯夯&#10;さくら&#10;o(*≧▽≦)ツﾟ夯"></textarea>
 
 <div class="row">
 <button id="addPeople">加入名單</button>
@@ -244,9 +99,6 @@ Emoji、顏文字及特殊符號。
 目前參與：<span id="participantCount">0</span> 人
 </div>
 
-<label>統一前綴圖示</label>
-<input id="prefix" type="text" value="🪄">
-
 <label>花農字體粗細</label>
 <select id="peopleWeight">
 <option value="400">一般</option>
@@ -255,45 +107,53 @@ Emoji、顏文字及特殊符號。
 </select>
 
 <label>
-花農字體大小上限：
-<span id="peopleSizeValue">31</span> px
+花農字體大小：
+<span id="peopleSizeValue"></span> px
 </label>
-<input id="peopleSize" type="range"
- min="15" max="60" value="31">
+<input id="peopleSize" type="range" min="15" max="60">
 
+<h3 style="margin-top:18px">花農欄距與行距</h3>
 <div class="hint">
-系統會根據所有參與者中最長的名字，
-計算一個大家共用的字體大小。
-不會讓某個名字特別小。
+欄數仍依參與人數自動決定；
+欄與欄之間、每一行之間的距離由你手動設定。
 </div>
 
-<h3 style="margin-top:18px">花農整組位置</h3>
+<label>
+左右欄距：
+<strong id="columnGapValue"></strong> px
+</label>
+<input id="columnGap" type="range"
+min="120" max="320" step="2">
 
+<label>
+上下行距：
+<strong id="rowGapValue"></strong> px
+</label>
+<input id="rowGap" type="range"
+min="18" max="55" step="1">
+
+<h3 style="margin-top:18px">花農整組位置</h3>
 <div class="hint">
-可拖曳海報上的花農姓名，
-整組一起移動；也可使用滑桿。
+可以拖曳預覽中的花農名單，
+或使用滑桿整組移動。
 </div>
 
 <div class="pair">
 <div>
-<label>
-左右位置 <span id="groupXValue"></span>
-</label>
+<label>左右位置 <span id="groupXValue"></span></label>
 <input id="groupX" type="range"
- min="35" max="65" step=".5">
+min="25" max="75" step=".5">
 </div>
 <div>
-<label>
-上下位置 <span id="groupYValue"></span>
-</label>
+<label>上下位置 <span id="groupYValue"></span></label>
 <input id="groupY" type="range"
- min="73" max="84" step=".5">
+min="65" max="90" step=".5">
 </div>
 </div>
 
 <div class="row">
 <button id="resetGroup" class="alt">
-花農位置置中
+花農排版還原預設
 </button>
 </div>
 
@@ -302,52 +162,39 @@ Emoji、顏文字及特殊符號。
 7～16 人：2 欄；
 17～30 人：3 欄；
 31 人以上：4 欄。
-系統自動安排欄距與行距。
+長名字會使整份名單使用較小但一致的字體。
+調整欄距或行距時，請確認文字仍在金框內。
 </div>
 </section>
 
 <section>
 <h3>③ 日期</h3>
-
 <label>
 <input id="showDate" type="checkbox" checked>
 顯示日期
 </label>
-
 <input id="date" type="date">
-
 <label>日期格式</label>
 <select id="dateFormat">
-<option value="full">
-2026 / 10 / 25（日）
-</option>
-<option value="dots">
-2026.10.25
-</option>
-<option value="zh">
-2026年10月25日
-</option>
+<option value="full">2026 / 10 / 25（日）</option>
+<option value="dots">2026.10.25</option>
+<option value="zh">2026年10月25日</option>
 </select>
 </section>
 
 <section>
 <h3>④ 本日總召</h3>
-
 <label>
 <input id="showLeader" type="checkbox">
 顯示總召
 </label>
-
-<input id="leader" type="text"
- placeholder="輸入本日總召姓名">
+<input id="leader" type="text" placeholder="輸入總召姓名">
 </section>
 
 <section>
 <h3>⑤ 日期與總召調整</h3>
-
 <div class="hint">
-日期與總召各自調整位置、
-字體大小、顏色與描邊。
+日期與總召可分別調整位置、大小、顏色與描邊。
 </div>
 
 <label>選擇調整項目</label>
@@ -358,30 +205,20 @@ Emoji、顏文字及特殊符號。
 
 <div class="pair">
 <div>
-<label>
-左右位置 <span id="xValue"></span>
-</label>
-<input id="posX" type="range"
- min="3" max="97" step=".5">
+<label>左右位置 <span id="xValue"></span></label>
+<input id="posX" type="range" min="3" max="97" step=".5">
 </div>
 <div>
-<label>
-上下位置 <span id="yValue"></span>
-</label>
-<input id="posY" type="range"
- min="2" max="98" step=".5">
+<label>上下位置 <span id="yValue"></span></label>
+<input id="posY" type="range" min="2" max="98" step=".5">
 </div>
 </div>
 
-<label>
-字體大小 <span id="sizeValue"></span>
-</label>
-<input id="fontSize" type="range"
- min="15" max="85">
+<label>字體大小 <span id="sizeValue"></span></label>
+<input id="fontSize" type="range" min="15" max="85">
 
 <div class="row">
-<label>
-文字顏色
+<label>文字顏色
 <input id="fontColor" type="color">
 </label>
 <label>
@@ -391,12 +228,8 @@ Emoji、顏文字及特殊符號。
 </div>
 
 <div class="row">
-<button id="dateCenter" class="alt">
-日期置中金框
-</button>
-<button id="leaderCenter" class="alt">
-總召置中欄位
-</button>
+<button id="dateCenter" class="alt">日期置中金框</button>
+<button id="leaderCenter" class="alt">總召置中欄位</button>
 </div>
 
 <button id="resetLayout" class="danger">
@@ -406,24 +239,16 @@ Emoji、顏文字及特殊符號。
 
 <section class="admin">
 <h3>⑥ 管理員｜發布共用資源</h3>
-
 <div class="hint">
-所有資料確認完成後，
-按「複製共用資料」，
-貼到 GitHub 的
-<strong>shared.json</strong>
-並提交。
+整理完成後，按「複製共用資料」，
+貼到 GitHub 的 <strong>shared.json</strong> 並提交，
+其他團員就能取得共用資料。
 </div>
 
 <div class="row">
-<button id="copyShared">
-複製共用資料
-</button>
-<button id="downloadShared" class="alt">
-下載 shared.json
-</button>
+<button id="copyShared">複製共用資料</button>
+<button id="downloadShared" class="alt">下載 shared.json</button>
 </div>
-
 <div id="adminStatus" class="status"></div>
 </section>
 
@@ -432,17 +257,11 @@ Emoji、顏文字及特殊符號。
 <section id="preview">
 <h3>海報即時預覽</h3>
 <div class="hint">
-花農自動統一字體、分欄與行距；
-日期和總召可單獨調整。
+花農自動分欄，欄距與行距手動調整。
+可直接拖曳整份名單。
 </div>
-
-<canvas id="canvas"
- width="1086" height="1448"></canvas>
-
-<button id="download">
-下載 PNG 海報
-</button>
-
+<canvas id="canvas" width="1086" height="1448"></canvas>
+<button id="download">下載 PNG 海報</button>
 <div id="info" class="status"></div>
 </section>
 
@@ -478,9 +297,11 @@ function blank(){
   updated:"",
   flowers:{},
   people:[],
-  prefix:"🪄",
+  prefix:"",
   peopleSize:31,
   peopleWeight:900,
+  columnGap:270,
+  rowGap:27,
   groupX:.5,
   groupY:.795,
   event:{
@@ -496,33 +317,27 @@ function blank(){
 
 function normalize(source){
  const d=blank();
-
- if(!source||typeof source!=="object"){
-  return d;
- }
+ if(!source||typeof source!=="object")return d;
 
  return{
   version:Number(source.version)||1,
   updated:source.updated||"",
   flowers:
-   source.flowers&&
-   typeof source.flowers==="object"?
+   source.flowers&&typeof source.flowers==="object"?
    clone(source.flowers):{},
-  people:
-   Array.isArray(source.people)?
+  people:Array.isArray(source.people)?
    source.people.map((p,i)=>({
     id:String(p.id||"p_"+i),
     name:String(p.name||""),
     checked:p.checked!==false
    })):[],
-  prefix:
-   typeof source.prefix==="string"?
-   source.prefix:"🪄",
+  prefix:"",
   peopleSize:Number(source.peopleSize)||31,
   peopleWeight:
-   [400,700,900].includes(
-    Number(source.peopleWeight)
-   )?Number(source.peopleWeight):900,
+   [400,700,900].includes(Number(source.peopleWeight))?
+   Number(source.peopleWeight):900,
+  columnGap:Number(source.columnGap)||270,
+  rowGap:Number(source.rowGap)||27,
   groupX:
    Number.isFinite(Number(source.groupX))?
    Number(source.groupX):.5,
@@ -534,8 +349,7 @@ function normalize(source){
    ...(source.event||{})
   },
   layouts:
-   source.layouts&&
-   typeof source.layouts==="object"?
+   source.layouts&&typeof source.layouts==="object"?
    clone(source.layouts):{}
  };
 }
@@ -556,13 +370,11 @@ function draftKey(){
 }
 
 function saveDraft(){
- data.prefix=$("prefix").value;
- data.peopleSize=Number(
-  $("peopleSize").value
- );
- data.peopleWeight=Number(
-  $("peopleWeight").value
- );
+ data.peopleSize=Number($("peopleSize").value);
+ data.peopleWeight=Number($("peopleWeight").value);
+ data.columnGap=Number($("columnGap").value);
+ data.rowGap=Number($("rowGap").value);
+ data.prefix="";
 
  data.event={
   date:$("date").value,
@@ -588,13 +400,17 @@ function saveDraft(){
 function applyData(source){
  data=normalize(source);
 
- $("prefix").value=data.prefix;
-
  $("peopleSize").value=
   Math.max(15,Math.min(60,data.peopleSize));
 
  $("peopleWeight").value=
   String(data.peopleWeight);
+
+ $("columnGap").value=
+  Math.max(120,Math.min(320,data.columnGap));
+
+ $("rowGap").value=
+  Math.max(18,Math.min(55,data.rowGap));
 
  $("date").value=data.event.date||"";
  $("dateFormat").value=
@@ -613,7 +429,6 @@ function applyData(source){
  render();
 }
 
-/* 保留舊版資料 */
 function recoverLegacy(){
  const names=readJSON("lw_names",{});
  const people=readJSON("lw_people",[]);
@@ -663,8 +478,7 @@ function recoverLegacy(){
 }
 
 async function loadShared(official=false){
- $("status").textContent=
-  "正在讀取共用資料……";
+ $("status").textContent="正在讀取共用資料……";
 
  try{
   const r=await fetch(
@@ -684,16 +498,13 @@ async function loadShared(official=false){
 
   $("status").textContent=
    "已載入共用版本 "+shared.version+
-   (shared.updated?
-    "｜更新："+shared.updated:"");
+   (shared.updated?"｜更新："+shared.updated:"");
 
   if(!official)recoverLegacy();
 
  }catch(e){
   sharedReady=false;
-
   const draft=readJSON(draftKey(),null);
-
   if(draft)applyData(draft);
 
   $("status").textContent=
@@ -703,8 +514,7 @@ async function loadShared(official=false){
 }
 
 async function loadImages(){
- $("imageCount").textContent=
-  "正在讀取底圖……";
+ $("imageCount").textContent="正在讀取底圖……";
 
  try{
   const r=await fetch(API+"?t="+Date.now());
@@ -773,10 +583,7 @@ function drawGallery(){
 }
 
 function chooseImage(filename){
- const file=files.find(
-  f=>f.name===filename
- );
-
+ const file=files.find(f=>f.name===filename);
  if(!file)return;
 
  selectedFile=filename;
@@ -839,7 +646,7 @@ function drawPeopleList(){
   };
 
   const name=document.createElement("span");
-  name.textContent="🪄 "+p.name;
+  name.textContent=p.name;
 
   const edit=document.createElement("button");
   edit.className="alt";
@@ -847,7 +654,6 @@ function drawPeopleList(){
 
   edit.onclick=()=>{
    const n=prompt("修改花農姓名",p.name);
-
    if(n===null||!n.trim())return;
 
    p.name=n.trim();
@@ -860,9 +666,7 @@ function drawPeopleList(){
   del.textContent="刪除";
 
   del.onclick=()=>{
-   if(!confirm(
-    "確定刪除「"+p.name+"」？"
-   ))return;
+   if(!confirm("確定刪除「"+p.name+"」？"))return;
 
    data.people.splice(i,1);
    drawPeopleList();
@@ -953,24 +757,34 @@ function updateFixedControls(){
 
  $("xValue").textContent=
   Math.round(item.x*100)+"%";
+
  $("yValue").textContent=
   Math.round(item.y*100)+"%";
- $("sizeValue").textContent=
-  item.size+"px";
+
+ $("sizeValue").textContent=item.size+"px";
 }
 
 function updateGroupControls(){
  $("groupX").value=
-  Math.max(35,Math.min(65,data.groupX*100));
+  Math.max(25,Math.min(75,data.groupX*100));
+
  $("groupY").value=
-  Math.max(73,Math.min(84,data.groupY*100));
+  Math.max(65,Math.min(90,data.groupY*100));
 
  $("groupXValue").textContent=
   Math.round(data.groupX*100)+"%";
+
  $("groupYValue").textContent=
   Math.round(data.groupY*100)+"%";
+
  $("peopleSizeValue").textContent=
   $("peopleSize").value;
+
+ $("columnGapValue").textContent=
+  $("columnGap").value;
+
+ $("rowGapValue").textContent=
+  $("rowGap").value;
 }
 
 function dateText(){
@@ -978,6 +792,7 @@ function dateText(){
  if(!value)return "";
 
  const [y,m,d]=value.split("-").map(Number);
+
  const weekday="日一二三四五六"[
   new Date(y,m-1,d).getDay()
  ];
@@ -1003,13 +818,7 @@ function textFont(size,weight=700){
   'px "PingFang TC",'+
   '"Hiragino Kaku Gothic ProN",'+
   '"Noto Sans CJK TC",'+
-  'system-ui,sans-serif';
-}
-
-function emojiFont(size){
- return size+
-  'px "Apple Color Emoji",'+
-  '"Segoe UI Emoji",'+
+  '"Apple Color Emoji",'+
   'system-ui,sans-serif';
 }
 
@@ -1043,9 +852,7 @@ function drawFixed(key,text){
  ctx.fillText(text,x,y,maxWidth);
 
  const width=Math.max(
-  Math.min(
-   ctx.measureText(text).width,maxWidth
-  ),
+  Math.min(ctx.measureText(text).width,maxWidth),
   size*1.5
  );
 
@@ -1068,20 +875,17 @@ function columnCount(count){
 }
 
 /*
-  自動排版 V5
+ 花農排版 V6
 
-  1. 計算參與人數。
-  2. 決定欄數。
-  3. 計算各欄最長姓名。
-  4. 全部姓名使用同一個字體大小。
-  5. 魔法棒獨立繪製，避免被壓扁。
-  6. 整份名單一起置中或拖曳。
+ 欄數：依參與人數自動計算
+ 欄距：使用者手動設定
+ 行距：使用者手動設定
+ 字體：整份名單統一大小及粗細
+ 前綴：完全不顯示
+ 位置：整組移動
 */
 function drawPeopleGroup(){
- const persons=data.people.filter(
-  p=>p.checked
- );
-
+ const persons=data.people.filter(p=>p.checked);
  const count=persons.length;
  if(!count)return;
 
@@ -1090,95 +894,102 @@ function drawPeopleGroup(){
  const scale=w/1086;
 
  const cols=columnCount(count);
- const rows=Math.ceil(count/cols);
-
- const areaW=w*.80;
- const areaH=h*.174;
 
  const centerX=data.groupX*w;
  const centerY=data.groupY*h;
 
- const left=centerX-areaW/2;
- const top=centerY-areaH/2;
+ const columnGap=
+  Number($("columnGap").value)*scale;
 
- const colW=areaW/cols;
- const rowH=areaH/rows;
+ const rowGap=
+  Number($("rowGap").value)*scale;
 
- const prefix=$("prefix").value.trim();
- const weight=Number($("peopleWeight").value);
+ const weight=
+  Number($("peopleWeight").value);
 
  const requestedSize=
   Number($("peopleSize").value)*scale;
 
- const availableTextW=colW*.91;
-
  /*
-  以全部姓名的最大寬度計算
-  統一字體大小。
+  各欄平均分配花農，
+  先填滿第一欄，再填第二欄。
  */
- function measureEntry(person,size){
-  const gap=prefix?size*.28:0;
-
-  ctx.font=textFont(size,weight);
-  const nameWidth=
-   ctx.measureText(person.name).width;
-
-  let iconWidth=0;
-  if(prefix){
-   ctx.font=emojiFont(size*1.08);
-   iconWidth=ctx.measureText(prefix).width;
-  }
-
-  return{
-   nameWidth,
-   iconWidth,
-   gap,
-   total:nameWidth+iconWidth+gap
-  };
- }
-
- let commonSize=Math.min(
-  requestedSize,
-  rowH*.69
- );
-
- /*
-  從最大希望大小逐步尋找
-  能容納所有姓名的共同大小。
- */
- for(let test=commonSize;test>=7;test-=.5){
-  const fits=persons.every(p=>
-   measureEntry(p,test).total<=availableTextW
-  );
-
-  if(fits){
-   commonSize=test;
-   break;
-  }
-
-  commonSize=Math.max(7,test-.5);
- }
-
- const iconSize=commonSize*1.08;
-
- /*
-  每欄人數平均分配，避免出現
-  某欄過長、另一欄過短。
- */
- const base=Math.floor(count/cols);
+ const baseRows=Math.floor(count/cols);
  const extra=count%cols;
 
- const columnRows=Array.from(
+ const rowsPerCol=Array.from(
   {length:cols},
-  (_,i)=>base+(i<extra?1:0)
+  (_,i)=>baseRows+(i<extra?1:0)
  );
 
- const maxRows=Math.max(...columnRows);
- const actualRowH=areaH/maxRows;
+ /*
+  根據手動欄距計算每欄中心。
+ */
+ const centers=Array.from(
+  {length:cols},
+  (_,i)=>centerX+
+   (i-(cols-1)/2)*columnGap
+ );
+
+ /*
+  每欄文字可用寬度。
+  欄距縮小時，也會縮小可用寬度，
+  避免鄰欄文字互相重疊。
+ */
+ const edgeMargin=w*.08;
+
+ let availableWidth;
+
+ if(cols===1){
+  availableWidth=w*.76;
+ }else{
+  availableWidth=Math.min(
+   columnGap*.90,
+   w*.40
+  );
+ }
+
+ /*
+  避免最左、最右欄超出圖片。
+ */
+ centers.forEach(x=>{
+  availableWidth=Math.min(
+   availableWidth,
+   2*Math.max(0,Math.min(
+    x-edgeMargin,
+    w-edgeMargin-x
+   ))
+  );
+ });
+
+ availableWidth=Math.max(
+  availableWidth,
+  20*scale
+ );
+
+ /*
+  先計算所有姓名的最長寬度，
+  再求出共同字體大小。
+ */
+ function fits(size){
+  ctx.font=textFont(size,weight);
+  return persons.every(p=>
+   ctx.measureText(p.name).width<=availableWidth
+  );
+ }
+
+ let commonSize=requestedSize;
+
+ for(let size=requestedSize;size>=7*scale;size-=.5*scale){
+  commonSize=size;
+  if(fits(size))break;
+ }
 
  ctx.save();
- ctx.textAlign="left";
+ ctx.textAlign="center";
  ctx.textBaseline="middle";
+ ctx.fillStyle="#344b40";
+ ctx.font=textFont(commonSize,weight);
 
  let personIndex=0;
 
@@ -1188,57 +999,39 @@ function drawPeopleGroup(){
  let hitBottom=0;
 
  for(let col=0;col<cols;col++){
-  const n=columnRows[col];
+  const rows=rowsPerCol[col];
+  if(!rows)continue;
 
-  if(!n)continue;
+  const x=centers[col];
 
   /*
-   所有欄位都依自己的筆數垂直置中，
-   所以不會出現一欄往上擠。
+   行距由使用者手動設定。
+   每欄以整欄高度置中。
   */
-  const usedH=n*actualRowH;
-  const startY=centerY-usedH/2;
+  const topY=centerY-
+   ((rows-1)*rowGap)/2;
 
-  const colCenter=
-   left+(col+.5)*colW;
-
-  for(let row=0;row<n;row++){
+  for(let row=0;row<rows;row++){
    const person=persons[personIndex++];
+   const y=topY+row*rowGap;
 
-   const y=
-    startY+(row+.5)*actualRowH;
+   ctx.fillText(
+    person.name,
+    x,y,
+    availableWidth
+   );
 
-   const measured=
-    measureEntry(person,commonSize);
-
-   const startX=
-    colCenter-measured.total/2;
-
-   let nameX=startX;
-
-   if(prefix){
-    /*
-     魔法棒獨立繪製，
-     避免與姓名一起縮放。
-    */
-    ctx.font=emojiFont(iconSize);
-    ctx.fillText(prefix,startX,y);
-
-    nameX=startX+
-     measured.iconWidth+
-     measured.gap;
-   }
-
-   ctx.font=textFont(commonSize,weight);
-   ctx.fillStyle="#344b40";
-   ctx.fillText(person.name,nameX,y);
+   const textWidth=Math.min(
+    ctx.measureText(person.name).width,
+    availableWidth
+   );
 
    hitLeft=Math.min(
-    hitLeft,startX
+    hitLeft,x-textWidth/2
    );
 
    hitRight=Math.max(
-    hitRight,startX+measured.total
+    hitRight,x+textWidth/2
    );
 
    hitTop=Math.min(
@@ -1255,10 +1048,10 @@ function drawPeopleGroup(){
   key:"group",
   x:centerX,
   y:centerY,
-  left:Math.max(0,hitLeft-18*scale),
-  right:Math.min(w,hitRight+18*scale),
-  top:Math.max(0,hitTop-15*scale),
-  bottom:Math.min(h,hitBottom+15*scale)
+  left:Math.max(0,hitLeft-20*scale),
+  right:Math.min(w,hitRight+20*scale),
+  top:Math.max(0,hitTop-16*scale),
+  bottom:Math.min(h,hitBottom+16*scale)
  });
 
  ctx.restore();
@@ -1275,9 +1068,10 @@ function render(){
  }else{
   ctx.fillStyle="#f3f0e7";
   ctx.fillRect(0,0,w,h);
+
   ctx.fillStyle="#58705e";
-  ctx.font="28px sans-serif";
   ctx.textAlign="center";
+  ctx.font="28px sans-serif";
   ctx.fillText(
    "請先選擇海報底圖",
    w/2,h/2
@@ -1286,10 +1080,7 @@ function render(){
 
  hitAreas=[];
 
- if(
-  $("showDate").checked&&
-  $("date").value
- ){
+ if($("showDate").checked&&$("date").value){
   drawFixed("date",dateText());
  }
 
@@ -1297,23 +1088,20 @@ function render(){
   $("showLeader").checked&&
   $("leader").value.trim()
  ){
-  drawFixed(
-   "leader",
-   $("leader").value.trim()
-  );
+  drawFixed("leader",$("leader").value.trim());
  }
 
  drawPeopleGroup();
 }
 
 function point(e){
- const r=canvas.getBoundingClientRect();
+ const rect=canvas.getBoundingClientRect();
 
  return{
-  x:(e.clientX-r.left)*
-   canvas.width/r.width,
-  y:(e.clientY-r.top)*
-   canvas.height/r.height
+  x:(e.clientX-rect.left)*
+   canvas.width/rect.width,
+  y:(e.clientY-rect.top)*
+   canvas.height/rect.height
  };
 }
 
@@ -1347,19 +1135,16 @@ canvas.addEventListener("pointermove",e=>{
 
  const p=point(e);
 
- const x=
-  (p.x-drag.dx)/canvas.width;
-
- const y=
-  (p.y-drag.dy)/canvas.height;
+ const x=(p.x-drag.dx)/canvas.width;
+ const y=(p.y-drag.dy)/canvas.height;
 
  if(drag.key==="group"){
   data.groupX=Math.max(
-   .35,Math.min(.65,x)
+   .25,Math.min(.75,x)
   );
 
   data.groupY=Math.max(
-   .73,Math.min(.84,y)
+   .65,Math.min(.90,y)
   );
 
   updateGroupControls();
@@ -1380,9 +1165,7 @@ canvas.addEventListener("pointermove",e=>{
  "pointercancel",
  "lostpointercapture"
 ].forEach(type=>{
- canvas.addEventListener(
-  type,()=>drag=null
- );
+ canvas.addEventListener(type,()=>drag=null);
 });
 
 function downloadPoster(){
@@ -1412,7 +1195,7 @@ function downloadPoster(){
   a.remove();
 
   $("info").textContent=
-   "已產生海報，請查看 Safari 下載項目。";
+   "海報已產生，請查看 Safari 下載項目。";
 
   setTimeout(()=>{
    URL.revokeObjectURL(url);
@@ -1434,12 +1217,11 @@ function publishedData(){
   String(now.getMonth()+1).padStart(2,"0")+"-"+
   String(now.getDate()).padStart(2,"0");
 
- output.prefix=$("prefix").value;
- output.peopleSize=
-  Number($("peopleSize").value);
- output.peopleWeight=
-  Number($("peopleWeight").value);
-
+ output.prefix="";
+ output.peopleSize=Number($("peopleSize").value);
+ output.peopleWeight=Number($("peopleWeight").value);
+ output.columnGap=Number($("columnGap").value);
+ output.rowGap=Number($("rowGap").value);
  output.groupX=data.groupX;
  output.groupY=data.groupY;
 
@@ -1460,18 +1242,17 @@ async function copyShared(){
   return;
  }
 
- const text=publishedData();
+ const content=publishedData();
 
  try{
-  await navigator.clipboard.writeText(text);
+  await navigator.clipboard.writeText(content);
 
   $("adminStatus").textContent=
-   "已複製，請貼到 GitHub 的 shared.json。";
+   "已複製共用資料，請貼到 GitHub 的 shared.json。";
 
  }catch{
   const t=document.createElement("textarea");
-
-  t.value=text;
+  t.value=content;
   t.style.position="fixed";
   t.style.top="0";
 
@@ -1484,7 +1265,7 @@ async function copyShared(){
 
   $("adminStatus").textContent=ok?
    "已複製，請貼到 shared.json。":
-   "複製失敗，請使用下載功能。";
+   "複製失敗，請改用下載功能。";
  }
 }
 
@@ -1514,15 +1295,13 @@ function downloadShared(){
  },60000);
 }
 
-$("reload").onclick=()=>{
- loadShared(false);
-};
+$("reload").onclick=()=>loadShared(false);
 
 $("restore").onclick=async()=>{
  if(!sharedReady)return;
 
  if(!confirm(
-  "確定捨棄自己的草稿，還原為正式共用版本？"
+  "確定捨棄目前草稿，還原成正式共用版本？"
  ))return;
 
  localStorage.removeItem(draftKey());
@@ -1534,10 +1313,10 @@ $("search").oninput=drawGallery;
 $("saveFlower").onclick=()=>{
  if(!selectedFile)return;
 
- const n=$("flowerName").value.trim();
+ const name=$("flowerName").value.trim();
 
- if(n){
-  data.flowers[selectedFile]=n;
+ if(name){
+  data.flowers[selectedFile]=name;
  }else{
   delete data.flowers[selectedFile];
  }
@@ -1567,13 +1346,17 @@ $("peopleSize").oninput=()=>{
 
 $("peopleWeight").onchange=saveDraft;
 
+["columnGap","rowGap"].forEach(id=>{
+ $(id).oninput=()=>{
+  updateGroupControls();
+  saveDraft();
+ };
+});
+
 ["groupX","groupY"].forEach(id=>{
  $(id).oninput=()=>{
-  data.groupX=
-   Number($("groupX").value)/100;
-
-  data.groupY=
-   Number($("groupY").value)/100;
+  data.groupX=Number($("groupX").value)/100;
+  data.groupY=Number($("groupY").value)/100;
 
   updateGroupControls();
   saveDraft();
@@ -1583,6 +1366,9 @@ $("peopleWeight").onchange=saveDraft;
 $("resetGroup").onclick=()=>{
  data.groupX=.5;
  data.groupY=.795;
+
+ $("columnGap").value=270;
+ $("rowGap").value=27;
 
  updateGroupControls();
  saveDraft();
@@ -1621,24 +1407,18 @@ $("outline").onchange=()=>{
 
 $("dateCenter").onclick=()=>{
  target="date";
- setFixed("date",{
-  x:.5,y:.112
- });
+ setFixed("date",{x:.5,y:.112});
 };
 
 $("leaderCenter").onclick=()=>{
  target="leader";
- setFixed("leader",{
-  x:.60,y:.926
- });
+ setFixed("leader",{x:.60,y:.926});
 };
 
 $("resetLayout").onclick=()=>{
  if(!selectedFile)return;
 
- if(!confirm(
-  "確定重設日期與總召位置？"
- ))return;
+ if(!confirm("確定重設日期與總召位置？"))return;
 
  if(data.layouts[selectedFile]){
   delete data.layouts[selectedFile].date;
@@ -1650,7 +1430,6 @@ $("resetLayout").onclick=()=>{
 };
 
 [
- "prefix",
  "date",
  "dateFormat",
  "showDate",
@@ -1672,6 +1451,5 @@ async function start(){
 
 start();
 </script>
-
 </body>
 </html>
