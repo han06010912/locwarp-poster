@@ -1,6 +1,5 @@
 {
-  "version": 3,
-  "updated": "2026-10-25",
+  "version": 4,
   "flowers": {
     "0837DA32-04A1-4D9D-B3C1-04CF0ED4A2DF.png": "牽牛花",
     "0B833B7E-4771-4F7E-B82C-F3B217EB0254.png": "粉蝶花",
@@ -67,7 +66,7 @@
     {
       "id": "p_1792878181043_8lu9kd",
       "name": "☆👻",
-      "checked": false
+      "checked": true
     },
     {
       "id": "p_1792878181043_2nv6lu",
@@ -87,22 +86,22 @@
     {
       "id": "p_1792878181043_lhxk99",
       "name": "大文-是個Mac種花文",
-      "checked": false
+      "checked": true
     },
     {
       "id": "p_1792878181043_1tvqn5",
       "name": "✈️win",
-      "checked": false
+      "checked": true
     },
     {
       "id": "p_1792878181043_upsqw6",
       "name": "太后監察人",
-      "checked": false
+      "checked": true
     },
     {
       "id": "p_1792878181043_cp9p61",
       "name": "小PP",
-      "checked": true
+      "checked": false
     },
     {
       "id": "p_1792878181043_x56upv",
@@ -112,7 +111,7 @@
     {
       "id": "p_1792878181043_w2mp5w",
       "name": "北極啵啵南總",
-      "checked": true
+      "checked": false
     },
     {
       "id": "p_1792878181043_yew6xk",
@@ -127,7 +126,7 @@
     {
       "id": "p_1792878181043_6cj3g4",
       "name": "Willie",
-      "checked": false
+      "checked": true
     },
     {
       "id": "p_1792878181043_mq7sbm",
@@ -188,22 +187,13 @@
       "id": "p_1792878181043_plu5r8",
       "name": "Cynthia",
       "checked": false
+    },
+    {
+      "id": 1793323519095.501,
+      "name": "昀",
+      "checked": true
     }
   ],
-  "prefix": "",
-  "peopleSize": 60,
-  "peopleWeight": 900,
-  "columnGap": 216,
-  "rowGap": 54,
-  "groupX": 0.4736842105263157,
-  "groupY": 0.762865497076023,
-  "event": {
-    "date": "2026-10-25",
-    "dateFormat": "full",
-    "showDate": true,
-    "leader": "初飛者🦎🦎🦎",
-    "showLeader": true
-  },
   "layouts": {
     "0837DA32-04A1-4D9D-B3C1-04CF0ED4A2DF.png": {
       "leader": {
@@ -214,11 +204,14 @@
         "outline": true
       },
       "date": {
-        "x": 0.5093630017452007,
-        "y": 0.1064659685863882,
-        "size": 30,
+        "x": 0.5137489666574815,
+        "y": 0.11473684210526315,
+        "size": 43,
         "color": "#513d33",
-        "outline": true
+        "outline": true,
+        "arc": 0,
+        "spacing": 0,
+        "curveEngine": 2
       },
       "p_1792878181043_lhxk99": {
         "x": 0.685235602094241,
@@ -233,6 +226,12 @@
         "size": 31,
         "color": "#344b40",
         "outline": false
+      },
+      "dateFrame": {
+        "x": 0.5,
+        "y": 0.11199999999999999,
+        "w": 0.465,
+        "h": 0.042
       }
     },
     "0B833B7E-4771-4F7E-B82C-F3B217EB0254.png": {
@@ -274,9 +273,13 @@
       },
       "date": {
         "x": 0.5096491228070175,
-        "y": 0.11045988669590619,
+        "y": 0.10929029605263162,
         "size": 31,
-        "color": "#b51a00"
+        "color": "#b51a00",
+        "outline": true,
+        "arc": 0,
+        "spacing": 0,
+        "curveEngine": 2
       },
       "leader": {
         "x": 0.4842105263157894,
@@ -386,7 +389,10 @@
         "x": 0.509765625,
         "y": 0.10502083333333331,
         "size": 30,
-        "color": "#614b30"
+        "color": "#614b30",
+        "arc": 0,
+        "spacing": 0,
+        "curveEngine": 2
       },
       "leader": {
         "x": 0.4921052631578949,
@@ -402,7 +408,10 @@
         "y": 0.10967306573589349,
         "size": 29,
         "color": "#513d33",
-        "outline": true
+        "outline": true,
+        "arc": 0,
+        "spacing": 0,
+        "curveEngine": 2
       }
     },
     "20896A25-D188-4A43-836A-1A3051FDA37E.png": {},
@@ -419,7 +428,10 @@
         "y": 0.08634157774625302,
         "size": 43,
         "color": "#513d33",
-        "outline": true
+        "outline": true,
+        "arc": 0,
+        "spacing": 0,
+        "curveEngine": 2
       }
     },
     "356A0DD0-2CC6-4425-86BF-15B50E105944.png": {},
@@ -458,15 +470,18 @@
     "E3C5B2DE-46DE-4D30-8DEF-05D4AB1F083F.png": {},
     "EB7ECD82-4645-4844-80FF-CFCD5811AF02.png": {
       "date": {
-        "x": 0.5140350877192983,
-        "y": 0.10849122807017543,
+        "x": 0.5105263157894737,
+        "y": 0.11083040935672461,
         "size": 30,
         "color": "#513d33",
-        "outline": true
+        "outline": true,
+        "arc": 0,
+        "spacing": 0,
+        "curveEngine": 2
       },
       "leader": {
-        "x": 0.4491228070175439,
-        "y": 0.9289239766081877,
+        "x": 0.4526315789473684,
+        "y": 0.9330175438596499,
         "size": 42,
         "color": "#e22400",
         "outline": true
@@ -477,6 +492,59 @@
     "F08CC53A-78C1-40AB-B494-9A68EDBE3910.png": {},
     "F02E478B-01B3-4B21-B6A0-0307A77445D1.png": {},
     "EF83B3A3-1E19-4E28-A3CD-7FB3E0B83CD7.png": {},
-    "F1F88A5E-176C-4823-AF96-6D1340397A57.png": {}
+    "F1F88A5E-176C-4823-AF96-6D1340397A57.png": {},
+    "三色堇.PNG": {},
+    "兔耳花.PNG": {},
+    "九重葛.PNG": {
+      "date": {
+        "x": 0.5455326460481101,
+        "y": 0.16618386742778898,
+        "size": 91,
+        "width": 72,
+        "arc": 35,
+        "spacing": 0,
+        "font": "rounded",
+        "preset": "custom",
+        "outline": true,
+        "color": "#263e0f",
+        "curveEngine": 2
+      }
+    },
+    "向日葵.PNG": {
+      "leader": {
+        "x": 0.5254385964912281,
+        "y": 0.9069206603754184,
+        "size": 42,
+        "color": "#513d33",
+        "outline": true
+      }
+    },
+    "": {}
+  },
+  "peopleSize": 32,
+  "peopleWeight": 900,
+  "peopleFont": "rounded",
+  "peopleColor": "#344b40",
+  "peopleOutline": true,
+  "columnGap": 314,
+  "rowGap": 63,
+  "groupX": 0.465,
+  "groupY": 0.74,
+  "event": {
+    "date": "2026-10-25",
+    "dateFormat": "custom",
+    "showDate": true,
+    "customDate": "10/29（四）",
+    "leader": "初飛者🦎🦎🦎",
+    "showLeader": true
+  },
+  "updated": "2026-10-30",
+  "prefix": "",
+  "showDateFrame": false,
+  "dateFrame": {
+    "x": 0.5,
+    "y": 0.15,
+    "w": 0.43,
+    "h": 0.062
   }
 }
